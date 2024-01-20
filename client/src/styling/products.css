@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter&family=Calligraffitti&family=Diphylleia&family=Inconsolata&family=Open+Sans&family=Playfair+Display&family=Poppins:wght@300&family=Quicksand&family=Roboto+Mono&family=Rubik&display=swap');
+
+#sale-products{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    color:#A94438;
+}
+.slp1{
+    width: 20%;
+    display: flex;
+    flex-direction: column;    
+    padding: 10% 0% 3% 3%;
+}
+.slp2{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 5% 1% 3% 0%;    
+}
+.gray-line{
+    background-color: gray;
+    border-width: 5px;
+    color: maroon;
+    height: 1px;
+    width: 75%;
+}
+.far-away{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 73%;
+}
+.slp2 h3{
+    margin-bottom: -1%;
+    font-weight: 800;
+    font-family: 'Playfair Display', serif;
+}
+.space-btw{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+}   
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+.slp img{
+    width: 35vh;
+    height: 35vh;
+    padding:2px;
+    position: relative;
+    right:4%;
+    cursor: pointer;
+}
+.slp h6{
+    margin-top: -2%;
+}
+.slp{
+    padding: 1%;
+}
+.far-away h3{
+    font-weight: 400;
+}
+.slp-last{
+    text-align: center;
+    color:#A94438;
+}
+.slp-last h4{  
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+.slp-last p{
+    font-weight: 300;
+}
+#paint-pic img {
+    width: 100%;
+}
