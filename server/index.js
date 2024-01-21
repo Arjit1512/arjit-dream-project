@@ -5,17 +5,17 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { login, register } from "./controllers/auth.js";
 
-const app = express();
 dotenv.config();
  const allowedOrigins = [
-     "https://arjit-dream-fashion.vercel.app/",
+     "https://arjit-dream-fashion.vercel.app",
      "http://localhost:3000",
  ];
-// app.use(cors({
-//     origin: allowedOrigins,
-//     methods: ["POST", "GET"],
-//     credentials: true
-// }));
+const app = express();
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ["POST", "GET"],
+    credentials: true
+}));
 //app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extented: true }));
