@@ -9,14 +9,14 @@ function Login() {
     const [password, setPassword] = useState('')
     const [userName, setUserName] = useState('')
     
-    axios.defaults.withCredentials = true;
+    //axios.defaults.withCredentials = true;
 
     async function submit(e) {
         e.preventDefault();
 
         try {
 
-            await axios.post("https://arjit-fashion.vercel.app/auth/register", {
+            await axios.post("http://localhost:3001/auth/register", {//"https://arjit-fashion.vercel.app/auth/register", {
                userName, email, password
             })
 
