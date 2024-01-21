@@ -7,16 +7,16 @@ import { login, register } from "./controllers/auth.js";
 
 const app = express();
 dotenv.config();
-// const allowedOrigins = [
-//     //"https://nayepankh-react-frontend.vercel.app",
-//     "http://localhost:3000",
-// ];
+ const allowedOrigins = [
+     "https://arjit-dream-fashion.vercel.app/",
+     "http://localhost:3000",
+ ];
 // app.use(cors({
 //     origin: allowedOrigins,
 //     methods: ["POST", "GET"],
 //     credentials: true
 // }));
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extented: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extented: true }));
