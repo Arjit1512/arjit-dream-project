@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
+import Clothes from './Clothes.jsx';
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faPinterest, faTwitter, faYoutube, faShopify, faShoppingCart } from "@fortawesome/free-brands-svg-icons";
@@ -8,15 +10,40 @@ import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import { useCart } from './CartContext.js';
+const ProductDetail = () => {
 
-const DetailedPage = () => {
     const navigate = useNavigate();
     const { state, addToCart } = useCart();
 
     const [showNotification, setShowNotification] = useState(false);
 
-    const handleAddToCart = (index) => {
-        const selectedImage = `../sources/i${index + 1}.jpg`;
+    
+    
+    function getProductById(id) {
+        return Clothes.find(product => product.id === parseInt(id));
+    }
+
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+
+    
+    useEffect(() => {
+        const fetchProductDetails = async () => {
+            const fetchedProduct =  getProductById(id);
+            setProduct(fetchedProduct);
+        };
+
+        fetchProductDetails();
+    }, [id]);
+ 
+    if (!product) {
+        return <p>Sorry, couldn't load due to some internal errors. Please try again.</p>;
+    }
+
+    const handleAddToCart = () => {
+        console.log(`id : ${product.id}`);
+        const selectedImage = `../sources/pro${product.id}.webp`;
+
         addToCart(selectedImage);
     
         setShowNotification(true);
@@ -26,10 +53,8 @@ const DetailedPage = () => {
         }, 2000);
     };
     
-     
     return (
         <>
-
             <section id='part-1'>
                 <div className='black-box'>
                     <p>Free Shipping available worldwide!</p>
@@ -64,13 +89,13 @@ const DetailedPage = () => {
 
             <section id="prodetails" class="section-p1">
                 <div class="single-pro-image">
-                    <img id="MainImg" src={i1} width="100%" alt="" />
+                    <img id="MainImg" src={product.imgURL} width="100%" alt="" />
                     {/* ... (your existing code) */}
                 </div>
                 <div class="single-pro-details">
-                    <h1>Home / T-Shirt</h1>
+                    <h1>{product.name}</h1>
                     <h4>Men's Fashion T Shirt</h4>
-                    <h2>899.00</h2>
+                    <h2>{product.price}</h2>
                     <select fdprocessedid="cwggv">
                         <option>Select Size</option>
                         <option>XL</option>
@@ -80,10 +105,22 @@ const DetailedPage = () => {
                     </select>
                     <input type="number" value="1" fdprocessedid="1mx0s" />
                     <button className="normal" onClick={handleAddToCart}>Add to Cart</button>
+                
+                    {showNotification && (
+                        <div className="notification">
+                            <p>Item added to cart</p>
+                        </div>
+                    )}
+
+                    <div className='positioning'>
+                        <h4>Product Details</h4>
+                        <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
+                    </div>
+                
                 </div>
             </section>
 
-
+            
             <section id='part-2'>
                 <div className='light-border width'></div>
 
@@ -142,9 +179,10 @@ const DetailedPage = () => {
                 <div className='copy-right'>
                     <p>© Copyright 2023 Arjit Avadhanam</p>
                 </div>
-            </section>
+            </section>           
+            
         </>
     )
 }
 
-export default DetailedPage
+export default ProductDetail;

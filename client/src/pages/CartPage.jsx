@@ -15,8 +15,8 @@ const CartPage = () => {
         console.log('Cart items:', cartItems);
         setSelectedItem(cartItems[index]);
     };
-    
-    
+
+
 
     return (
         <div className="cart-page-main">
@@ -27,21 +27,21 @@ const CartPage = () => {
 
             <div className="flex-col">
                 <div className="cart-items sale1">
-                {cartItems.map((item, index) => (
-    <div
-        key={index}
-        className="cart-item flex-row sale1"
-        onClick={(event) => handleImageClick(index, event)}
-    >
-        <img src={item} alt={`Product ${index + 1}`} />
-        <div className="flex-col comp-of-items">
-            <h2>Interior & Exterior<br />
-                Painting</h2>
-            <p>Set the mood with a fresh coat of paint.</p>
-            <h3>899.00</h3>
-        </div>
-    </div>
-))}
+                    {cartItems.map((item, index) => (
+                        <div
+                            key={index}
+                            className="cart-item flex-row sale1"
+                            onClick={(event) => handleImageClick(index, event)}
+                        >
+                            <img src={`../sources/pro${index + 1}.webp`} alt={`Product ${index + 1}`} />
+                            <div className="flex-col comp-of-items">
+                                <h2>Interior & Exterior<br />
+                                    Painting</h2>
+                                <p>Set the mood with a fresh coat of paint.</p>
+                                <h3>899.00</h3>
+                            </div>
+                        </div>
+                    ))}
 
 
                 </div>

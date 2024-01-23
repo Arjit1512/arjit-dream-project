@@ -10,6 +10,7 @@ import CartPage from '../src/pages/CartPage.jsx';
 import Login from '../src/pages/Login.jsx';
 import Register from '../src/pages/Register.jsx';
 import Products from '../src/pages/Products.jsx';
+import ProductDetail from '../src/pages/ProductDetail.jsx';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
       </Routes>
     </div>
   );

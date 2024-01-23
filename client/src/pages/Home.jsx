@@ -37,6 +37,9 @@ const Home = () => {
         navigate("/login");
     }
     
+    function goToProducts(){
+        navigate("/products");
+    }
     
     return (
         <>
@@ -99,7 +102,7 @@ const Home = () => {
                         beyond a product - it's a story.</p>
 
 
-                    <a><i>view the collections</i></a>
+                    <a onClick={goToProducts}><i>view the collections</i></a>
                 </div>
                 <div className='p3-part2'>
                     <img src={i4} alt=''></img>
