@@ -59,16 +59,23 @@ app.post("/add-to-cart/:userId", async (req, res) => {
 });
 
 app.get("/get-cart/:userId", async (req, res) => {
-    const userId = req.params.userId; // Assuming userId is the user's _id
+    const userId = req.params.userId;
 
     try {
         const user = await User.findById(userId).populate('cart').exec();
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        if (!user.cart) {
+            return res.status(404).json({ error: 'User does not have a cart' });
+        }
         res.status(200).json({ cart: user.cart });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
 
 
 const PORT = process.env.PORT || 3000;
