@@ -2,10 +2,10 @@ import User from "../models/User.js";
 
 export const register = async(req,res) => {
     try{
-        const{userName,email,password} = req.body;
-
+        const{userId, userName,email,password} = req.body;
+        
         const newUser = new User({
-            userName , email, password
+            userId,userName , email, password
         });
 
         const savedUser = await newUser.save();
@@ -38,7 +38,7 @@ export const login = async(req,res) => {
             return;
         } 
         if(!isMatch){
-            res.json("new-user");
+            res.json("new-user"); 
             return;
         } 
 
