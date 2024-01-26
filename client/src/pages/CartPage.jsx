@@ -7,19 +7,20 @@ const CartPage = () => {
     const location = useLocation();
     const { state } = location;
     const [selectedItem, setSelectedItem] = useState(null);
-    const userId = "65b1424434fc72ea29abd1ca";
     const cartItems = state?.cartItems || [];
+
+    const userId = "65b1424434fc72ea29abd1ca";
 
     const handleImageClick = async (index, event) => {
         event.preventDefault();
         console.log('Clicked index:', index);
-    
+
         try {
             const response = await axios.post(`http://localhost:3001/add-to-cart/${userId}`, {
                 productId: index + 1,
                 quantity: 1,
             });
-    
+
             console.log('Response:', response.data);
             // Optionally, you can fetch the updated cart after adding the item
             fetchUserCart();
@@ -28,13 +29,12 @@ const CartPage = () => {
             // Handle error or show an error message to the user
         }
     };
-    
 
     useEffect(() => {
         // Fetch user's cart when the component mounts
         fetchUserCart();
     }, []);
-    
+
     const fetchUserCart = async () => {
         try {
             const response = await axios.get(`http://localhost:3001/get-cart/${userId}`);
@@ -46,11 +46,9 @@ const CartPage = () => {
             // Handle error or show an error message to the user
         }
     };
-    
-    
+
     return (
         <div className="cart-page-main">
-            {/* ... (previous code) */}
     
             <div className="cart-items sale1">
                 {cartItems.map((item, index) => (
