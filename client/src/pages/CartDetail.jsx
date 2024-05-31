@@ -5,6 +5,7 @@ import "../App.css";
 
 const CartDetail = () => {
   const [user, setUser] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -12,7 +13,8 @@ const CartDetail = () => {
       try {
         const response = await axios.get(`http://localhost:3001/get-cart/${id}`);
         const data = response.data;
-        setUser(data);
+        setUser(data.cart);
+        setTotalPrice(data.totalPrice);
         console.log("Cart data fetched", data);
       } catch (error) {
         console.error(error);
@@ -26,18 +28,19 @@ const CartDetail = () => {
     return <div>Loading...</div>;
   }
 
-  if (user.cart && Array.isArray(user.cart)) {
+  if (user && Array.isArray(user)) {
     return (
       <>
         <h1>INDIVIDUAL ITEMS</h1>
-        {user.cart.map((item) => (
+        {user.map((item) => (
           <div key={item._id}>
-            {/* <p>Product ID: {item.productId}</p> */}
             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
             <p>No of items: {item.quantity}</p>
-            <h3>The total bill that you need to pay:{item.price}</h3>
+            <p>Price per item: {item.price / item.quantity}</p>
+            <h3>Total for this item: {item.price}</h3>
           </div>
         ))}
+        <h2>Total Bill: {totalPrice}</h2>
       </>
     );
   }

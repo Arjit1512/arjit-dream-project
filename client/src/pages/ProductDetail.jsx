@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Clothes from './Clothes.jsx';
 import "../App.css";
@@ -38,19 +38,24 @@ const ProductDetail = () => {
             console.error('Product details not available');
             return;
         }
-
+    
+        console.log('Product details:', product);
+    
         const selectedImage = `../sources/pro${product.id}.webp`;
-
+    
         addToCart(selectedImage);
-
+    
         try {
-            await axios.post(`http://localhost:3001/add-to-cart/${userId}`, {
+            const response = await axios.post(`http://localhost:3001/add-to-cart/${userId}`, {
                 productId: product.id,
                 quantity: 1,
+                price: product.price
             });
-
+    
+            console.log('Add to cart response:', response.data);
+    
             setShowNotification(true);
-
+    
             setTimeout(() => {
                 setShowNotification(false);
             }, 2000);
@@ -58,6 +63,7 @@ const ProductDetail = () => {
             console.error('Error updating cart:', error);
         }
     };
+    
 
     return (
         <>
@@ -90,45 +96,42 @@ const ProductDetail = () => {
                 <div className='light-border width'></div>
             </section>
 
-            <section id="prodetails" class="section-p1">
-            {product && (
-                <div class="single-pro-image">
-                    <img id="MainImg" src={product.imgURL} width="100%" alt="" />
-                    
-                </div>
-            )}    
-            {product && (
-                <div class="single-pro-details">
-                    <h1>{product.name}</h1>
-                    <h4>Men's Fashion T Shirt</h4>
-                    <h2>{product.price}</h2>
-                    <select fdprocessedid="cwggv">
-                        <option>Select Size</option>
-                        <option>XL</option>
-                        <option>XXL</option>
-                        <option>Small</option>
-                        <option>Large</option>
-                    </select>
-                    <input type="number" value="1" fdprocessedid="1mx0s" />
-                    <button className="normal" onClick={handleAddToCart}>
-                        Add to Cart
-                    </button>
-
-                    {showNotification && (
-                        <div className="notification">
-                            <p>Item added to cart</p>
-                        </div>
-                    )}
-
-                    <div className='positioning'>
-                        <h4>Product Details</h4>
-                        <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
+            <section id="prodetails" className="section-p1">
+                {product && (
+                    <div className="single-pro-image">
+                        <img id="MainImg" src={product.imgURL} width="100%" alt="" />
                     </div>
+                )}
+                {product && (
+                    <div className="single-pro-details">
+                        <h1>{product.name}</h1>
+                        <h4>Men's Fashion T Shirt</h4>
+                        <h2>{product.price}</h2>
+                        <select fdprocessedid="cwggv">
+                            <option>Select Size</option>
+                            <option>XL</option>
+                            <option>XXL</option>
+                            <option>Small</option>
+                            <option>Large</option>
+                        </select>
+                        <input type="number" value="1" fdprocessedid="1mx0s" />
+                        <button className="normal" onClick={handleAddToCart}>
+                            Add to Cart
+                        </button>
 
-                </div>
-                )}    
+                        {showNotification && (
+                            <div className="notification">
+                                <p>Item added to cart</p>
+                            </div>
+                        )}
+
+                        <div className='positioning'>
+                            <h4>Product Details</h4>
+                            <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
+                        </div>
+                    </div>
+                )}
             </section>
-
 
             <section id='part-2'>
                 <div className='light-border width'></div>
@@ -136,17 +139,14 @@ const ProductDetail = () => {
                 <h3>TRY OTHER PRODUCTS</h3>
 
                 <div className="testimonial-section">
-
                     <div>
                         <div className='shop-images sale-page'>
-
                             <img src={i1} alt='' className='i1'></img>
                             <img src={i2} alt='' className='i2'></img>
                             <img src={i3} alt='' className='i2'></img>
                             <img src={i1} alt='' className='i3'></img>
                         </div>
                     </div>
-
                 </div>
             </section>
 
@@ -189,7 +189,6 @@ const ProductDetail = () => {
                     <p>© Copyright 2023 Arjit Avadhanam</p>
                 </div>
             </section>
-
         </>
     )
 }
