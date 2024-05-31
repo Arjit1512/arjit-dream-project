@@ -9,7 +9,7 @@ function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  //axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
   async function submit(e) {
     e.preventDefault();
 
