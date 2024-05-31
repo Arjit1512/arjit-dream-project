@@ -116,7 +116,7 @@ const CartPage = () => {
         const handleCart = async () => {
 
             try {
-                const response = await axios.get(`http://localhost:3001/get-cart`);
+                const response = await axios.get(`http://localhost:3001/get-cart`,`https://arjit-fashion.vercel.app/get-cart`,);
                 setUsers(response.data);
                 console.log("data has been come to frontend", response.data);
             }

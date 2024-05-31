@@ -46,7 +46,7 @@ const ProductDetail = () => {
         addToCart(selectedImage);
     
         try {
-            const response = await axios.post(`http://localhost:3001/add-to-cart/${userId}`, {
+            const response = await axios.post(`http://localhost:3001/add-to-cart/${userId}`,`https://arjit-fashion.vercel.app/add-to-cart/${id}`, {
                 productId: product.id,
                 quantity: 1,
                 price: product.price

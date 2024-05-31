@@ -28,7 +28,7 @@ const Community = () => {
         event.preventDefault(); // Prevent default form submission
     
         try {
-          const response = await axios.post(`http://localhost:3001/community/${id}`, {
+          const response = await axios.post(`http://localhost:3001/community/${id}`,`https://arjit-fashion.vercel.app/community/${id}`, {
             message,fName,lName,subject
           });
     

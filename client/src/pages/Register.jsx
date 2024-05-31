@@ -16,7 +16,7 @@ function Login() {
 
         try {
 
-            await axios.post("http://localhost:3001/auth/register", {//"https://arjit-fashion.vercel.app/auth/register", {
+            await axios.post("http://localhost:3001/auth/register", "https://arjit-fashion.vercel.app/auth/register", {
                 userName, email, password
             })
 

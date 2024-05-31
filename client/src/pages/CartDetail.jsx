@@ -11,7 +11,7 @@ const CartDetail = () => {
   useEffect(() => {
     const doCart = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/get-cart/${id}`);
+        const response = await axios.get(`http://localhost:3001/get-cart/${id}`,`https://arjit-fashion.vercel.app/get-cart/${id}`, );
         const data = response.data;
         setUser(data.cart);
         setTotalPrice(data.totalPrice);
