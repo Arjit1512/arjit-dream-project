@@ -11,56 +11,56 @@ const Clothes =[
     {
         id:1,
         imgURL:pro1,
-        price:"599.00",
+        price:599.00,
         name:"T-Shirt Green",
         description:"I'm a product"
     },
     {
         id:2,
         imgURL:pro2,
-        price:"899.00",
+        price:899.00,
         name:"T-Shirt Blue",
         description:"I'm a product"
     },
     {
         id:3,
         imgURL:pro3,
-        price:"599.00",
+        price:599.00,
         name:"T-Shirt Green",
         description:"I'm a product"
     },
     {
         id:4,
         imgURL:pro4,
-        price:"899.00",
+        price:899.00,
         name:"T-Shirt Blue",
         description:"I'm a product"
     },
     {
         id:5,
         imgURL:pro5,
-        price:"599.00",
+        price:599.00,
         name:"T-Shirt Green",
         description:"I'm a product"
     },
     {
         id:6,
         imgURL:pro6,
-        price:"899.00",
+        price:899.00,
         name:"T-Shirt Blue",
         description:"I'm a product"
     },
     {
         id:7,
         imgURL:pro7,
-        price:"599.00",
+        price:599.00,
         name:"T-Shirt Green",
         description:"I'm a product"
     },
     {
         id:8,
         imgURL:pro8,
-        price:"1299.00",
+        price:1299.00,
         name:"T-Shirt Blue",
         description:"I'm a product"
     },

@@ -10,7 +10,6 @@ function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   //axios.defaults.withCredentials = true;
-
   async function submit(e) {
     e.preventDefault();
 
@@ -19,12 +18,18 @@ function Login() {
         email, password
       })
         .then(res => {
-          if (res.data == "old-user") {
+          if (res.data.status === "old-user") {
+            const userId = res.data.userId;
+            const name = res.data.name;
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('name', name);
+            console.log("User ID:", userId);
             history("/")
           }
-          else if (res.data == "new-user") {
+          else if (res.data.status === "new-user") {
             alert("Wrong password entered.")
           }
+
         })
         .catch(e => {
           alert("User have not signed up!")
@@ -38,8 +43,7 @@ function Login() {
     }
 
   }
-
-
+  
   return (
     <>
       <link

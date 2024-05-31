@@ -8,10 +8,10 @@ import User from "./models/User.js";
 import Cart from "./models/Cart.js";
 
 dotenv.config();
- const allowedOrigins = [
-     "https://arjit-dream-fashion.vercel.app",
-     "http://localhost:3000",
- ];
+const allowedOrigins = [
+    "https://arjit-dream-fashion.vercel.app",
+    "http://localhost:3000",
+];
 const app = express();
 app.use(cors({
     origin: allowedOrigins,
@@ -35,32 +35,55 @@ app.post("/auth/register", (req, res) => {
 /*CART ROUTES*/
 app.post("/add-to-cart/:userId", async (req, res) => {
     const userId = req.params.userId;
-    const { productId, quantity } = req.body;
+    const { productId, quantity, } = req.body;
 
     try {
-        const cartItem = await Cart.create({ userId, productId, quantity });
+        // Check if the product already exists in the user's cart
+        const existingCartItem = await Cart.findOne({ userId, productId });
 
-        // Find the user by userId and update the cart array
-        const user = await User.findByIdAndUpdate(
-            userId,
-            { $push: { cart: cartItem._id } },
-            { new: true } // This ensures that the updated user document is returned
-        );
+        if (existingCartItem) {
+            // If the product exists, update the quantity
+            existingCartItem.quantity += quantity;
+            await existingCartItem.save();
+            res.status(200).json({ message: "Quantity updated in cart successfully" });
+        } else {
+            // If the product doesn't exist, create a new cart item
+            const newCartItem = await Cart.create({ userId, productId, quantity, });
 
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
+            // Find the user by userId and update the cart array
+            const user = await User.findByIdAndUpdate(
+                userId,
+                { $push: { cart: newCartItem._id } },
+                { new: true } // This ensures that the updated user document is returned
+            );
+
+            if (!user) {
+                return res.status(404).json({ error: "User not found" });
+            }
+
+            res.status(201).json({ message: "Item added to cart successfully" });
         }
-
-        res.status(201).json({ message: "Item added to cart successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
 
+app.get("/get-cart", async (req, res) => {
+    try {
+        const userData = await User.find();
+
+        // Respond with the fetched data
+        res.json({ data: userData });
+    }
+    catch (error) {
+        console.log("Something is wrong. Try again!", error);
+    }
+})
+
+
 app.get("/get-cart/:userId", async (req, res) => {
     const userId = req.params.userId;
-
     try {
         const user = await User.findById(userId).populate('cart').exec();
         if (!user) {
@@ -76,7 +99,26 @@ app.get("/get-cart/:userId", async (req, res) => {
     }
 });
 
+//for getting feedbacks
+app.post("/community/:userId", async (req, res) => {
+    const userId = req.params.userId;
+    const { message, fName, lName, subject } = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $push: { message: message, fName: fName, lName: lName, subject: subject } },
+            { new: true }
+        );
+        if (!user) {
+            res.status(404).json({ error: "User does not exist" });
+        }
+        res.status(201).json({ message: "Thanks for your feedback!" });
+    }
+    catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 
+})
 
 const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGO_URL);

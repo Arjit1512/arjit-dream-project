@@ -10,7 +10,7 @@ export const register = async(req,res) => {
 
         const savedUser = await newUser.save();
         if(savedUser){
-            res.json("new-user");
+            res.json({ status: "new-user", userId: savedUser._id, name:savedUser.userName }); //UTILIZED IN HOME.JSX IN THIS LINE:const userId = localStorage.getItem('userId');const name = localStorage.getItem('name');
             return;
         } 
         if(!savedUser){
@@ -33,10 +33,11 @@ export const login = async(req,res) => {
 
         const isMatch = (user.password === password);
 
-        if(isMatch){
-            res.json("old-user");
+        if (isMatch) {
+            res.json({ status: "old-user", userId: user._id, name:user.userName }); //UTILIZED IN HOME.JSX IN THIS LINE:const userId = localStorage.getItem('userId');const name = localStorage.getItem('name');
             return;
-        } 
+        }
+
         if(!isMatch){
             res.json("new-user"); 
             return;

@@ -16,7 +16,8 @@ const Home = () => {
     
     const [cartItems, setCartItems] = useState([]);
     const [showNotification, setShowNotification] = useState(false);
-    
+    const userId = localStorage.getItem('userId');
+    const name = localStorage.getItem('name');
     const addToCart = () => {
         setCartItems([i1, ...cartItems]);
 
@@ -29,7 +30,6 @@ const Home = () => {
 
     };
     
- 
     
     const navigate = useNavigate();
 
@@ -45,7 +45,7 @@ const Home = () => {
         <>
             <section id='part-1'>
                 <div className='black-box'>
-                    <p>Free Shipping available worldwide!</p>
+                    <p>Welcome {name}!! Free Shipping available worldwide!</p>
                 </div>
                 <div className='navbar'>
                     <p>ARJIT AVADHANAM</p>
@@ -56,7 +56,7 @@ const Home = () => {
                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} />
                         <FontAwesomeIcon className="fa-icon" icon={faUser} onClick={goToLogin}/>
-                        <div className="cart-icon"  onClick={() => navigate("/cart-page", { state: { cartItems } })}>
+                        <div className="cart-icon"  onClick={() => navigate(`/get-cart/${userId}`, { state: { cartItems } })}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                             {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
                         </div>
@@ -66,7 +66,7 @@ const Home = () => {
                 <div className='navbar-items'>
                     <Link to='/sale' style={{textDecoration:"none" ,color:"black"}}>SALE</Link>
                     <Link to='/about-us' style={{textDecoration:"none" ,color:"black"}}>ABOUT US</Link>
-                    <Link to='/community' style={{textDecoration:"none" ,color:"black"}}>COMMUNITY</Link>
+                    <Link to={`/community/${userId}`} style={{textDecoration:"none" ,color:"black"}}>COMMUNITY</Link>
                 </div>
                 <video autoPlay muted loop id="myVideo">
                     <source src={pixels} type="video/mp4" />

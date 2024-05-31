@@ -8,7 +8,7 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [userName, setUserName] = useState('')
-    
+
     //axios.defaults.withCredentials = true;
 
     async function submit(e) {
@@ -17,17 +17,22 @@ function Login() {
         try {
 
             await axios.post("http://localhost:3001/auth/register", {//"https://arjit-fashion.vercel.app/auth/register", {
-               userName, email, password
+                userName, email, password
             })
 
                 .then(res => {
-                    if (res.data == "old-user") {
+                    if (res.data.status == "old-user") {
                         alert("User already exists")
                     }
-                    else if (res.data == "new-user") {
-                        history("/")
+                    else if (res.data.status == "new-user") {
+                        const userId = res.data.userId;
+                        const name = res.data.name;
+                        localStorage.setItem('userId', userId);
+                        localStorage.setItem('name', name); 
+                        console.log("User ID:", userId);
+                        history("/");
                     }
-                    
+
                 })
                 .catch(e => {
                     alert("Please try entering new email and password")
@@ -68,7 +73,7 @@ function Login() {
                             <div className="input-box">
                                 <input placeholder="User Name" type="text" required onChange={(e) => { setUserName(e.target.value) }} />
                             </div>
-                            
+
                             <div className="input-box">
                                 <input placeholder="Email" type="email" pattern="[a-zA-Z0-9._%+-]+@gmail.com" required onChange={(e) => { setEmail(e.target.value) }} />
                             </div>
