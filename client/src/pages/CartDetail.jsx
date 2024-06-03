@@ -5,7 +5,6 @@ import "../App.css";
 
 const CartDetail = () => {
   const [user, setUser] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -13,8 +12,7 @@ const CartDetail = () => {
       try {
         const response = await axios.get(`http://localhost:3001/get-cart/${id}`,`https://arjit-fashion.vercel.app/get-cart/${id}`, );
         const data = response.data;
-        setUser(data.cart);
-        setTotalPrice(data.totalPrice);
+        setUser(data);
         console.log("Cart data fetched", data);
       } catch (error) {
         console.error(error);
@@ -28,19 +26,18 @@ const CartDetail = () => {
     return <div>Loading...</div>;
   }
 
-  if (user && Array.isArray(user)) {
+  if (user.cart && Array.isArray(user.cart)) {
     return (
       <>
         <h1>INDIVIDUAL ITEMS</h1>
-        {user.map((item) => (
+        {user.cart.map((item) => (
           <div key={item._id}>
+            {/* <p>Product ID: {item.productId}</p> */}
             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
             <p>No of items: {item.quantity}</p>
-            <p>Price per item: {item.price / item.quantity}</p>
-            <h3>Total for this item: {item.price}</h3>
+            <h3>The total bill that you need to pay:{item.price}</h3>
           </div>
         ))}
-        <h2>Total Bill: {totalPrice}</h2>
       </>
     );
   }
