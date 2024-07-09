@@ -17,7 +17,7 @@ const Products = () => {
     return (
       <div className='flex-col slp'>
         <img src={props.img} alt="product.jpg" className='style-cloth' onClick={handleClick}/>
-        <p>{props.desc}</p>
+        <p>{props.name}</p>
         <h6>{props.price}</h6>
       </div>
     );
@@ -29,6 +29,7 @@ const Products = () => {
         id={clothes.id}
         key={clothes.id}
         img={clothes.imgURL}
+        name={clothes.name}
         desc={clothes.description}
         price={clothes.price}
       />

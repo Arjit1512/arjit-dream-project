@@ -1,51 +1,65 @@
-import React, {useState} from 'react';
-import "../App.css";
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faPinterest, faTwitter} from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faPinterest, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from 'react-router-dom';
 import pixels from "../sources/pexels.mp4";
 import background from "../sources/background.mp4";
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import i4 from "../sources/i3.webp";
-import { BrowserRouter as Router, Route, Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import "../App.css";
 
 const Home = () => {
-    
     const [cartItems, setCartItems] = useState([]);
-    const [showNotification, setShowNotification] = useState(false);
-    const userId = localStorage.getItem('userId');
-    const name = localStorage.getItem('name');
-    const addToCart = () => {
-        setCartItems([i1, ...cartItems]);
-
-        setShowNotification(true);
-
-        setTimeout(() => {
-            setShowNotification(false);
-        }, 2000);
-
-
-    };
-    
-    
+    const [userName, setUserName] = useState("");
+    const [loading, setLoading] = useState(true); // Loading state
     const navigate = useNavigate();
 
-    function goToLogin(){
-        navigate("/login");
-    }
-    
-    function goToProducts(){
-        navigate("/products");
-    }
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found. User is not authenticated.');
+                setLoading(false); // Set loading state accordingly
+                return;
+            }
+
+            try {
+                const response = await axios.get('http://localhost:3001/get-cart', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response && response.data) {
+                    setUserName(response.data.userName);
+                } else {
+                    console.error('No data found in response:', response);
+                }
+            } catch (error) {
+                console.log("Error fetching user data:", error);
+            } finally {
+                setLoading(false); // Always set loading state to false after attempting to fetch data
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    const addToCart = () => {
+        setCartItems([i1, ...cartItems]);
+        // Optionally, you can show a notification here
+    };
     
     return (
         <>
             <section id='part-1'>
                 <div className='black-box'>
-                    <p>Welcome {name}!! Free Shipping available worldwide!</p>
+                    <p>Welcome {userName ? userName : "Guest"}!! Free Shipping available worldwide!</p>
                 </div>
                 <div className='navbar'>
                     <p>ARJIT AVADHANAM</p>
@@ -55,8 +69,8 @@ const Home = () => {
                         <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} />
-                        <FontAwesomeIcon className="fa-icon" icon={faUser} onClick={goToLogin}/>
-                        <div className="cart-icon"  onClick={() => navigate(`/get-cart/${userId}`, { state: { cartItems } })}>
+                        <FontAwesomeIcon className="fa-icon" icon={faUser} onClick={() => navigate("/login")} />
+                        <div className="cart-icon" onClick={() => navigate(`/cart-page`, { state: { cartItems } })}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                             {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
                         </div>
@@ -64,28 +78,24 @@ const Home = () => {
                 </div>
 
                 <div className='navbar-items'>
-                    <Link to='/sale' style={{textDecoration:"none" ,color:"black"}}>SALE</Link>
-                    <Link to='/about-us' style={{textDecoration:"none" ,color:"black"}}>ABOUT US</Link>
-                    <Link to={`/community/${userId}`} style={{textDecoration:"none" ,color:"black"}}>COMMUNITY</Link>
+                    <Link to='/sale' style={{ textDecoration: "none", color: "black" }}>SALE</Link>
+                    <Link to='/about-us' style={{ textDecoration: "none", color: "black" }}>ABOUT US</Link>
+                    <Link to='/community' style={{ textDecoration: "none", color: "black" }}>COMMUNITY</Link>
                 </div>
                 <video autoPlay muted loop id="myVideo">
                     <source src={pixels} type="video/mp4" />
                 </video>
             </section>
 
-
             <section id='part-2'>
                 <h4>SHOP ONLINE</h4>
-
 
                 <div className='shop-images'>
                     <img src={i1} alt='' className='i1'></img>
                     <img src={i2} alt='' className='i2'></img>
                     <img src={i3} alt='' className='i3'></img>
-
                 </div>
             </section>
-
 
             <section id="part-3">
                 <div className='p3-part1'>
@@ -102,10 +112,10 @@ const Home = () => {
                         beyond a product - it's a story.</p>
 
 
-                    <a onClick={goToProducts}><i>view the collections</i></a>
+                    <Link to="/products"><i>View the collections</i></Link>
                 </div>
                 <div className='p3-part2'>
-                    <img src={i4} alt=''></img>
+                    <img src={i4} alt='' />
                 </div>
             </section>
 
@@ -119,7 +129,7 @@ const Home = () => {
                         generated millions in start-up value, launching some of<br />
                         the most iconic tech brands of our era.  After realizing<br />
                         that our approach to design generates insane valuation<br />
-                        metrics, we introduced a  new model - our Digital.<br />
+                        metrics, we introduced a new model - our Digital.<br />
                         Brand. Accelerator."</p>
                 </div>
             </section>

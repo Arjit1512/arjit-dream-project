@@ -43,24 +43,24 @@ const AboutUs = () => {
                 </div>
             </section>
 
-            <section id='bp-sandwich'>
+            {/* <section id='bp-sandwich'>
                 <div className='container-choose'>
                     <h1>WHY CHOOSE US?</h1>
                     <p>Have you ever thought about how nice it would be to find a home repair expert that you trust with all of your home repairs and improvements? Someone that you trust around your family and belongings? Someone that genuinely cares about your home as much as you do? How about somebody that is willing to go the extra mile to ensure that you get exactly what you want?
                         A home service pro with all of these traits will not only make your life easier by saving you time and reducing stress, but can end up saving you money in the long run as well.
                         Since we truly care about your home, you can rest assured that we always do the job right the first time. No more worrying about the kind of quality you will receive.</p>
                 </div>
-            </section>
+            </section> */}
 
             <section id="black-panther-2">
-                <div className='bp2'>
+                {/* <div className='bp2'>
                     <h4>Band is a multidisciplinary creative studio.</h4>
                     <p>We work together to design, create and produce work that we are proud of for<br />
                         folks that we believe in. We are available for hire in a wide range of creative<br />
                         discilpines for a variety of jobs, projects and gigs.</p>
-                </div>
+                </div> */}
 
-                <div className='img-section'>
+                {/* <div className='img-section'>
                     <img src={hyena} alt="" className='hyena-img' />
                     <div className='shit' >
                         <p>While functionality is important on a website, the design creates the first impression. So, don’t let these awesome<br />
@@ -77,17 +77,19 @@ const AboutUs = () => {
                             with smooth and lovely animations. Graceful page transitions also add charm to the website.
                         </p>
                     </div>
-                </div>
+                </div> */}
                 {/*<div className='img-section2'>
                     <img src={i1} alt="" className='picture1' />
                     <img src={i2} alt="" className='picture2' />
                     <img src={i1} alt="" className='picture1' />
                     <img src={i2} alt="" className='picture2' />
                 </div> */}
-                <div className='hyena'>
+                {/* <div className='hyena'>
 
-                </div>
+                </div> */}
             </section>
+
+            
         </>
     )
 }
