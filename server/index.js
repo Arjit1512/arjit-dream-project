@@ -8,14 +8,12 @@ import User from "./models/User.js";
 import Cart from "./models/Cart.js";
 import products from './products.js'; // Import the products
 
-
 dotenv.config();
 const app = express();
 const allowedOrigins = [
     "http://localhost:3000",  // Your frontend origin
 ];
 
-// CORS middleware configuration
 app.use(cors({
     origin: function(origin, callback) {
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -28,56 +26,41 @@ app.use(cors({
     credentials: true  // Enable sending cookies across domains
 }));
 
-
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-// Serve static files from the public directory
 app.use(express.static('public'));
 
 /*USER ROUTES*/
 app.post("/auth/login", (req, res) => {
     login(req, res);
-    console.log("JWT Secret:", process.env.JWT_SECRET); // This should log your JWT secret
-})
+    console.log("JWT Secret:", process.env.JWT_SECRET);
+});
 app.post("/auth/register", (req, res) => {
     register(req, res);
-})
+});
 
 /*CART ROUTES*/
-// Assuming price calculation on server-side
-
-// Assuming price calculation on server-side
 app.post('/add-to-cart', auth, async (req, res) => {
     const { productId, quantity } = req.body;
-    const userId = req.user._id; // Extract userId from auth middleware
+    const userId = req.user._id;
 
     try {
-        // Find product details (if needed)
         const product = products.find(p => p.id === parseInt(productId));
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
         }
 
-        // Calculate price based on product and quantity
         const price = product.price * quantity;
-
-        // Check if the product already exists in the user's cart
         let existingCartItem = await Cart.findOne({ userId, productId });
 
         if (existingCartItem) {
-            // If the product exists, update the quantity and price
             existingCartItem.quantity += quantity;
-            existingCartItem.price += price; // Update the price as well, if needed
+            existingCartItem.price += price;
             await existingCartItem.save();
-            console.log('Existing cart item updated:', existingCartItem);
             return res.status(200).json({ message: 'Quantity updated in cart successfully' });
         } else {
-            // If the product doesn't exist, create a new cart item
             const newCartItem = await Cart.create({ userId, productId, quantity, price });
-            console.log('New cart item created:', newCartItem);
-
-            // Update user's cart array
             const user = await User.findByIdAndUpdate(
                 userId,
                 { $push: { cart: newCartItem._id } },
@@ -95,8 +78,9 @@ app.post('/add-to-cart', auth, async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 app.get('/get-cart', auth, async (req, res) => {
-    const userId = req.user._id; // Assuming your auth middleware attaches user info to req.user
+    const userId = req.user._id;
 
     try {
         const user = await User.findById(userId).populate('cart').exec();
@@ -109,47 +93,75 @@ app.get('/get-cart', auth, async (req, res) => {
             return res.status(404).json({ error: 'User does not have any items in the cart' });
         }
 
-        // Calculate total price, handle cases where price might be null
         const totalPrice = user.cart.reduce((total, item) => {
-            return total + (item.price ? item.price : 0); // Default to 0 if price is null or undefined
+            return total + (item.price ? item.price : 0);
         }, 0);
 
-        console.log('User:', user);
-        console.log('Cart:', user.cart);
-        console.log('Total Price:', totalPrice);
-
-        res.status(200).json({ cart: user.cart, totalPrice });
+        res.status(200).json({ cart: user.cart, totalPrice, userName:user.userName });
     } catch (error) {
         console.error('Error fetching cart data:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+app.post('/update-cart', auth, async (req, res) => {
+    const { productId, action } = req.body;
+    const userId = req.user._id;
+
+    try {
+        const cartItem = await Cart.findOne({ userId, productId });
+
+        if (!cartItem) {
+            console.log('Cart item not found for userId:', userId, 'and productId:', productId);
+            return res.status(404).json({ error: 'Cart item not found' });
+        }
+
+        const product = products.find(p => p.id === parseInt(productId));
+        if (!product) {
+            console.log('Product not found with id:', productId);
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        if (action === 'increase') {
+            console.log('Increasing quantity for productId:', productId);
+            cartItem.quantity += 1;
+            cartItem.price += product.price;
+            await cartItem.save(); // Save the updated cart item
+        } else if (action === 'decrease') {
+            console.log('Decreasing quantity for productId:', productId);
+            cartItem.quantity -= 1;
+            cartItem.price -= product.price;
+
+            if (cartItem.quantity <= 0) {
+                await Cart.deleteOne({ _id: cartItem._id });
+                await User.findByIdAndUpdate(userId, { $pull: { cart: cartItem._id } });
+            } else {
+                await cartItem.save();
+            }
+        } else {
+            await cartItem.save();
+        }
+
+        const user = await User.findById(userId).populate('cart').exec();
+        
+        if (!user) {
+            console.log('User not found with id:', userId);
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const totalPrice = user.cart.reduce((total, item) => total + item.price, 0);
+
+        console.log('Updated cart:', user.cart); // Add this line
+        return res.status(200).json({ cart: user.cart, totalPrice });
+    } catch (error) {
+        console.error('Error updating cart:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
-// app.get('/get-cart/:userId', auth, async (req, res) => {
-//     const userId = req.params.userId;
-//     try {
-//         const user = await User.findById(userId).populate('cart').exec();
-//         if (!user) {
-//             return res.status(404).json({ error: 'User not found' });
-//         }
-//         if (!user.cart) {
-//             return res.status(404).json({ error: 'User does not have a cart' });
-//         }
 
-//         // Calculate total price
-//         const totalPrice = user.cart.reduce((total, item) => total + item.price, 0);
-
-//         res.status(200).json({ cart: user.cart, totalPrice });
-//     } catch (error) {
-//         console.error('Error fetching cart data:', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
-
-// For getting feedbacks
 app.post("/community", auth, async (req, res) => {
-    const userId = req.user._id; // Extract userId from auth middleware
+    const userId = req.user._id;
     const { message, fName, lName, subject } = req.body;
     try {
         const user = await User.findByIdAndUpdate(
@@ -170,7 +182,6 @@ app.post("/community", auth, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
-
 
 const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGO_URL);

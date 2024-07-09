@@ -23,7 +23,13 @@ const Sale = () => {
 
     return (
         <>
-            <h1 className='heading-sale'>OUR SALE IS LIVE NOW!</h1>
+            {/* <h1 className='heading-sale'>OUR SALE IS LIVE NOW!</h1>
+             */}
+             <section id='part-1'>
+                <div className='black-box'>
+                    <p className='blink'>OUR SALE IS LIVE NOW!</p>
+                </div>
+              </section>  
             <section id='video-sale'>
                 <video autoPlay muted loop id="myVideo">
                     <source src={background1} type="video/mp4" />
@@ -31,7 +37,7 @@ const Sale = () => {
 
                 <div className='text-area sale-text'>
                     <h1>Welcome to our brand new collections!</h1>
-                    <button onClick={() => navigate("/products")}>Sale</button>
+                    <button className='' onClick={() => navigate("/products")}>Sale</button>
 
                 </div>
             </section>

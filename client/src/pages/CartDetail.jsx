@@ -220,7 +220,7 @@ const CartDetail = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+        const token = localStorage.getItem('token');
 
         if (!token) {
           setError('User not authenticated');
@@ -248,6 +248,37 @@ const CartDetail = () => {
 
     fetchCart();
   }, []);
+
+  const handleQuantityChange = async (productId, action) => {
+    try {
+      console.log(`Updating cart for product ${productId} with action ${action}`);
+      const token = localStorage.getItem('token');
+
+      const response = await axios.post('http://localhost:3001/update-cart', {
+        productId,
+        action
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      console.log('Update cart response:', response.data);
+      const updatedCart = response.data.cart;
+      setCart(updatedCart);
+      setTotalPrice(response.data.totalPrice);
+      //if(action==='increase')console.log('+ BUTTON PRESSED');
+      console.log('Cart updated:', updatedCart);
+    } catch (error) {
+      console.error("Error updating cart", error);
+      setError('Error updating cart');
+    }
+  };
+
+  // Add useEffect here to monitor changes to cart and totalPrice
+  useEffect(() => {
+    console.log('Cart or TotalPrice changed:', cart, totalPrice);
+  }, [cart, totalPrice]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -277,6 +308,8 @@ const CartDetail = () => {
             <h3>{item.name}</h3>
             <p className='quantity'>Quantity: {item.quantity}</p>
             <h3 className='itemprice'>INR {item.price}</h3>
+            <button onClick={() => handleQuantityChange(item.productId, 'decrease')}>-</button>
+            <button onClick={() => handleQuantityChange(item.productId, 'increase')}>+</button>
             <div className='border-45'></div>
           </div>
         </div>

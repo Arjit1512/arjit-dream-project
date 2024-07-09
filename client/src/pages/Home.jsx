@@ -59,7 +59,7 @@ const Home = () => {
         <>
             <section id='part-1'>
                 <div className='black-box'>
-                    <p>Welcome {userName ? userName : "Guest"}!! Free Shipping available worldwide!</p>
+                    <p>Welcome {userName ? userName : ""}!! Free Shipping available worldwide!</p>
                 </div>
                 <div className='navbar'>
                     <p>ARJIT AVADHANAM</p>
@@ -79,7 +79,8 @@ const Home = () => {
 
                 <div className='navbar-items'>
                     <Link to='/sale' style={{ textDecoration: "none", color: "black" }}>SALE</Link>
-                    <Link to='/about-us' style={{ textDecoration: "none", color: "black" }}>ABOUT US</Link>
+                    {/* <Link to='/about-us' style={{ textDecoration: "none", color: "black" }}>ABOUT US</Link>
+                     */}
                     <Link to='/community' style={{ textDecoration: "none", color: "black" }}>COMMUNITY</Link>
                 </div>
                 <video autoPlay muted loop id="myVideo">
@@ -87,7 +88,7 @@ const Home = () => {
                 </video>
             </section>
 
-            <section id='part-2'>
+            {/* <section id='part-2'>
                 <h4>SHOP ONLINE</h4>
 
                 <div className='shop-images'>
@@ -95,7 +96,7 @@ const Home = () => {
                     <img src={i2} alt='' className='i2'></img>
                     <img src={i3} alt='' className='i3'></img>
                 </div>
-            </section>
+            </section> */}
 
             <section id="part-3">
                 <div className='p3-part1'>
@@ -112,7 +113,7 @@ const Home = () => {
                         beyond a product - it's a story.</p>
 
 
-                    <Link to="/products"><i>View the collections</i></Link>
+                    <Link to="/products" style={{textDecoration:"none"}}><i>view the collections</i></Link>
                 </div>
                 <div className='p3-part2'>
                     <img src={i4} alt='' />
