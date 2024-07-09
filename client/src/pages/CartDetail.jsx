@@ -302,18 +302,21 @@ const CartDetail = () => {
       <div className='black-border'></div>
 
       {cart.map((item) => (
-        <div key={item._id} className='cart-class1'>
-          <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-          <div className='flex-col calvin1'>
-            <h3>{item.name}</h3>
-            <p className='quantity'>Quantity: {item.quantity}</p>
-            <h3 className='itemprice'>INR {item.price}</h3>
-            <button onClick={() => handleQuantityChange(item.productId, 'decrease')}>-</button>
-            <button onClick={() => handleQuantityChange(item.productId, 'increase')}>+</button>
-            <div className='border-45'></div>
-          </div>
-        </div>
-      ))}
+  <div key={item._id} className='cart-class1'>
+    <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
+    <div className='flex-col calvin1'>
+      <h3>{item.name}</h3>
+      <p className='quantity'>Quantity: {item.quantity}</p>
+      <h3 className='itemprice'>INR {item.price}</h3>
+      <div className='quantity-buttons'>
+        <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease')}>-</button>
+        <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'increase')}>+</button>
+      </div>
+      <div className='border-45'></div>
+    </div>
+  </div>
+))}
+
       <div className='cart-class2'>
         <div className='inside'>
           <h2>ORDER SUMMARY</h2>

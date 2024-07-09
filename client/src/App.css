@@ -823,7 +823,29 @@ button.normal {
     position: relative;
     bottom: 5%;
 }
-
+.quantity-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity-button {
+    background-color: #202224; /* Adjust color as needed */
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 8px; /* Adjust spacing between buttons */
+  }
+  
+  .quantity-button:hover {
+    background-color: #383b3d; /* Darker shade or hover effect */
+  }
+  
+  .quantity-button:active {
+    transform: translateY(1px); /* Click effect */
+  }
+  
 .single-pro-details h4{
     font-size: 1.4rem;
     position: relative;
@@ -942,7 +964,7 @@ button.normal {
     background-color: #000;
     position: relative;
     right:38%;
-    top: 21vh;
+    top: 15vh;
 }
 .cart-class1{
     width: 60%;
