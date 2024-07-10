@@ -23,8 +23,11 @@
     font-size: 1.4rem;
     text-align: center;
     padding-top: 0.6%;
+    background-color: ghostwhite;
 }
-
+#part-1{
+    background-color: ghostwhite;
+}
 .navbar {
     background-color: white;
     width: 100%;
@@ -497,7 +500,7 @@ Link {
     width: 190%;
     position: relative;
     top: 12%;
-    background-color: maroon;
+    background-color: black;
 }
 
 .flex-row2 {
@@ -746,7 +749,7 @@ textarea {
     display: flex;
     position: relative;
     height: 700px;
-    background-color: #FAF3F0;
+    background-color: ghostwhite;
 }
 
 #prodetails .single-pro-image {
@@ -770,9 +773,13 @@ textarea {
     width: 50%;
     padding-top: 5%;
 }
-
+.single-pro-details h1{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 900;
+}
 #prodetails .single-pro-details h4 {
-    padding: 40px 0 20px 0;
+    padding: 20px 0 20px 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #prodetails .single-pro-details h2 {
@@ -804,17 +811,41 @@ textarea {
 }
 
 #prodetails .single-pro-details span {
-    line-height: 25px;
+    line-height: 18px;
     position: relative;
-    bottom: 25px;
+    bottom: 45px;
+    word-spacing: -2px;
+    font-family: 'Inconsolata', monospace;
 }
+.space-btw select {
+    background-color: rgb(152, 42, 42);
+    color: aliceblue;
+    height: fit-content;
+    padding: 10px 15px;
+    border-radius: 2%;
+    font-weight: 500;
+    font-family: 'Open Sans', sans-serif;
+    cursor: pointer; 
+}
+
+.space-btw select:focus,
+.space-btw select:active {
+    background-color: rgb(152, 42, 42); 
+    color: aliceblue; 
+}
+
+.space-btw select option {
+    background-color: white; 
+    color: black; 
+}
+
 
 button.normal {
     font-size: 14px;
     font-weight: 600;
     padding: 15px 25px;
     color: white;
-    background-color: #088178;
+    background-color: black;
     border-radius: 4px;
     cursor: pointer;
     border: none;
@@ -852,10 +883,14 @@ button.normal {
     bottom: 20px;
     font-family: 'Playfair Display', serif;
 }
+.positioning h4{
+    font-family: 'Open Sans', sans-serif;;
+}
 .positioning{
     position: relative;
-    bottom: 7%;
+    top:2%;
 }
+
 .light-border.width{
     width: 100%;
 }
@@ -947,7 +982,18 @@ button.normal {
     border: 2px solid rgb(0, 0, 0);
     cursor: pointer;
 }
- 
+
+.logout-button{
+    background-color: #000;
+    color: aliceblue;
+    font-family: 'Rubik', sans-serif;
+    cursor: pointer;
+}
+.logout-button:hover{
+    background-color:#2e3236;
+}
+
+
 /*CART PAGE */
 .cart-head{
     color: #000;

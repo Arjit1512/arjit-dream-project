@@ -2,13 +2,14 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dotenv from 'dotenv';
+import BlacklistToken from '../models/BlackListToken.js';
+
 dotenv.config();
 
 //middleware function
 // controllers/auth.js
 
 const secret = process.env.JWT_SECRET;
-
 export const auth = async (req, res, next) => {
     try {
         const token = req.header("Authorization").replace("Bearer ", "");
@@ -16,9 +17,14 @@ export const auth = async (req, res, next) => {
             return res.status(401).json({ error: 'Authorization token missing' });
         }
 
-        // Skip verification and directly decode the token
-        const decoded = jwt.decode(token);
+        // Check if the token is blacklisted
+        const blacklistedToken = await BlacklistToken.findOne({ token });
+        if (blacklistedToken) {
+            return res.status(401).json({ error: 'Token is blacklisted. Please log in again.' });
+        }
 
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if (!decoded) {
             return res.status(401).json({ error: 'Invalid token.' });
         }
@@ -30,6 +36,7 @@ export const auth = async (req, res, next) => {
         res.status(401).json({ error: 'Please authenticate.' });
     }
 };
+
 
 export const register = async (req, res) => {
     const { userName, email, password } = req.body;

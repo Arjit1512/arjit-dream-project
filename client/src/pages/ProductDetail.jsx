@@ -531,7 +531,7 @@ const ProductDetail = () => {
             <section id='part-2'>
                 <div className='light-border width'></div>
 
-                <h3>TRY OTHER PRODUCTS</h3>
+                <h3>YOU MAY ALSO LIKE</h3>
 
                 <div className="testimonial-section">
                     <div>

@@ -54,7 +54,24 @@ const Home = () => {
         setCartItems([i1, ...cartItems]);
         // Optionally, you can show a notification here
     };
-    
+
+    const handleLogout = async () => {
+        const token = localStorage.getItem('token');
+
+        try {
+            await axios.post('http://localhost:3001/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch (error) {
+            console.error('Error logging out:', error);
+        } finally {
+            localStorage.removeItem('token');
+            setUserName("");
+        }
+    };
+
     return (
         <>
             <section id='part-1'>
@@ -69,34 +86,26 @@ const Home = () => {
                         <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} />
-                        <FontAwesomeIcon className="fa-icon" icon={faUser} onClick={() => navigate("/login")} />
                         <div className="cart-icon" onClick={() => navigate(`/cart-page`, { state: { cartItems } })}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                             {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
                         </div>
+                        {userName ? (
+                            <button onClick={handleLogout} className="logout-button">Logout</button>
+                        ) : (
+                            <FontAwesomeIcon className="fa-icon" icon={faUser} onClick={() => navigate("/login")} />
+                        )}
                     </div>
                 </div>
 
                 <div className='navbar-items'>
                     <Link to='/sale' style={{ textDecoration: "none", color: "black" }}>SALE</Link>
-                    {/* <Link to='/about-us' style={{ textDecoration: "none", color: "black" }}>ABOUT US</Link>
-                     */}
                     <Link to='/community' style={{ textDecoration: "none", color: "black" }}>COMMUNITY</Link>
                 </div>
                 <video autoPlay muted loop id="myVideo">
                     <source src={pixels} type="video/mp4" />
                 </video>
             </section>
-
-            {/* <section id='part-2'>
-                <h4>SHOP ONLINE</h4>
-
-                <div className='shop-images'>
-                    <img src={i1} alt='' className='i1'></img>
-                    <img src={i2} alt='' className='i2'></img>
-                    <img src={i3} alt='' className='i3'></img>
-                </div>
-            </section> */}
 
             <section id="part-3">
                 <div className='p3-part1'>
@@ -105,13 +114,11 @@ const Home = () => {
                         editions and <br />
                         more collection</h3>
 
-
                     <p>Available to purchase on our boutiques<br />
                         worldwide. Whether you choose to be a royal<br />
                         beauty in couture or to embrace your fairytale<br />
                         dream in a GALA creation, each dress is far<br />
                         beyond a product - it's a story.</p>
-
 
                     <Link to="/products" style={{textDecoration:"none"}}><i>view the collections</i></Link>
                 </div>

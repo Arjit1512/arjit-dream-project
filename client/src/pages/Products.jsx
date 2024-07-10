@@ -1,29 +1,60 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import "../styling/products.css";
 import bg from "../sources/background-img.webp";
 import Clothes from './Clothes.jsx';
 import "../App.css";
 import { useNavigate } from 'react-router-dom';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 const Products = () => {
+  const [sort, setSort] = useState('Recommended');
+  const [filter, setFilter] = useState({ price: false });
+  const [priceRange, setPriceRange] = useState([0, 2000]);
 
-  function Cloth(props) {
+  const handleSortClick = (newSort) => {
+    setSort(newSort);
+  };
 
-    const navigate = useNavigate();
-    
-    function handleClick(){
-      navigate(`/products/${props.id}`);
+  const handleFilterClick = (type) => {
+    setFilter((prevFilter) => ({ ...prevFilter, [type]: !prevFilter[type] }));
+  };
+
+  const handlePriceChange = (range) => {
+    setPriceRange(range);
+  };
+
+  const filteredClothes = Clothes.filter((cloth) => {
+    // Apply price filter
+    return cloth.price >= priceRange[0] && cloth.price <= priceRange[1];
+  });
+
+  const sortedClothes = [...filteredClothes].sort((a, b) => {
+    if (sort === 'Price: Low to High') {
+      return a.price - b.price;
+    } else if (sort === 'Price: High to Low') {
+      return b.price - a.price;
     }
-    
+    return 0; // Default sorting
+  });
+
+  const Cloth = (props) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+      navigate(`/products/${props.id}`);
+    };
+
     return (
       <div className='flex-col slp'>
-        <img src={props.img} alt="product.jpg" className='style-cloth' onClick={handleClick}/>
+        <img src={props.img} alt="product.jpg" className='style-cloth' onClick={handleClick} />
         <p>{props.name}</p>
         <h6>{props.price}</h6>
       </div>
     );
-  }
+  };
 
-  function createCloth(clothes) {
+  const createCloth = (clothes) => {
     return (
       <Cloth
         id={clothes.id}
@@ -34,7 +65,7 @@ const Products = () => {
         price={clothes.price}
       />
     );
-  }
+  };
 
   return (
     <>
@@ -43,20 +74,36 @@ const Products = () => {
           <br /><br /><br />
           <h2>Filter by</h2>
           <div className='gray-line'></div>
-          <div className='far-away'>
+          <div className='far-away' onClick={() => handleFilterClick('price')}>
             <h3>Price</h3>
-            <h3>+</h3>
+            <h3 style={{cursor:"pointer"}}>{filter.price ? '-' : '+'}</h3>
           </div>
-          <div className='gray-line'></div>
-          <div className='far-away'>
-            <h3>Color</h3>
-            <h3>+</h3>
-          </div>
-          <div className='gray-line'></div>
-          <div className='far-away'>
-            <h3>Size</h3>
-            <h3>+</h3>
-          </div>
+          {filter.price && (
+            <div style={{ 
+              padding: '15px', 
+              width: '70%',
+              position:'relative',
+              right:'4%',
+              fontWeight:'600'
+               }}>
+              <Slider
+                range
+                min={0}
+                max={2000}
+                defaultValue={[0, 2000]}
+                value={priceRange}
+                onChange={handlePriceChange}
+                trackStyle={[{ backgroundColor: 'black', height: 5 }]}
+                handleStyle={[
+                  { borderColor: 'black', backgroundColor: 'black' },
+                  { borderColor: 'black', backgroundColor: 'black' }
+                ]}
+              />
+              <div className="price-range">
+                <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
+              </div>
+            </div>
+          )}
           <div className='gray-line'></div>
         </div>
 
@@ -65,18 +112,19 @@ const Products = () => {
           <p>This is your category description. It’s a great place to tell customers what this category is<br />
             about, connect with your audience and draw attention to your products.</p>
 
-
           <div className='space-btw'>
-            <h5>12 products</h5>
-            <h5>Sort By: Recommended</h5>
+            <h5>{sortedClothes.length} products</h5>
+            <select onChange={(e) => handleSortClick(e.target.value)} value={sort}>
+              <option value="Recommended">Sort By: Recommended</option>
+              <option value="Price: Low to High">Price: Low to High</option>
+              <option value="Price: High to Low">Price: High to Low</option>
+            </select>
           </div>
-
 
           <div className='flex-row flex-wrap'>
-            {Clothes.map(createCloth)}
+            {sortedClothes.map(createCloth)}
           </div>
         </div>
-
       </section>
 
       <section id="paint-pic">
@@ -90,9 +138,8 @@ const Products = () => {
 
         <p>© Copyright 2023 Arjit Avadhanam</p>
       </div>
-
     </>
-  )
+  );
 }
 
-export default Products
+export default Products;

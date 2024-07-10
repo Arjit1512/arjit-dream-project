@@ -7,6 +7,10 @@ import { login, register, auth } from "./controllers/auth.js";
 import User from "./models/User.js";
 import Cart from "./models/Cart.js";
 import products from './products.js'; // Import the products
+import BlacklistToken from './models/BlackListToken.js';
+
+
+// ... other routes and server setup
 
 dotenv.config();
 const app = express();
@@ -38,6 +42,19 @@ app.post("/auth/login", (req, res) => {
 });
 app.post("/auth/register", (req, res) => {
     register(req, res);
+});
+
+
+app.post("/logout", auth, async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1];
+        const blacklistedToken = new BlacklistToken({ token });
+        await blacklistedToken.save();
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        console.error('Error during logout:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 /*CART ROUTES*/
