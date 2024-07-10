@@ -249,14 +249,15 @@ const CartDetail = () => {
     fetchCart();
   }, []);
 
-  const handleQuantityChange = async (productId, action) => {
+  const handleQuantityChange = async (productId, action, size) => {
     try {
-      console.log(`Updating cart for product ${productId} with action ${action}`);
+      console.log(`Updating cart for product ${productId} with action ${action} and size ${size}`);
       const token = localStorage.getItem('token');
 
       const response = await axios.post('http://localhost:3001/update-cart', {
         productId,
-        action
+        action,
+        size
       }, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -267,7 +268,6 @@ const CartDetail = () => {
       const updatedCart = response.data.cart;
       setCart(updatedCart);
       setTotalPrice(response.data.totalPrice);
-      //if(action==='increase')console.log('+ BUTTON PRESSED');
       console.log('Cart updated:', updatedCart);
     } catch (error) {
       console.error("Error updating cart", error);
@@ -302,20 +302,21 @@ const CartDetail = () => {
       <div className='black-border'></div>
 
       {cart.map((item) => (
-  <div key={item._id} className='cart-class1'>
-    <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-    <div className='flex-col calvin1'>
-      <h3>{item.name}</h3>
-      <p className='quantity'>Quantity: {item.quantity}</p>
-      <h3 className='itemprice'>INR {item.price}</h3>
-      <div className='quantity-buttons'>
-        <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease')}>-</button>
-        <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'increase')}>+</button>
-      </div>
-      <div className='border-45'></div>
-    </div>
-  </div>
-))}
+        <div key={item._id} className='cart-class1'>
+          <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
+          <div className='flex-col calvin1'>
+            <h3>{item.name}</h3>
+            <p className='quantity calvin1'>Quantity: {item.quantity}</p>
+            <p className='size calvin1'>Size: {item.size}</p> {/* Display size */}
+            <h3 className='itemprice'>INR {item.price}</h3>
+            <div className='quantity-buttons'>
+              <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
+              <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
+            </div>
+          </div>
+          <div className='border-45'></div>
+        </div>
+      ))}
 
       <div className='cart-class2'>
         <div className='inside'>

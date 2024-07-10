@@ -4,23 +4,27 @@ const cartSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'dream-user',
+      ref: 'User', // Update reference to match your User model
     },
     productId: {
-      required: true,
       type: Number,
+      required: true,
     },
     quantity: {
-      required: true,
       type: Number,
+      required: true,
     },
     price: {
-      required: false,
       type: Number,
+      required: true,
     },
-    name:{
-      required: false,
-      type: String,
+    name: {
+      type: String, // Add name field
+      required: true,
+    },
+    size: {
+      type: String, // Add size field
+      required: true,
     },
   },
   {

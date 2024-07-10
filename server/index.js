@@ -59,7 +59,7 @@ app.post("/logout", auth, async (req, res) => {
 
 /*CART ROUTES*/
 app.post('/add-to-cart', auth, async (req, res) => {
-    const { productId, quantity } = req.body;
+    const { productId, quantity, size } = req.body; // Ensure size is included in req.body
     const userId = req.user._id;
 
     try {
@@ -69,7 +69,9 @@ app.post('/add-to-cart', auth, async (req, res) => {
         }
 
         const price = product.price * quantity;
-        let existingCartItem = await Cart.findOne({ userId, productId });
+        const name = product.name; // Get product name
+
+        let existingCartItem = await Cart.findOne({ userId, productId, size });
 
         if (existingCartItem) {
             existingCartItem.quantity += quantity;
@@ -77,7 +79,7 @@ app.post('/add-to-cart', auth, async (req, res) => {
             await existingCartItem.save();
             return res.status(200).json({ message: 'Quantity updated in cart successfully' });
         } else {
-            const newCartItem = await Cart.create({ userId, productId, quantity, price });
+            const newCartItem = await Cart.create({ userId, productId, quantity, price, name, size });
             const user = await User.findByIdAndUpdate(
                 userId,
                 { $push: { cart: newCartItem._id } },
@@ -95,6 +97,8 @@ app.post('/add-to-cart', auth, async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+
 
 app.get('/get-cart', auth, async (req, res) => {
     const userId = req.user._id;
@@ -121,14 +125,20 @@ app.get('/get-cart', auth, async (req, res) => {
     }
 });
 app.post('/update-cart', auth, async (req, res) => {
-    const { productId, action } = req.body;
+    const { productId, action, size } = req.body;
     const userId = req.user._id;
 
     try {
-        const cartItem = await Cart.findOne({ userId, productId });
+        let cartItem;
+        if (size) {
+            cartItem = await Cart.findOne({ userId, productId, size });
+        } else {
+            // Fallback to finding by productId only if size is not provided
+            cartItem = await Cart.findOne({ userId, productId });
+        }
 
         if (!cartItem) {
-            console.log('Cart item not found for userId:', userId, 'and productId:', productId);
+            console.log('Cart item not found for userId:', userId, 'and productId:', productId, 'and size:', size);
             return res.status(404).json({ error: 'Cart item not found' });
         }
 
@@ -139,12 +149,12 @@ app.post('/update-cart', auth, async (req, res) => {
         }
 
         if (action === 'increase') {
-            console.log('Increasing quantity for productId:', productId);
+            console.log('Increasing quantity for productId:', productId, 'and size:', size);
             cartItem.quantity += 1;
             cartItem.price += product.price;
             await cartItem.save(); // Save the updated cart item
         } else if (action === 'decrease') {
-            console.log('Decreasing quantity for productId:', productId);
+            console.log('Decreasing quantity for productId:', productId, 'and size:', size);
             cartItem.quantity -= 1;
             cartItem.price -= product.price;
 

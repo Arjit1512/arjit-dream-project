@@ -392,8 +392,6 @@
 // }
 
 // export default ProductDetail;
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Clothes from './Clothes.jsx';
@@ -413,6 +411,7 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [showNotification, setShowNotification] = useState(false);
     const navigate = useNavigate();
+    const [selectedSize, setSelectedSize] = useState(""); // State to hold selected size
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -427,24 +426,33 @@ const ProductDetail = () => {
         fetchProductDetails();
     }, [id]);
 
+    const handleSizeChange = (event) => {
+        setSelectedSize(event.target.value);
+    };
+
     const handleAddToCart = async () => {
+        if (!selectedSize) {
+            alert("Please select a size before adding to cart.");
+            return;
+        }
+
         try {
             const token = localStorage.getItem('token');
             if (token) {
                 const response = await axios.post('http://localhost:3001/add-to-cart', {
                     productId: product.id,
                     quantity: 1,
-                    price: product.price
+                    size: selectedSize, // Include selected size
                 }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-    
+
                 console.log('Add to cart response:', response.data);
-    
+
                 setShowNotification(true);
-    
+
                 setTimeout(() => {
                     setShowNotification(false);
                 }, 2000);
@@ -455,7 +463,6 @@ const ProductDetail = () => {
             console.error('Error updating cart:', error);
         }
     };
-    
 
     return (
         <>
@@ -498,14 +505,15 @@ const ProductDetail = () => {
                         <h1>{product.name}</h1>
                         <h4>Men's Fashion T Shirt</h4>
                         <h2>{product.price}</h2>
-                        <select>
-                            <option>Select Size</option>
-                            <option>XL</option>
-                            <option>XXL</option>
-                            <option>Small</option>
-                            <option>Large</option>
+                        <select onChange={handleSizeChange} value={selectedSize}>
+                            <option value="">Select Size</option>
+                            <option value="Small">S</option>
+                            <option value="Medium">M</option>
+                            <option value="Large">L</option>
+                            <option value="XL">XL</option>
+                            
                         </select>
-                        <input type="number" value="1" readOnly />
+                        {/* <input type="number" value="1" readOnly /> */}
                         <button className="normal" onClick={handleAddToCart}>
                             Add to Cart
                         </button>

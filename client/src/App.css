@@ -1003,15 +1003,7 @@ button.normal {
     width:100%;
     background-color: #000;
 }
-.border-45{
-    height: 3.8px;
-    width: 60px;
-    padding-right: 700px;
-    background-color: #000;
-    position: relative;
-    right:38%;
-    top: 15vh;
-}
+
 .cart-class1{
     width: 60%;
     display: flex;
@@ -1031,15 +1023,32 @@ button.normal {
     position: relative;
     left: 3%;
 }
-.quantity{
+.quantity.calvin1{
+    top:20%;
+}
+.quantity-buttons{
     position: relative;
-    top:20vh;
+    bottom: 20%;
+}
+.border-45{
+    height: 3.8px;
+    width: 30px;
+    padding-right: 700px;
+    background-color: #000;
+    position: relative;
+    right:40%;
+    top: 38vh;
+}
+.size{
+    bottom: 20%;
+}
+.calvin1 h3{
+    width: max-content;
 }
 .itemprice{
     position: relative;
-    top:11.1vh;
-    left: 50%;
-    margin-bottom: 0;  
+    left: 250%;
+    bottom: 2%;
     width: fit-content;
 }
 .cart-class2{
