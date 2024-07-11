@@ -9,8 +9,9 @@ import 'rc-slider/assets/index.css';
 
 const Products = () => {
   const [sort, setSort] = useState('Recommended');
-  const [filter, setFilter] = useState({ price: false });
+  const [filter, setFilter] = useState({ price: false, category: false });
   const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const handleSortClick = (newSort) => {
     setSort(newSort);
@@ -24,9 +25,14 @@ const Products = () => {
     setPriceRange(range);
   };
 
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
   const filteredClothes = Clothes.filter((cloth) => {
-    // Apply price filter
-    return cloth.price >= priceRange[0] && cloth.price <= priceRange[1];
+    const priceCondition = cloth.price >= priceRange[0] && cloth.price <= priceRange[1];
+    const categoryCondition = selectedCategory === 'All' || cloth.category === selectedCategory;
+    return priceCondition && categoryCondition;
   });
 
   const sortedClothes = [...filteredClothes].sort((a, b) => {
@@ -85,7 +91,7 @@ const Products = () => {
               position:'relative',
               right:'4%',
               fontWeight:'600'
-               }}>
+            }}>
               <Slider
                 range
                 min={0}
@@ -102,6 +108,26 @@ const Products = () => {
               <div className="price-range">
                 <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
               </div>
+            </div>
+          )}
+          <div className='gray-line'></div>
+          <div className='far-away' onClick={() => handleFilterClick('category')}>
+            <h3>Category</h3>
+            <h3 style={{cursor:"pointer"}}>{filter.category ? '-' : '+'}</h3>
+          </div>
+          {filter.category && (
+            <div style={{ 
+              padding: '15px', 
+              width: '70%',
+              position:'relative',
+              right:'4%',
+              fontWeight:'600'
+            }}>
+              <select onChange={handleCategoryChange} value={selectedCategory}>
+                <option value="All">All</option>
+                <option value="T-Shirts">T-Shirts</option>
+                <option value="Accessories">Accessories</option>
+              </select>
             </div>
           )}
           <div className='gray-line'></div>

@@ -235,8 +235,8 @@ const CartDetail = () => {
         });
         const data = response.data;
 
-        setCart(data.cart);
-        setTotalPrice(data.totalPrice);
+        setCart(data.cart || []);
+        setTotalPrice(data.totalPrice || 0);
         setLoading(false);
         console.log("Cart data fetched", data);
       } catch (error) {
@@ -257,7 +257,7 @@ const CartDetail = () => {
       const response = await axios.post('http://localhost:3001/update-cart', {
         productId,
         action,
-        size
+        size: size || null // Ensure size is sent as null if not applicable
       }, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -265,9 +265,9 @@ const CartDetail = () => {
       });
 
       console.log('Update cart response:', response.data);
-      const updatedCart = response.data.cart;
+      const updatedCart = response.data.cart || [];
       setCart(updatedCart);
-      setTotalPrice(response.data.totalPrice);
+      setTotalPrice(response.data.totalPrice || 0);
       console.log('Cart updated:', updatedCart);
     } catch (error) {
       console.error("Error updating cart", error);
@@ -275,7 +275,6 @@ const CartDetail = () => {
     }
   };
 
-  // Add useEffect here to monitor changes to cart and totalPrice
   useEffect(() => {
     console.log('Cart or TotalPrice changed:', cart, totalPrice);
   }, [cart, totalPrice]);
@@ -288,7 +287,7 @@ const CartDetail = () => {
     return <div>{error}</div>;
   }
 
-  if (cart.length === 0) {
+  if (!cart || cart.length === 0) {
     return (
       <>
         <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
@@ -307,7 +306,7 @@ const CartDetail = () => {
           <div className='flex-col calvin1'>
             <h3>{item.name}</h3>
             <p className='quantity calvin1'>Quantity: {item.quantity}</p>
-            <p className='size calvin1'>Size: {item.size}</p> {/* Display size */}
+            {item.size && <p className='size calvin1'>Size: {item.size}</p>} {/* Display size if applicable */}
             <h3 className='itemprice'>INR {item.price}</h3>
             <div className='quantity-buttons'>
               <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
