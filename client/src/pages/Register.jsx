@@ -212,7 +212,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
 import './Login.css';
 
-
 function Register() {
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
