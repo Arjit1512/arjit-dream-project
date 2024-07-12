@@ -108,7 +108,6 @@ app.post('/add-to-cart', auth, async (req, res) => {
 
 app.get('/get-cart', auth, async (req, res) => {
     const userId = req.user._id;
-
     try {
         const user = await User.findById(userId).populate('cart').exec();
 

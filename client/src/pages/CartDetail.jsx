@@ -1,227 +1,19 @@
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import "../App.css";
-
-// const CartDetail = () => {
-//   const [user, setUser] = useState(null);
-//   const [totalPrice, setTotalPrice] = useState(0);
-//   const { id } = useParams();
-
-//   useEffect(() => {
-//     const doCart = async () => {
-//       try {
-//         const response = await axios.get(`http://localhost:3001/get-cart/${id}`);
-//         const data = response.data;
-//         setUser(data.cart);
-//         setTotalPrice(data.totalPrice);
-//         console.log("Cart data fetched", data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     doCart();
-//   }, [id]);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && Array.isArray(user)) {
-//     return (
-//       <>
-//         <h1 className='heading-sale cart-head'>SHOPPING CART</h1>
-//         <div className='black-border'></div>
-
-//         {user.map((item) => (
-//           <div key={item._id} className='cart-class1'>
-//             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-//            <div className='flex-col calvin1'> 
-//             <h3>{item.name}</h3>
-//             <p className='quantity'>Quantity: {item.quantity}</p>
-//             {/* <p>Price per item: {item.price / item.quantity}</p> */}
-//             <h3 className='itemprice'>INR {item.price}</h3>
-            
-//             <div className='border-45'></div>
-//             </div>
-            
-//           </div>
-          
-//         ))}
-//         <div className='cart-class2'>
-//          <div className='inside'>
-//           <h2>ORDER SUMMARY</h2>
-//           <h4><span>SUB TOTAL:</span> INR {totalPrice}</h4>
-//           <h4><span>TAX AND DELIVERY CHARGES:</span> INR {100}</h4>
-//           <h4><span>TOTAL:</span> INR {totalPrice+100}</h4>
-//           <button className='last-button'>CHECKOUT</button>
-//         </div>
-//         </div>
-        
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-//     </>
-//   );
-// };
-
-// export default CartDetail;
-
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import "../App.css";
-
-// const CartDetail = () => {
-//   const [user, setUser] = useState(null);
-//   const [totalPrice, setTotalPrice] = useState(0);
-//   const { id } = useParams();
-
-//   // Define endpoint URLs
-//   const endpointUrls = {
-//     getCart: `http://localhost:3001/get-cart/${id}`,
-//     getAnotherData: `https://arjit-fashion.vercel.app/get-cart/${id}`,
-//   };
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(endpointUrls.getCart);
-//         const data = response.data;
-//         setUser(data.cart);
-//         setTotalPrice(data.totalPrice);
-//         console.log("Cart data fetched", data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     fetchData();
-//   }, [id, endpointUrls.getCart]);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && Array.isArray(user)) {
-//     return (
-//       <>
-//         <h1>INDIVIDUAL ITEMS</h1>
-//         {user.map((item) => (
-//           <div key={item._id}>
-//             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-//             <p>No of items: {item.quantity}</p>
-//             <p>Price per item: {item.price / item.quantity}</p>
-//             <h3>Total for this item: {item.price}</h3>
-//           </div>
-//         ))}
-//         <h2>Total Bill: {totalPrice}</h2>
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-//     </>
-//   );
-// };
-
-// export default CartDetail;
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import "../App.css";
-
-// const CartDetail = () => {
-//   const [user, setUser] = useState(null);
-//   const [totalPrice, setTotalPrice] = useState(0);
-//   const { id } = useParams();
-
-//   // Define endpoint URLs
-//   const endpointUrls = {
-//     getCart: `http://localhost:3001/get-cart/${id}`,
-//     getAnotherData: `https://arjit-fashion.vercel.app/get-cart/${id}`,
-//     // Add more endpoint URLs as needed
-//   };
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(endpointUrls.getCart);
-//         const data = response.data;
-//         setUser(data.cart);
-//         setTotalPrice(data.totalPrice);
-//         console.log("Cart data fetched", data);
-//       } catch (error) {
-//         console.error('Failed to fetch cart data', error);
-//         if (error.response) {
-//           // Server responded with a status other than 2xx
-//           console.error('Error data:', error.response.data);
-//           console.error('Error status:', error.response.status);
-//           console.error('Error headers:', error.response.headers);
-//         } else if (error.request) {
-//           // Request was made but no response was received
-//           console.error('Error request:', error.request);
-//         } else {
-//           // Something happened in setting up the request
-//           console.error('Error message:', error.message);
-//         }
-//       }
-//     };
-
-//     fetchData();
-//   }, [id, endpointUrls.getCart]);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && Array.isArray(user)) {
-//     return (
-//       <>
-//         <h1>INDIVIDUAL ITEMS</h1>
-//         {user.map((item) => (
-//           <div key={item._id}>
-//             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-//             <p>No of items: {item.quantity}</p>
-//             <p>Price per item: {(item.price / item.quantity).toFixed(2)}</p>
-//             <h3>Total for this item: {item.price}</h3>
-//           </div>
-//         ))}
-//         <h2>Total Bill: {totalPrice}</h2>
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-//     </>
-//   );
-// };
-
-// export default CartDetail;
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../App.css";
+import { useNavigate } from 'react-router-dom';
+import { useCart } from './CartContext';
 
 const CartDetail = () => {
-  const [cart, setCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { state: { cartItems }, addToCart } = useCart();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
         const token = localStorage.getItem('token');
-
         if (!token) {
           setError('User not authenticated');
           setLoading(false);
@@ -233,12 +25,13 @@ const CartDetail = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        const data = response.data;
 
-        setCart(data.cart || []);
-        setTotalPrice(data.totalPrice || 0);
+        const data = response.data;
+        addToCart(data.cartItems); // Add fetched cart items to context
+
         setLoading(false);
         console.log("Cart data fetched", data);
+
       } catch (error) {
         console.error("Error fetching cart data", error);
         setError('Error fetching cart data');
@@ -247,7 +40,7 @@ const CartDetail = () => {
     };
 
     fetchCart();
-  }, []);
+  }, [addToCart]);
 
   const handleQuantityChange = async (productId, action, size) => {
     try {
@@ -264,20 +57,20 @@ const CartDetail = () => {
         }
       });
 
+      const updatedCart = response.data.cartItems || [];
+      addToCart(updatedCart); // Update context with updated cart items
+
       console.log('Update cart response:', response.data);
-      const updatedCart = response.data.cart || [];
-      setCart(updatedCart);
-      setTotalPrice(response.data.totalPrice || 0);
-      console.log('Cart updated:', updatedCart);
+
     } catch (error) {
       console.error("Error updating cart", error);
       setError('Error updating cart');
     }
   };
 
-  useEffect(() => {
-    console.log('Cart or TotalPrice changed:', cart, totalPrice);
-  }, [cart, totalPrice]);
+  const handleDashboard = () => {
+    navigate("/dashboard");
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -287,7 +80,7 @@ const CartDetail = () => {
     return <div>{error}</div>;
   }
 
-  if (!cart || cart.length === 0) {
+  if (!cartItems || cartItems.length === 0) {
     return (
       <>
         <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
@@ -300,30 +93,34 @@ const CartDetail = () => {
       <h1 className='heading-sale cart-head'>SHOPPING CART</h1>
       <div className='black-border'></div>
 
-      {cart.map((item) => (
-        <div key={item._id} className='cart-class1'>
-          <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-          <div className='flex-col calvin1'>
-            <h3>{item.name}</h3>
-            <p className='quantity calvin1'>Quantity: {item.quantity}</p>
-            {item.size && <p className='size calvin1'>Size: {item.size}</p>} {/* Display size if applicable */}
-            <h3 className='itemprice'>INR {item.price}</h3>
-            <div className='quantity-buttons'>
-              <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
-              <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
+      {cartItems.map((item) => (
+        // Add a null check for item to prevent accessing undefined properties
+        item && (
+          <div key={item._id} className='cart-class1'>
+            <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
+            <div className='flex-col calvin1'>
+              <h3>{item.name}</h3>
+              <p className='quantity calvin1'>Quantity: {item.quantity}</p>
+              {item.size && <p className='size calvin1'>Size: {item.size}</p>}
+              <h3 className='itemprice'>INR {item.price}</h3>
+              <div className='quantity-buttons'>
+                <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
+                <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
+              </div>
             </div>
+            <div className='border-45'></div>
           </div>
-          <div className='border-45'></div>
-        </div>
+        )
       ))}
 
       <div className='cart-class2'>
         <div className='inside'>
           <h2>ORDER SUMMARY</h2>
-          <h4><span>SUB TOTAL:</span> INR {totalPrice}</h4>
+          {/* Calculate total price based on cartItems */}
+          <h4><span>SUB TOTAL:</span> INR {cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)}</h4>
           <h4><span>TAX AND DELIVERY CHARGES:</span> INR {100}</h4>
-          <h4><span>TOTAL:</span> INR {totalPrice + 100}</h4>
-          <button className='last-button'>CHECKOUT</button>
+          <h4><span>TOTAL:</span> INR {cartItems.reduce((total, item) => total + (item.price * item.quantity), 0) + 100}</h4>
+          <button className='last-button' onClick={handleDashboard}>CHECKOUT</button>
         </div>
       </div>
     </>
