@@ -431,6 +431,11 @@ const ProductDetail = () => {
     };
 
     const handleAddToCart = async () => {
+        if (!selectedSize) {
+            alert("Please select a size before adding to cart.");
+            return;
+        }
+
         try {
             const token = localStorage.getItem('token');
             if (token) {
@@ -498,17 +503,17 @@ const ProductDetail = () => {
                 {product && (
                     <div className="single-pro-details">
                         <h1>{product.name}</h1>
-                        <h4>{product.category === 'Accessories' ? 'Fashion Accessories' : 'Men\'s Fashion T Shirt'}</h4>
+                        <h4>Men's Fashion T Shirt</h4>
                         <h2>{product.price}</h2>
-                        {product.category !== 'Accessories' && (
-                            <select onChange={handleSizeChange} value={selectedSize}>
-                                <option value="">Select Size</option>
-                                <option value="Small">S</option>
-                                <option value="Medium">M</option>
-                                <option value="Large">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                        )}
+                        <select onChange={handleSizeChange} value={selectedSize}>
+                            <option value="">Select Size</option>
+                            <option value="Small">S</option>
+                            <option value="Medium">M</option>
+                            <option value="Large">L</option>
+                            <option value="XL">XL</option>
+                            
+                        </select>
+                        {/* <input type="number" value="1" readOnly /> */}
                         <button className="normal" onClick={handleAddToCart}>
                             Add to Cart
                         </button>
