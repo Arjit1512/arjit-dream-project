@@ -431,31 +431,46 @@ const ProductDetail = () => {
     };
 
     const handleAddToCart = async () => {
+        if (!product) {
+            console.error('Product details not available');
+            return;
+        }
+    
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+    
+        console.log('Product details:', product);
+    
+        addToCart({
+            productId: product.id,
+            quantity: 1,
+            price: product.price,
+            size: product.category === 'Accessories' ? null : selectedSize // Include selected size or null for Accessories
+        });
+    
         try {
-            const token = localStorage.getItem('token');
-            if (token) {
-                const response = await axios.post('http://localhost:3001/add-to-cart', {
-                    productId: product.id,
-                    quantity: 1,
-                    size: selectedSize, // Include selected size
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                console.log('Add to cart response:', response.data);
-
-                setShowNotification(true);
-
-                setTimeout(() => {
-                    setShowNotification(false);
-                }, 2000);
-            } else {
-                navigate("/login");
-            }
+            const response = await axios.post('http://localhost:3001/add-to-cart', {
+                productId: product.id,
+                quantity: 1,
+                size: product.category === 'Accessories' ? null : selectedSize, // Include selected size or null for Accessories
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+    
+            console.log('Add to cart response:', response.data);
+    
+            setShowNotification(true);
+    
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 2000);
         } catch (error) {
-            console.error('Error updating cart:', error);
+            console.error('Error adding to cart:', error);
         }
     };
 
@@ -480,7 +495,7 @@ const ProductDetail = () => {
                             style={{ cursor: "pointer" }}
                             icon={faShopify}
                         />
-                        <div className="cart-icon" onClick={() => navigate(`/get-cart`)}>
+                        <div className="cart-icon" onClick={() => navigate("/get-cart")}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                         </div>
                     </div>
@@ -534,15 +549,15 @@ const ProductDetail = () => {
             <section id='part-2'>
                 <div className='light-border width'></div>
 
-                <h3>YOU MAY ALSO LIKE</h3>
+                <h3>TRY OTHER PRODUCTS</h3>
 
                 <div className="testimonial-section">
                     <div>
                         <div className='shop-images sale-page'>
-                            <img src={i1} alt='' className='i1' />
-                            <img src={i2} alt='' className='i2' />
-                            <img src={i3} alt='' className='i2' />
-                            <img src={i1} alt='' className='i3' />
+                            <img src={i1} alt='' className='i1'></img>
+                            <img src={i2} alt='' className='i2'></img>
+                            <img src={i3} alt='' className='i2'></img>
+                            <img src={i1} alt='' className='i3'></img>
                         </div>
                     </div>
                 </div>
@@ -589,6 +604,6 @@ const ProductDetail = () => {
             </section>
         </>
     );
-};
+}
 
 export default ProductDetail;

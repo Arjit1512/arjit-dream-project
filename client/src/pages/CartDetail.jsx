@@ -207,6 +207,7 @@
 // };
 
 // export default CartDetail;
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../App.css";
@@ -248,32 +249,37 @@ const CartDetail = () => {
 
     fetchCart();
   }, []);
-
   const handleQuantityChange = async (productId, action, size) => {
     try {
-      console.log(`Updating cart for product ${productId} with action ${action} and size ${size}`);
       const token = localStorage.getItem('token');
-
+  
+      if (!token) {
+        throw new Error('User not authenticated');
+      }
+  
       const response = await axios.post('http://localhost:3001/update-cart', {
         productId,
         action,
-        size: size || null // Ensure size is sent as null if not applicable
+        size: size || null  // Ensure size is sent as null if not applicable
       }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-
+  
       console.log('Update cart response:', response.data);
+  
       const updatedCart = response.data.cart || [];
       setCart(updatedCart);
       setTotalPrice(response.data.totalPrice || 0);
       console.log('Cart updated:', updatedCart);
     } catch (error) {
-      console.error("Error updating cart", error);
-      setError('Error updating cart');
+      console.error('Error updating cart:', error.message);
+      setError('Error updating cart: ' + error.message);
+      // Handle error (e.g., show error message to user)
     }
   };
+  
 
   useEffect(() => {
     console.log('Cart or TotalPrice changed:', cart, totalPrice);
@@ -306,7 +312,16 @@ const CartDetail = () => {
           <div className='flex-col calvin1'>
             <h3>{item.name}</h3>
             <p className='quantity calvin1'>Quantity: {item.quantity}</p>
-            {item.size && <p className='size calvin1'>Size: {item.size}</p>} {/* Display size if applicable */}
+            {item.category === 'T-Shirts' && (
+              <select
+                value={item.size || ''}
+                onChange={(e) => handleQuantityChange(item.productId, 'update', e.target.value)}
+              >
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
+            )}
             <h3 className='itemprice'>INR {item.price}</h3>
             <div className='quantity-buttons'>
               <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>

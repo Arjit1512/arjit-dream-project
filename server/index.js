@@ -54,6 +54,35 @@ app.post("/logout", auth, async (req, res) => {
 });
 
 /* CART ROUTES */
+
+
+
+app.get('/get-cart', auth, async (req, res) => {
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId).populate('cart').exec();
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (!user.cart || user.cart.length === 0) {
+            return res.status(404).json({ error: 'User does not have any items in the cart' });
+        }
+
+        const totalPrice = user.cart.reduce((total, item) => {
+            return total + item.price;
+        }, 0);
+
+        return res.status(200).json({ cart: user.cart, totalPrice, userName:user.userName });
+    } catch (error) {
+        console.error('Error fetching user cart:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 app.post('/add-to-cart', auth, async (req, res) => {
     const { productId, quantity, size } = req.body;
     const userId = req.user._id;
@@ -104,51 +133,25 @@ app.post('/add-to-cart', auth, async (req, res) => {
     }
 });
 
-
-
-app.get('/get-cart', auth, async (req, res) => {
-    const userId = req.user._id;
-
-    try {
-        const user = await User.findById(userId).populate('cart').exec();
-
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        if (!user.cart || user.cart.length === 0) {
-            return res.status(404).json({ error: 'User does not have any items in the cart' });
-        }
-
-        const totalPrice = user.cart.reduce((total, item) => {
-            return total + item.price;
-        }, 0);
-
-        return res.status(200).json({ cart: user.cart, totalPrice, userName:user.userName });
-    } catch (error) {
-        console.error('Error fetching user cart:', error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
+// POST endpoint to update cart
 app.post('/update-cart', auth, async (req, res) => {
     const { productId, action, size } = req.body;
     const userId = req.user._id;
 
     try {
-        // Find the product in the products array
+        // Find the product in the products array or database
         const product = products.find(p => p.id === parseInt(productId));
         if (!product) {
             return res.status(404).json({ error: 'Product not found' });
         }
 
-        // Check if size is required and provided
+        // Determine cartItemQuery based on product category and size
         let cartItemQuery = { userId, productId };
-        
-        if (product.category !== 'Accessories' && size) {
-            cartItemQuery.size = size;
-        } else if (product.category === 'Accessories') {
+
+        if (product.category === 'Accessories') {
             cartItemQuery.size = null;
+        } else if (size) {
+            cartItemQuery.size = size;
         } else {
             return res.status(400).json({ error: 'Size is required to update item in cart' });
         }

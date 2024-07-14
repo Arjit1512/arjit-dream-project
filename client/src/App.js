@@ -164,6 +164,7 @@ const App = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/:id" element={<ProductDetail />} />
+      <Route path="/update-cart" element={<CartDetail />} />
       <Route path="/get-cart" element={<CartDetail />} />
       <Route path="/success" element={<Success />} />
     </Routes>
