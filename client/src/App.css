@@ -1028,7 +1028,7 @@ button.normal {
 }
 .quantity-buttons{
     position: relative;
-    bottom: 20%;
+    bottom: 33%;
 }
 .border-45{
     height: 3.8px;
@@ -1036,7 +1036,7 @@ button.normal {
     padding-right: 700px;
     background-color: #000;
     position: relative;
-    right:40%;
+    right:45%;
     top: 38vh;
 }
 .size{
@@ -1056,7 +1056,7 @@ button.normal {
     display: flex;
     flex-direction: column;
     position: absolute;
-    left:70%;
+    left:72%;
     top:15vh;
     padding-bottom: 2%;
     border: 2px solid black;

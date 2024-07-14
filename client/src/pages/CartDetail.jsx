@@ -207,7 +207,6 @@
 // };
 
 // export default CartDetail;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../App.css";
@@ -249,14 +248,15 @@ const CartDetail = () => {
 
     fetchCart();
   }, []);
+
   const handleQuantityChange = async (productId, action, size) => {
     try {
       const token = localStorage.getItem('token');
-  
+
       if (!token) {
         throw new Error('User not authenticated');
       }
-  
+
       const response = await axios.post('http://localhost:3001/update-cart', {
         productId,
         action,
@@ -266,9 +266,9 @@ const CartDetail = () => {
           Authorization: `Bearer ${token}`
         }
       });
-  
+
       console.log('Update cart response:', response.data);
-  
+
       const updatedCart = response.data.cart || [];
       setCart(updatedCart);
       setTotalPrice(response.data.totalPrice || 0);
@@ -279,7 +279,6 @@ const CartDetail = () => {
       // Handle error (e.g., show error message to user)
     }
   };
-  
 
   useEffect(() => {
     console.log('Cart or TotalPrice changed:', cart, totalPrice);
@@ -311,6 +310,9 @@ const CartDetail = () => {
           <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
           <div className='flex-col calvin1'>
             <h3>{item.name}</h3>
+            {item.category !== 'Accessories' && (
+              <p>Size: {item.size}</p>
+            )}
             <p className='quantity calvin1'>Quantity: {item.quantity}</p>
             {item.category === 'T-Shirts' && (
               <select
