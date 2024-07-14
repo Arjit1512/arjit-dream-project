@@ -82,15 +82,15 @@ const Products = () => {
           <div className='gray-line'></div>
           <div className='far-away' onClick={() => handleFilterClick('price')}>
             <h3>Price</h3>
-            <h3 style={{cursor:"pointer"}}>{filter.price ? '-' : '+'}</h3>
+            <h3 style={{ cursor: "pointer" }}>{filter.price ? '-' : '+'}</h3>
           </div>
           {filter.price && (
-            <div style={{ 
-              padding: '15px', 
+            <div style={{
+              padding: '15px',
               width: '70%',
-              position:'relative',
-              right:'4%',
-              fontWeight:'600'
+              position: 'relative',
+              right: '4%',
+              fontWeight: '600'
             }}>
               <Slider
                 range
@@ -113,16 +113,10 @@ const Products = () => {
           <div className='gray-line'></div>
           <div className='far-away' onClick={() => handleFilterClick('category')}>
             <h3>Category</h3>
-            <h3 style={{cursor:"pointer"}}>{filter.category ? '-' : '+'}</h3>
+            <h3 style={{ cursor: "pointer" }}>{filter.category ? '-' : '+'}</h3>
           </div>
           {filter.category && (
-            <div style={{ 
-              padding: '15px', 
-              width: '70%',
-              position:'relative',
-              right:'4%',
-              fontWeight:'600'
-            }}>
+            <div className="filter-dropdown">
               <select onChange={handleCategoryChange} value={selectedCategory}>
                 <option value="All">All</option>
                 <option value="T-Shirts">T-Shirts</option>
@@ -130,7 +124,7 @@ const Products = () => {
               </select>
             </div>
           )}
-          <div className='gray-line'></div>
+          <div className='gray-line filter-gray'></div>
         </div>
 
         <div className='slp2'>
