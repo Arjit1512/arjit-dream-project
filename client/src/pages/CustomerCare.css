@@ -1,0 +1,50 @@
+.customer-care-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top:5%;
+    margin-bottom: 5%;
+}
+
+.customer-care-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.customer-care-section h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.customer-care-section p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.customer-care-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.customer-care-section li {
+    margin-bottom: 8px;
+}
+
+.customer-care-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.customer-care-section a:hover {
+    text-decoration: underline;
+}

@@ -861,6 +861,8 @@ textarea {
 }
 
 
+
+  
 button.normal {
     font-size: 14px;
     font-weight: 600;
@@ -1160,3 +1162,49 @@ button.normal {
     font-weight: 600;
     cursor: pointer;
 }
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .user-dropdown .fa-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    min-width: 160px;
+    border-radius: 5px;
+    padding: 10px 0;
+    right: 0;
+    top: 100%; /* Position dropdown below the icon */
+  }
+  
+  .dropdown-content a,
+  .dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+  }
+  
+  .dropdown-content a:hover,
+  .dropdown-content button:hover {
+    background-color: #393333;
+    color: white;
+  }
+  
+  .user-dropdown:hover .dropdown-content {
+    display: block;
+  }
+  

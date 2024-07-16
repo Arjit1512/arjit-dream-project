@@ -152,6 +152,7 @@ import CartDetail from './pages/CartDetail';
 import Dashboard from './pages/Dashboard';
 import CartContext from './pages/CartContext';
 import Success from './pages/Success';
+import CustomerCare from './pages/CustomerCare';
 import { CartProvider } from './pages/CartContext'; 
 
 const App = () => {
@@ -173,6 +174,7 @@ const App = () => {
       <Route path="/get-cart" element={<CartDetail />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path='/checkout' element={<CartDetail />} />
+      <Route path='/customer-care' element={<CustomerCare />} />
       <Route path="/success" element={<Success />} />
     </Routes>
     </CartProvider>
