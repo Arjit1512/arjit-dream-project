@@ -207,15 +207,17 @@
 // };
 
 // export default CartDetail;
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "../App.css";
+import { useNavigate } from 'react-router-dom';
+import { useCart } from './CartContext';
 
 const CartDetail = () => {
-  const [cart, setCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { state, dispatch } = useCart();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -233,21 +235,21 @@ const CartDetail = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        const data = response.data;
 
-        setCart(data.cart || []);
-        setTotalPrice(data.totalPrice || 0);
+        const data = response.data.cart[0]; // Assuming only one cart per user
+        dispatch({ type: 'SET_CART', payload: data.items });
+        dispatch({ type: 'SET_TOTAL_PRICE', payload: data.totalPrice });
+
         setLoading(false);
-        console.log("Cart data fetched", data);
       } catch (error) {
-        console.error("Error fetching cart data", error);
+        console.error('Error fetching cart data:', error.message);
         setError('Error fetching cart data');
         setLoading(false);
       }
     };
 
     fetchCart();
-  }, []);
+  }, [dispatch]);
 
   const handleQuantityChange = async (productId, action, size) => {
     try {
@@ -260,29 +262,41 @@ const CartDetail = () => {
       const response = await axios.post('http://localhost:3001/update-cart', {
         productId,
         action,
-        size: size || null  // Ensure size is sent as null if not applicable
+        size: size || null
       }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      console.log('Update cart response:', response.data);
-
-      const updatedCart = response.data.cart || [];
-      setCart(updatedCart);
-      setTotalPrice(response.data.totalPrice || 0);
-      console.log('Cart updated:', updatedCart);
+      dispatch({ type: 'SET_CART', payload: response.data.cart });
+      dispatch({ type: 'SET_TOTAL_PRICE', payload: response.data.totalPrice });
     } catch (error) {
       console.error('Error updating cart:', error.message);
-      setError('Error updating cart: ' + error.message);
-      // Handle error (e.g., show error message to user)
     }
   };
 
-  useEffect(() => {
-    console.log('Cart or TotalPrice changed:', cart, totalPrice);
-  }, [cart, totalPrice]);
+  const handleCheckout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('User not authenticated');
+      }
+
+      await axios.post('http://localhost:3001/checkout', null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch({ type: 'CLEAR_CART' });
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error during checkout:', error.message);
+      setError('Error during checkout: ' + error.message);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -292,55 +306,41 @@ const CartDetail = () => {
     return <div>{error}</div>;
   }
 
-  if (!cart || cart.length === 0) {
+  if (!state.cartItems || state.cartItems.length === 0) {
     return (
-      <>
-        <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-      </>
+      <h3 style={{ textAlign: 'center' }}>Oops, you don't have anything in your cart! 😞</h3>
     );
   }
 
   return (
     <>
-      <h1 className='heading-sale cart-head'>SHOPPING CART</h1>
-      <div className='black-border'></div>
+      <h1 className="heading-sale cart-head">SHOPPING CART</h1>
+      <div className="black-border"></div>
 
-      {cart.map((item) => (
-        <div key={item._id} className='cart-class1'>
+      {state.cartItems.map((item) => (
+        <div key={item._id} className="cart-class1">
           <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-          <div className='flex-col calvin1'>
+          <div className="flex-col calvin1">
             <h3>{item.name}</h3>
-            {item.category !== 'Accessories' && (
-              <p>Size: {item.size}</p>
-            )}
-            <p className='quantity calvin1'>Quantity: {item.quantity}</p>
-            {item.category === 'T-Shirts' && (
-              <select
-                value={item.size || ''}
-                onChange={(e) => handleQuantityChange(item.productId, 'update', e.target.value)}
-              >
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-              </select>
-            )}
-            <h3 className='itemprice'>INR {item.price}</h3>
-            <div className='quantity-buttons'>
-              <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
-              <button className='quantity-button' onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
+            {item.size && <p>Size: {item.size}</p>}
+            <p className="quantity calvin1">Quantity: {item.quantity}</p>
+            <h3 className="itemprice">INR {item.price * item.quantity}</h3> {/* Correctly calculate the total price for the item */}
+            <div className="quantity-buttons">
+              <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
+              <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
             </div>
           </div>
-          <div className='border-45'></div>
+          <div className="border-45"></div>
         </div>
       ))}
 
-      <div className='cart-class2'>
-        <div className='inside'>
+      <div className="cart-class2">
+        <div className="inside">
           <h2>ORDER SUMMARY</h2>
-          <h4><span>SUB TOTAL:</span> INR {totalPrice}</h4>
+          <h4><span>SUB TOTAL:</span> INR {state.totalPrice}</h4>
           <h4><span>TAX AND DELIVERY CHARGES:</span> INR {100}</h4>
-          <h4><span>TOTAL:</span> INR {totalPrice + 100}</h4>
-          <button className='last-button'>CHECKOUT</button>
+          <h4><span>TOTAL:</span> INR {state.totalPrice + 100}</h4>
+          <button className="last-button" onClick={handleCheckout}>CHECKOUT</button>
         </div>
       </div>
     </>

@@ -1080,11 +1080,11 @@ button.normal {
 
 .border-45 {
     height: 3.8px;
-    width: 30px;
+    width: 45px;
     padding-right: 700px;
     background-color: #000;
     position: relative;
-    right: 45%;
+    right: 40%;
     top: 38vh;
 }
 

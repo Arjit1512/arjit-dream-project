@@ -134,6 +134,7 @@
 //     </div>
 //   );
 // }
+
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
@@ -148,10 +149,14 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import CartDetail from './pages/CartDetail';
+import Dashboard from './pages/Dashboard';
+import CartContext from './pages/CartContext';
 import Success from './pages/Success';
+import { CartProvider } from './pages/CartContext'; 
 
 const App = () => {
   return (
+    <CartProvider> 
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about-us" element={<AboutUs />} />
@@ -166,8 +171,11 @@ const App = () => {
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/update-cart" element={<CartDetail />} />
       <Route path="/get-cart" element={<CartDetail />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path='/checkout' element={<CartDetail />} />
       <Route path="/success" element={<Success />} />
     </Routes>
+    </CartProvider>
   );
 };
 

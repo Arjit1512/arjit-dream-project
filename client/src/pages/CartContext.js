@@ -1,40 +1,103 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import axios from 'axios';
 
-// Create a context for the cart
 const CartContext = createContext();
 
-// Define the reducer function
+const initialState = {
+  cartItems: [],
+  totalPrice: 0,
+  checkedOutItems: [],
+  user: null,
+};
+
 const cartReducer = (state, action) => {
   switch (action.type) {
+    case 'SET_CART':
+      return {
+        ...state,
+        cartItems: action.payload
+      };
+    case 'SET_TOTAL_PRICE':
+      return {
+        ...state,
+        totalPrice: action.payload
+      };
     case 'ADD_TO_CART':
       return {
         ...state,
-        cartItems: [action.payload, ...state.cartItems],
+        cartItems: [action.payload, ...state.cartItems]
       };
-    // Add more cases for other actions if needed
+    case 'CLEAR_CART':
+      return {
+        ...state,
+        checkedOutItems: [...state.cartItems],
+        cartItems: [],
+        totalPrice: 0
+      };
+    case 'SET_USER':
+      return {
+        ...state,
+        user: action.payload
+      };
     default:
       return state;
   }
 };
 
-// Define the CartProvider component
 const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, { cartItems: [] });
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  // Define the addToCart function
   const addToCart = (item) => {
-    console.log('Adding to cart:', item);
     dispatch({ type: 'ADD_TO_CART', payload: item });
   };
 
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR_CART' });
+  };
+
+  const fetchCart = async (token) => {
+    try {
+      const response = await axios.get('http://localhost:3001/get-cart', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = response.data;
+      dispatch({ type: 'SET_CART', payload: data.cart || [] });
+      dispatch({ type: 'SET_TOTAL_PRICE', payload: data.totalPrice || 0 });
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  const fetchUser = async (token) => {
+    try {
+      const response = await axios.get('http://localhost:3001/dashboard', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = response.data;
+      dispatch({ type: 'SET_USER', payload: data.user });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    if (token) {
+      fetchUser(token);
+    }
+  }, []);
+
   return (
-    <CartContext.Provider value={{ state, addToCart }}>
+    <CartContext.Provider value={{ state, dispatch, addToCart, clearCart, fetchCart, fetchUser }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-// Custom hook to use the cart context
 const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {

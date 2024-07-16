@@ -410,6 +410,8 @@ const ProductDetail = () => {
     const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
     const [showNotification, setShowNotification] = useState(false);
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(''); // Error state
     const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState(""); // State to hold selected size
 
@@ -418,8 +420,11 @@ const ProductDetail = () => {
             try {
                 const fetchedProduct = Clothes.find((p) => p.id === parseInt(id));
                 setProduct(fetchedProduct);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching product details:', error);
+                setError('Failed to fetch product details.');
+                setLoading(false);
             }
         };
 
@@ -473,6 +478,14 @@ const ProductDetail = () => {
             console.error('Error adding to cart:', error);
         }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <>
