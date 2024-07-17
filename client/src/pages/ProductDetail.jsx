@@ -404,6 +404,9 @@ import axios from 'axios';
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
+import i5 from "../sources/i5.jpg";
+import i6 from "../sources/i6.jpg";
+import i44 from "../sources/i4.jpg";
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -493,8 +496,8 @@ const ProductDetail = () => {
                 <div className='black-box'>
                     <p>Free Shipping available worldwide!</p>
                 </div>
-                <div className='navbar'>
-                    <p>ARJIT AVADHANAM</p>
+                <div className='navbar barrr'>
+                    <p>TRUE HOOD</p>
 
                     <div className='social-icons'>
                         <FontAwesomeIcon className="fa-icon" icon={faInstagram} style={{ visibility: "hidden" }} />
@@ -559,7 +562,7 @@ const ProductDetail = () => {
                 )}
             </section>
 
-            <section id='part-2'>
+            {/* <section id='part-2'>
                 <div className='light-border width'></div>
 
                 <h3>TRY OTHER PRODUCTS</h3>
@@ -574,7 +577,57 @@ const ProductDetail = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
+
+            <section id='home-div'>
+
+            <h1> YOU MAY ALSO LIKE</h1>
+    <div className='flex-row hr'>
+        <div className='flex-col hc'>
+            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Red</h5>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                <div className='discount'>-25%</div>
+            </div>
+        </div>
+
+        <div className='flex-col hc'>
+            <img src={i3} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i44} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Porsche</h5>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
+                <div className='discount'>-36%</div>
+            </div>
+        </div>
+
+        <div className='flex-col hc'>
+            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Black</h5>
+                <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+                <div className='discount'>-21%</div>
+            </div>
+        </div>
+
+        <div className='flex-col hc'>
+            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Red</h5>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                <div className='discount'>-25%</div>
+            </div>
+        </div>
+    </div>
+</section>
 
             <div className='light-border width'></div>
 

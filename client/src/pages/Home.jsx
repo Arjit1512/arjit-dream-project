@@ -8,7 +8,12 @@ import background from "../sources/background.mp4";
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
-import i4 from "../sources/i3.webp";
+import i5 from "../sources/i5.jpg";
+import i6 from "../sources/i6.jpg";
+import i44 from "../sources/i4.jpg";
+
+import i4 from "../sources/arjit.jpg";
+import bghome from '../sources/bghome.webp';
 import axios from 'axios';
 import "../App.css";
 import UserDropdown from './UserDropdown';
@@ -79,7 +84,7 @@ const Home = () => {
           <p>Welcome {userName ? userName : ""}!! Free Shipping available worldwide!</p>
         </div>
         <div className='navbar'>
-          <p>ARJIT AVADHANAM</p>
+          <p>TRUE HOOD</p>
 
           <div className='social-icons'>
             <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
@@ -94,16 +99,74 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='navbar-items'>
+        {/* <div className='navbar-items'>
           <Link to='/sale' style={{ textDecoration: "none", color: "black" }}>SALE</Link>
           <Link to='/community' style={{ textDecoration: "none", color: "black" }}>COMMUNITY</Link>
         </div>
         <video autoPlay muted loop id="myVideo">
           <source src={pixels} type="video/mp4" />
-        </video>
+        </video> */}
+
+
       </section>
 
-      <section id="part-3">
+      <section id="paint-pic">
+        <img src={bghome} alt="" />
+      </section>
+
+     
+     
+     
+      <section id='home-div'>
+    <div className='flex-row hr'>
+        <div className='flex-col hc'>
+            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Red</h5>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                <div className='discount'>-25%</div>
+            </div>
+        </div>
+
+        <div className='flex-col hc'>
+            <img src={i3} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i44} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Porsche</h5>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
+                <div className='discount'>-36%</div>
+            </div>
+        </div>
+
+        <div className='flex-col hc'>
+            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Black</h5>
+                <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+                <div className='discount'>-21%</div>
+            </div>
+        </div>
+
+        <div className='flex-col hc'>
+            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+                <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                <h5 className="body-title">T-Shirt Red</h5>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                <div className='discount'>-25%</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="part-3">
         <div className='p3-part1'>
           <h3>Discover our<br />
             latest vintage<br />
@@ -122,8 +185,12 @@ const Home = () => {
           <img src={i4} alt='' />
         </div>
       </section>
+     
+     
 
-      <section id='part-4'>
+
+
+      {/* <section id='part-4'>
         <video autoPlay muted loop id="myVideo">
           <source src={background} type="video/mp4" />
         </video>
@@ -136,9 +203,13 @@ const Home = () => {
             metrics, we introduced a new model - our Digital.<br />
             Brand. Accelerator."</p>
         </div>
-      </section>
+      </section> */}
 
       <section id="last">
+
+
+
+
         <div className='navigate'>
           <h5>NAVIGATE</h5>
           <a>Shop</a>
@@ -165,12 +236,10 @@ const Home = () => {
 
         <div className='customer-service'>
           <h5>CUSTOMER SERVICE</h5>
-          <p>
-            Our dedicated customer service team is here to help you with any queries you may have. Feel free to reach out to us through any of the channels below:
-          </p>
-          <p>Email: info@mysite.com</p>
-          <p>Phone: +1234567890</p>
-          <p>Operating Hours: Monday - Friday, 9AM - 6PM (EST)</p>
+          <a>Privacy Policy</a>
+          <a>Terms & Conditions</a>
+          <a>Payments</a>
+          <a>Let's Act</a>
         </div>
 
         <div className='copy-right'>

@@ -23,9 +23,11 @@
     font-size: 1.4rem;
     text-align: center;
     padding-top: 0.6%;
-    background-color: ghostwhite;
+    background-color: rgb(255, 255, 255);
 }
-
+.barrr{
+    padding-bottom: 0.01%;
+}
 #part-1 {
     background-color: ghostwhite;
 }
@@ -48,7 +50,108 @@
     justify-content: space-between;
     gap: 30%;
 }
+/*HOME-DIVVVVVVVVVVVVVVVVVVVVVVVVVV*/
 
+#home-div{
+    margin-top: 2%;
+    height: 420px;
+}
+#home-div h1{
+    text-align: center;
+    font-family:'Playfair Display', serif;
+    font-weight: 500;
+}
+.break{
+    text-decoration: line-through;
+    color: gray;
+}
+.discount{
+    background-color: #ea2121;
+    width: max-content;
+    height: fit-content;
+    color: white;
+    border: 1.5px solid black;
+    position: relative;
+    bottom:10%;
+}
+.hr{
+    width: 100%;
+}
+.hc{
+    width:25%;
+    padding-left: 5%;
+    position: relative;
+    right:2%;
+}
+.hc h5{
+    font-family: 'Inconsolata', monospace;
+}
+.body-text{
+    position: relative;
+    bottom: 8%;
+}
+.body-img-top{
+    width:100%;
+    height:100%;
+}
+
+.gray-text{
+    color: gray;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+/*CHAT-GPT CODE*/
+/* Container to hold the images */
+/* Container to hold the images */
+.hc {
+    position: relative;
+    width: 25%;
+    padding-left: 5%;
+    right: 2%;
+    overflow: hidden; /* Hide overflow to manage sliding */
+    height: 300px; /* Set a defined height for the container */
+}
+
+/* Base image */
+/* Container to hold the images */
+.hc {
+    position: relative;
+    width: 25%;
+    padding-left: 5%;
+    right: 2%;
+    overflow: hidden; /* Hide overflow to manage sliding */
+    height: 400px; /* Set a defined height for the container */
+    transition: transform 0.3s ease; /* Smooth transition for moving up */
+}
+
+/* Move the container slightly up on hover */
+.hc:hover {
+    transform: translateY(-15px);
+    cursor: pointer;
+}
+
+/* Base image */
+.body-img-top {
+    display: block;
+}
+
+/* Hover image initially hidden */
+.body-img-hover {
+    display: none;
+}
+
+/* On hover, hide the base image and show the hover image */
+.hc:hover .body-img-top {
+    display: none;
+}
+
+.hc:hover .body-img-hover {
+    display: block;
+}
+
+
+
+/*END OF HOME DIVVVVVVVVVVVVVVVVVVVVV*/
 .fa-icon {
     font-size: 24px;
     cursor: pointer;
@@ -199,6 +302,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 2%;
+    /* background-color: #000; */
 }
 
 .navigate,
@@ -209,6 +314,7 @@
     flex-direction: column;
     margin-left: 5%;
     margin-top: 2%;
+    /* color: white; */
 }
 
 .navigate a,
@@ -252,8 +358,13 @@
     margin-top: 20%;
     right: 40%;
     height: max-content;
+    font-weight: 600;
+    /* color: white; */
 }
-
+.hood-true{
+    color: white;
+    width: 15%;
+}
 Link {
     text-decoration: none;
 }
@@ -499,13 +610,12 @@ Link {
 .light-border {
     border-width: 5px;
     color: darkred;
-    height: 1px;
+    height: 2px;
     width: 190%;
     position: relative;
-    top: 12%;
+    top:8vh;
     background-color: black;
 }
-
 .flex-row2 {
     padding-top: 40px;
 }

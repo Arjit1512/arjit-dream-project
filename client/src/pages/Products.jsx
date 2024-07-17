@@ -75,6 +75,18 @@ const Products = () => {
 
   return (
     <>
+       <section id='part-1'>
+        <div className='black-box'>
+          <p>Free Shipping available worldwide!</p>
+        </div>
+        <div className='navbar'>
+          <p>TRUE HOOD</p>
+        </div>
+      </section>
+
+
+
+
       <section id="sale-products">
         <div className='slp1'>
           <br /><br /><br />
