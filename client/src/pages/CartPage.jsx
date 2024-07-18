@@ -196,85 +196,86 @@
 // };
 
 // export default CartPage;
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 
 const CartPage = () => {
-    const location = useLocation();
-    const { state } = location;
-    const [userCart, setUserCart] = useState([]);
-    const cartItems = state?.cartItems || [];
+  const location = useLocation();
+  const { state } = location;
+  const [userCart, setUserCart] = useState([]);
+  const cartItems = state?.cartItems || [];
 
-    const handleImageClick = async (index, event) => {
-        event.preventDefault();
-        console.log('Clicked index:', index);
+  const handleImageClick = async (index, event) => {
+    event.preventDefault();
+    console.log('Clicked index:', index);
 
-        try {
-            const token = localStorage.getItem('token'); // Retrieve token from local storage
+    try {
+      const token = localStorage.getItem('token'); // Retrieve token from local storage
 
-            if (!token) {
-                console.error('No token found. User is not authenticated.');
-                return;
-            }
+      if (!token) {
+        console.error('No token found. User is not authenticated.');
+        return;
+      }
 
-            const response = await axios.post(`http://localhost:3001/add-to-cart`, {
-                productId: index + 1,
-                quantity: 1,
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            console.log('Response:', response.data);
-            fetchUserCart();
-        } catch (error) {
-            console.error('Error adding item to cart:', error);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/add-to-cart`, {
+        productId: index + 1,
+        quantity: 1,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-    };
+      });
 
-    useEffect(() => {
-        fetchUserCart();
-    }, []);
+      console.log('Response:', response.data);
+      fetchUserCart();
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
 
-    const fetchUserCart = async () => {
-        try {
-            const token = localStorage.getItem('token'); // Retrieve token from local storage
+  useEffect(() => {
+    fetchUserCart();
+  }, []);
 
-            if (!token) {
-                console.error('No token found. User is not authenticated.');
-                return;
-            }
+  const fetchUserCart = async () => {
+    try {
+      const token = localStorage.getItem('token'); // Retrieve token from local storage
 
-            const response = await axios.get('http://localhost:3001/get-cart', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+      if (!token) {
+        console.error('No token found. User is not authenticated.');
+        return;
+      }
 
-            console.log('User Cart:', response.data.cart);
-            setUserCart(response.data.cart);
-        } catch (error) {
-            console.error('Error fetching user cart:', error);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-cart`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-    };
+      });
 
-    return (
-        <div className="cart-page-main">
-            <div>
-                <h2>User Cart</h2>
-                <ul>
-                    {userCart.map((item, index) => (
-                        <li key={index}>
-                            Product ID: {item.productId}, Quantity: {item.quantity}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
-}
+      console.log('User Cart:', response.data.cart);
+      setUserCart(response.data.cart);
+    } catch (error) {
+      console.error('Error fetching user cart:', error);
+    }
+  };
+
+  return (
+    <div className="cart-page-main">
+      <div>
+        <h2>User Cart</h2>
+        <ul>
+          {userCart.map((item, index) => (
+            <li key={index}>
+              Product ID: {item.productId}, Quantity: {item.quantity}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export default CartPage;

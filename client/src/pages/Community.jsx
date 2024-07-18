@@ -226,106 +226,106 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Community = () => {
-    const [message, setMessage] = useState("");
-    const [fName, setfName] = useState("");
-    const [lName, setlName] = useState("");
-    const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [fName, setfName] = useState("");
+  const [lName, setlName] = useState("");
+  const [subject, setSubject] = useState("");
 
-    function handleMessage(event) {
-        setMessage(event.target.value);
-    }
-    function handlefName(event) {
-        setfName(event.target.value);
-    }
-    function handlelName(event) {
-        setlName(event.target.value);
-    }
-    function handleSubject(event) {
-        setSubject(event.target.value);
-    }
+  function handleMessage(event) {
+    setMessage(event.target.value);
+  }
+  function handlefName(event) {
+    setfName(event.target.value);
+  }
+  function handlelName(event) {
+    setlName(event.target.value);
+  }
+  function handleSubject(event) {
+    setSubject(event.target.value);
+  }
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-        try {
-            const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    try {
+      const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
 
-            if (!token) {
-                alert('User not authenticated');
-                return;
-            }
+      if (!token) {
+        alert('User not authenticated');
+        return;
+      }
 
-            const response = await axios.post('http://localhost:3001/community', {
-                message, fName, lName, subject
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            if (response.status === 201) {
-                navigate('/success');
-            } else {
-                alert('User does not exist.');
-            }
-        } catch (error) {
-            console.error('Failed to submit message', error);
-            alert('An error occurred while submitting the message.');
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/community`, {
+        message, fName, lName, subject
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-    };
+      });
 
-    return (
-        <>
-            <section id='community-page'>
-                <div className='cpage1'>
-                    <h1>Give us your valuable feedback.</h1>
-                    <div className='brown-border'></div>
-                    <p className='text-community'>
-                        Before we kick off any project we like to consult with you to give you the most accurate quote possible.
-                        <br />
-                        Use the form below to schedule a time and day for us to come out and check out your property.
-                    </p>
+      if (response.status === 201) {
+        navigate('/success');
+      } else {
+        alert('User does not exist.');
+      }
+    } catch (error) {
+      console.error('Failed to submit message', error);
+      alert('An error occurred while submitting the message.');
+    }
+  };
 
-                    <form onSubmit={handleSubmit}>
-                        <div className='flex-col'>
-                            <label>Name</label>
-                            <div className='flex-row name-form'>
-                                <input type='text' placeholder='First Name' onChange={handlefName} value={fName} />
-                                <input style={{ marginLeft: "3%" }} type='text' placeholder='Last Name' onChange={handlelName} value={lName} />
-                            </div>
-                            <br />
-                            <label>Subject</label>
-                            <input type='text' placeholder='' onChange={handleSubject} value={subject} />
-                            <br />
-                            <label>Message</label>
-                            <textarea style={{ height: "75px" }} placeholder='' onChange={handleMessage} value={message} />
-                            <button className='send' type='submit'>SEND</button>
-                        </div>
-                    </form>
-                </div>
+  return (
+    <>
+      <section id='community-page'>
+        <div className='cpage1'>
+          <h1>Give us your valuable feedback.</h1>
+          <div className='brown-border'></div>
+          <p className='text-community'>
+            Before we kick off any project we like to consult with you to give you the most accurate quote possible.
+            <br />
+            Use the form below to schedule a time and day for us to come out and check out your property.
+          </p>
 
-                <div className='cpage2'>
-                    <img src={location} alt='' />
-                    <div className='contact-text'>
-                        <h1>Contact</h1>
-                    </div>
-                    <div className='light-border lb2'></div>
-                    <div className='address'>
-                        <p>Arjit Avadhanam<br />
-                            IIIT Sricity<br />
-                            near Tada<br />
-                            Sricity, 517646<br />
-                            <br />
-                            avadhanamarjit15@gmail.com<br />
-                            9618825172
-                        </p>
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+          <form onSubmit={handleSubmit}>
+            <div className='flex-col'>
+              <label>Name</label>
+              <div className='flex-row name-form'>
+                <input type='text' placeholder='First Name' onChange={handlefName} value={fName} />
+                <input style={{ marginLeft: "3%" }} type='text' placeholder='Last Name' onChange={handlelName} value={lName} />
+              </div>
+              <br />
+              <label>Subject</label>
+              <input type='text' placeholder='' onChange={handleSubject} value={subject} />
+              <br />
+              <label>Message</label>
+              <textarea style={{ height: "75px" }} placeholder='' onChange={handleMessage} value={message} />
+              <button className='send' type='submit'>SEND</button>
+            </div>
+          </form>
+        </div>
+
+        <div className='cpage2'>
+          <img src={location} alt='' />
+          <div className='contact-text'>
+            <h1>Contact</h1>
+          </div>
+          <div className='light-border lb2'></div>
+          <div className='address'>
+            <p>Arjit Avadhanam<br />
+              IIIT Sricity<br />
+              near Tada<br />
+              Sricity, 517646<br />
+              <br />
+              avadhanamarjit15@gmail.com<br />
+              9618825172
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }
 
 export default Community;

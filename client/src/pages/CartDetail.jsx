@@ -230,7 +230,7 @@ const CartDetail = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:3001/get-cart', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-cart`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -259,7 +259,7 @@ const CartDetail = () => {
         throw new Error('User not authenticated');
       }
 
-      const response = await axios.post('http://localhost:3001/update-cart', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/update-cart`, {
         productId,
         action,
         size: size || null
@@ -284,7 +284,7 @@ const CartDetail = () => {
         throw new Error('User not authenticated');
       }
 
-      await axios.post('http://localhost:3001/checkout', null, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, null, {
         headers: {
           Authorization: `Bearer ${token}`
         }

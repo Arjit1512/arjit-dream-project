@@ -11,7 +11,7 @@ const Dashboard = () => {
       const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
       console.log("Fetching user data with token:", token);
       try {
-        const response = await axios.get('http://localhost:3001/dashboard', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

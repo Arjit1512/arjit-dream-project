@@ -206,6 +206,8 @@
 // }
 
 // export default Login;
+
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -223,7 +225,7 @@ function Register() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3001/auth/register', {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
                 userName,
                 email,
                 password
@@ -259,7 +261,7 @@ function Register() {
                         <form onSubmit={handleRegister}>
                             <div className="input-box">
                                 <input
-                                    placeholder="User Name"
+                                    placeholder="Name"
                                     type="text"
                                     required
                                     value={userName}

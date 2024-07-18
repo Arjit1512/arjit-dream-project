@@ -3,20 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faPinterest, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
-import pixels from "../sources/pexels.mp4";
-import background from "../sources/background.mp4";
+import bghome from '../sources/bghome.webp';
+import axios from 'axios';
+import "../App.css";
+import UserDropdown from './UserDropdown';
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import i5 from "../sources/i5.jpg";
 import i6 from "../sources/i6.jpg";
+import i4 from "../sources/arjit.jpg";
 import i44 from "../sources/i4.jpg";
 
-import i4 from "../sources/arjit.jpg";
-import bghome from '../sources/bghome.webp';
-import axios from 'axios';
-import "../App.css";
-import UserDropdown from './UserDropdown';
 
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -34,7 +32,7 @@ const Home = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3001/get-cart', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-cart`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -47,6 +45,8 @@ const Home = () => {
         }
       } catch (error) {
         console.log("Error fetching user data:", error);
+        console.log('API URL:', process.env.REACT_APP_API_URL);
+
       } finally {
         setLoading(false); // Always set loading state to false after attempting to fetch data
       }
@@ -55,16 +55,11 @@ const Home = () => {
     fetchUserData();
   }, []);
 
-  const addToCart = () => {
-    setCartItems([i1, ...cartItems]);
-    // Optionally, you can show a notification here
-  };
-
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
 
     try {
-      await axios.post('http://localhost:3001/logout', {}, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -91,24 +86,15 @@ const Home = () => {
             <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
             <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
             <FontAwesomeIcon className="fa-icon" icon={faPinterest} />
-            <div className="cart-icon" onClick={() => navigate(`/cart-page`, { state: { cartItems } })}>
+            <div className="cart-icon" onClick={() => navigate('/cart-page', { state: { cartItems } })}>
               <FontAwesomeIcon className="fa-icon" icon={faCart} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
             </div>
             <UserDropdown userName={userName} handleLogout={handleLogout} />
           </div>
         </div>
-
-        {/* <div className='navbar-items'>
-          <Link to='/sale' style={{ textDecoration: "none", color: "black" }}>SALE</Link>
-          <Link to='/community' style={{ textDecoration: "none", color: "black" }}>COMMUNITY</Link>
-        </div>
-        <video autoPlay muted loop id="myVideo">
-          <source src={pixels} type="video/mp4" />
-        </video> */}
-
-
       </section>
+
 
       <section id="paint-pic">
         <img src={bghome} alt="" />
@@ -251,3 +237,5 @@ const Home = () => {
 }
 
 export default Home;
+
+

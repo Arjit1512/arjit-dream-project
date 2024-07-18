@@ -392,6 +392,7 @@
 // }
 
 // export default ProductDetail;
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Clothes from './Clothes.jsx';
@@ -460,7 +461,7 @@ const ProductDetail = () => {
         });
     
         try {
-            const response = await axios.post('http://localhost:3001/add-to-cart', {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/add-to-cart`, {
                 productId: product.id,
                 quantity: 1,
                 size: product.category === 'Accessories' ? null : selectedSize, // Include selected size or null for Accessories
@@ -561,23 +562,6 @@ const ProductDetail = () => {
                     </div>
                 )}
             </section>
-
-            {/* <section id='part-2'>
-                <div className='light-border width'></div>
-
-                <h3>TRY OTHER PRODUCTS</h3>
-
-                <div className="testimonial-section">
-                    <div>
-                        <div className='shop-images sale-page'>
-                            <img src={i1} alt='' className='i1'></img>
-                            <img src={i2} alt='' className='i2'></img>
-                            <img src={i3} alt='' className='i2'></img>
-                            <img src={i1} alt='' className='i3'></img>
-                        </div>
-                    </div>
-                </div>
-            </section> */}
 
             <section id='home-div'>
 

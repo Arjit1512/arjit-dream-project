@@ -198,6 +198,7 @@
 // }
 
 // export default Login;
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -213,15 +214,14 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:3001/auth/login", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
                 email,
                 password
             });
 
             if (response.data.status === "old-user") {
-                const { token, userName } = response.data;
+                const { token } = response.data;
                 localStorage.setItem('token', token);
-                localStorage.setItem('userName', userName); // Consider removing this line unless you specifically need userName in localStorage
                 console.log("Login successful. Token:", token);
                 navigate("/");
             } else {
@@ -252,6 +252,7 @@ function Login() {
                                     type="email"
                                     placeholder="Email"
                                     required
+                                    value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
@@ -260,6 +261,7 @@ function Login() {
                                     type="password"
                                     placeholder="Password"
                                     required
+                                    value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>

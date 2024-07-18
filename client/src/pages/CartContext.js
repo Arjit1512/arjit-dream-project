@@ -57,7 +57,7 @@ const CartProvider = ({ children }) => {
 
   const fetchCart = async (token) => {
     try {
-      const response = await axios.get('http://localhost:3001/get-cart', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-cart`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -72,7 +72,7 @@ const CartProvider = ({ children }) => {
 
   const fetchUser = async (token) => {
     try {
-      const response = await axios.get('http://localhost:3001/dashboard', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -12,7 +12,8 @@ import BlacklistToken from './models/BlackListToken.js';
 dotenv.config();
 const app = express();
 const allowedOrigins = [
-    "http://localhost:3000",  // Your frontend origin
+    "http://localhost:3000",  // Your local frontend origin
+    "https://arjit-dream-fashion.vercel.app",  // Your Vercel domain
 ];
 
 app.use(cors({
@@ -84,8 +85,6 @@ app.get('/get-cart', auth, async (req, res) => {
     }
 });
 
-
-// /add-to-cart endpoint
 app.post('/add-to-cart', auth, async (req, res) => {
     const { productId, quantity, size } = req.body;
     const userId = req.user._id;
@@ -156,62 +155,53 @@ app.post('/add-to-cart', auth, async (req, res) => {
     }
 });
 
-
-// /update-cart endpoint (similar changes as above for user.cart)
-// Ensure other endpoints also handle user.cart as an array of Cart references correctly
-
-
-// POST endpoint to update cart//
-// /update-cart endpoint
 app.post('/update-cart', auth, async (req, res) => {
     const { productId, action, size } = req.body;
     const userId = req.user._id;
-  
+
     try {
-      // Find the product in the products array or database
-      const product = products.find(p => p.id === parseInt(productId));
-      if (!product) {
-        return res.status(404).json({ error: 'Product not found' });
-      }
-  
-      // Find the user's cart
-      const cart = await Cart.findOne({ userId });
-      if (!cart) {
-        return res.status(404).json({ error: 'Cart not found' });
-      }
-  
-      // Determine the index of the cart item to update
-      const cartItemIndex = cart.items.findIndex(item => item.productId === productId && item.size === size);
-      if (cartItemIndex === -1) {
-        return res.status(404).json({ error: 'Cart item not found' });
-      }
-  
-      // Update the quantity based on the action
-      if (action === 'increase') {
-        cart.items[cartItemIndex].quantity += 1;
-      } else if (action === 'decrease') {
-        if (cart.items[cartItemIndex].quantity <= 1) {
-          cart.items.splice(cartItemIndex, 1); // Remove the item if quantity is 1 or less
-        } else {
-          cart.items[cartItemIndex].quantity -= 1;
+        // Find the product in the products array or database
+        const product = products.find(p => p.id === parseInt(productId));
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
         }
-      } else {
-        return res.status(400).json({ error: 'Invalid action' });
-      }
-  
-      // Update the total price
-      cart.totalPrice = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-  
-      await cart.save();
-  
-      return res.status(200).json({ cart: cart.items, totalPrice: cart.totalPrice });
+
+        // Find the user's cart
+        const cart = await Cart.findOne({ userId });
+        if (!cart) {
+            return res.status(404).json({ error: 'Cart not found' });
+        }
+
+        // Determine the index of the cart item to update
+        const cartItemIndex = cart.items.findIndex(item => item.productId === productId && item.size === size);
+        if (cartItemIndex === -1) {
+            return res.status(404).json({ error: 'Cart item not found' });
+        }
+
+        // Update the quantity based on the action
+        if (action === 'increase') {
+            cart.items[cartItemIndex].quantity += 1;
+        } else if (action === 'decrease') {
+            if (cart.items[cartItemIndex].quantity <= 1) {
+                cart.items.splice(cartItemIndex, 1); // Remove the item if quantity is 1 or less
+            } else {
+                cart.items[cartItemIndex].quantity -= 1;
+            }
+        } else {
+            return res.status(400).json({ error: 'Invalid action' });
+        }
+
+        // Update the total price
+        cart.totalPrice = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+        await cart.save();
+
+        return res.status(200).json({ cart: cart.items, totalPrice: cart.totalPrice });
     } catch (error) {
-      console.error('Error updating cart:', error);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error updating cart:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
-
-
 
 app.post("/community", auth, async (req, res) => {
     const userId = req.user._id;
@@ -231,48 +221,53 @@ app.post("/community", auth, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
-// Add this route in your express app setup
-
 
 app.post('/checkout', auth, async (req, res) => {
     try {
-      const userId = req.user._id;
-  
-      // Find the user's cart
-      const cart = await Cart.findOne({ userId });
-  
-      if (!cart) {
-        return res.status(404).json({ message: 'Cart not found' });
-      }
-  
-      // Save current cart items and total price to user's totalOrders
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      user.totalOrders.push({
-        items: cart.items,
-        totalBill: cart.totalPrice + 100, // Adding 100 for tax and delivery charges
-        orderDate: new Date(), // Save the order date
-      });
-  
-      await user.save();
-  
-      // Clear the cart items
-      cart.items = [];
-      cart.totalPrice = 0;
-  
-      await cart.save();
-  
-      // Return the updated user data
-      res.json({ message: 'Checkout successful and cart cleared', user });
+        const userId = req.user._id;
+
+        // Find the user's cart
+        const cart = await Cart.findOne({ userId });
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        // Save current cart items and total price to user's totalOrders
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.totalOrders.push({
+            items: cart.items,
+            totalBill: cart.totalPrice + 100, // Adding 100 for tax and delivery charges
+            orderDate: new Date(),
+            userName: user.userName,
+            userEmail: user.email
+        });
+
+        // Clear the cart
+        cart.items = [];
+        cart.totalPrice = 0;
+
+        await cart.save();
+        await user.save();
+
+        res.status(200).json({
+            message: 'Checkout successful',
+            user: {
+                userName: user.userName,
+                email: user.email,
+                totalOrders: user.totalOrders
+            }
+        });
     } catch (error) {
-      console.error('Error during checkout:', error);
-      res.status(500).json({ message: 'Internal server error' });
+        console.error('Error during checkout:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
-  });
-  // /dashboard endpoint
+});
+
 app.get('/dashboard', auth, async (req, res) => {
     const userId = req.user._id;
     try {
@@ -290,12 +285,8 @@ app.get('/dashboard', auth, async (req, res) => {
     }
 });
 
-  
+const PORT = process.env.PORT || 5000;
 
-/* MONGOOSE SETUP */
-const PORT = process.env.PORT || 3000;
-mongoose.connect(process.env.MONGO_URL);
-
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
-});
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+}).catch((error) => console.log(`${error} did not connect`));
