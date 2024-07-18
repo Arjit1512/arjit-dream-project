@@ -12,10 +12,10 @@ import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import i5 from "../sources/i5.jpg";
 import i6 from "../sources/i6.jpg";
+import i7 from "../sources/i7.png";
+import i8 from "../sources/i8.png";
 import i4 from "../sources/arjit.jpg";
 import i44 from "../sources/i4.jpg";
-
-
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userName, setUserName] = useState("");
@@ -55,6 +55,12 @@ const Home = () => {
     fetchUserData();
   }, []);
 
+  const gotoHome = async () => {
+    window.location.reload(); // Refresh the page
+    navigate("/"); 
+  }
+  
+
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
 
@@ -69,6 +75,7 @@ const Home = () => {
     } finally {
       localStorage.removeItem('token');
       setUserName("");
+      window.location.href = "/"; // Navigate to the home page and refresh
     }
   };
 
@@ -79,7 +86,7 @@ const Home = () => {
           <p>Welcome {userName ? userName : ""}!! Free Shipping available worldwide!</p>
         </div>
         <div className='navbar'>
-          <p>TRUE HOOD</p>
+          <p onClick={gotoHome} style={{cursor:"pointer"}}>TRUE HOOD</p>
 
           <div className='social-icons'>
             <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
@@ -139,11 +146,11 @@ const Home = () => {
         </div>
 
         <div className='flex-col hc'>
-            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <img src={i7} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
                 <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Red</h5>
+                <h5 className="body-title">T-Shirt Culture</h5>
                 <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
                 <div className='discount'>-25%</div>
             </div>
