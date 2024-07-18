@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faPinterest, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
-import bghome from '../sources/bghome.webp';
 import axios from 'axios';
 import "../App.css";
 import UserDropdown from './UserDropdown';
@@ -12,15 +11,47 @@ import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import i5 from "../sources/i5.jpg";
 import i6 from "../sources/i6.jpg";
-import i4 from "../sources/arjit.jpg";
 import i44 from "../sources/i4.jpg";
-
+import { storage } from '../firebase/firebase';
+import { ref, getDownloadURL } from 'firebase/storage';
 
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userName, setUserName] = useState("");
+  const [images, setImages] = useState({});
   const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const imageRefs = [
+          { key: 'arjit', ref: ref(storage, 'statics/arjit.jpg') },
+          { key: 'bg', ref: ref(storage, 'statics/bghome.webp') }
+        ];
+
+        const urls = await Promise.all(
+          imageRefs.map(async ({ key, ref }) => {
+            const url = await getDownloadURL(ref);
+            return { [key]: url };
+          })
+        );
+
+        const imagesObj = urls.reduce((acc, curr) => {
+          return { ...acc, ...curr };
+        }, {});
+
+        setImages(imagesObj);
+      } catch (error) {
+        console.error("Error fetching images from Firebase:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -73,7 +104,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <> 
       <section id='part-1'>
         <div className='black-box'>
           <p>Welcome {userName ? userName : ""}!! Free Shipping available worldwide!</p>
@@ -97,62 +128,62 @@ const Home = () => {
 
 
       <section id="paint-pic">
-        <img src={bghome} alt="" />
+        <img src={images.bg} alt="" />
       </section>
 
      
      
      
       <section id='home-div'>
-    <div className='flex-row hr'>
-        <div className='flex-col hc'>
-            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                <div className='discount'>-25%</div>
+        <div className='flex-row hr'>
+            <div className='flex-col hc'>
+                <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Red</h5>
+                    <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                    <div className='discount'>-25%</div>
+                </div>
+            </div>
+
+            <div className='flex-col hc'>
+                <img src={i3} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i44} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Porsche</h5>
+                    <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
+                    <div className='discount'>-36%</div>
+                </div>
+            </div>
+
+            <div className='flex-col hc'>
+                <img src={i5} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Black</h5>
+                    <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+                    <div className='discount'>-21%</div>
+                </div>
+            </div>
+
+            <div className='flex-col hc'>
+                <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Red</h5>
+                    <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                    <div className='discount'>-25%</div>
+                </div>
             </div>
         </div>
-
-        <div className='flex-col hc'>
-            <img src={i3} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i44} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Porsche</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
-                <div className='discount'>-36%</div>
-            </div>
-        </div>
-
-        <div className='flex-col hc'>
-            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Black</h5>
-                <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
-                <div className='discount'>-21%</div>
-            </div>
-        </div>
-
-        <div className='flex-col hc'>
-            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                <div className='discount'>-25%</div>
-            </div>
-        </div>
-    </div>
-</section>
+      </section>
 
 
-<section id="part-3">
+      <section id="part-3">
         <div className='p3-part1'>
           <h3>Discover our<br />
             latest vintage<br />
@@ -168,7 +199,7 @@ const Home = () => {
           <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
         </div>
         <div className='p3-part2'>
-          <img src={i4} alt='' />
+          <img src={images.arjit} alt='Arjit' />
         </div>
       </section>
      
