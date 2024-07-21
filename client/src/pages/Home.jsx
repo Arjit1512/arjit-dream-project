@@ -14,8 +14,9 @@ import i5 from "../sources/i5.jpg";
 import i6 from "../sources/i6.jpg";
 import i7 from "../sources/i7.png";
 import i8 from "../sources/i8.png";
-import i4 from "../sources/arjit.jpg";
-import i44 from "../sources/i4.jpg";
+import i4 from "../sources/i4.jpg";
+import i44 from "../sources/arjit.jpg";
+import voth from '../sources/voth.jpg';
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userName, setUserName] = useState("");
@@ -90,10 +91,10 @@ const Home = () => {
 
           <div className='social-icons'>
             <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
-            <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
+            {/* <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
             <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
-            <FontAwesomeIcon className="fa-icon" icon={faPinterest} />
-            <div className="cart-icon" onClick={() => navigate('/cart-page', { state: { cartItems } })}>
+            <FontAwesomeIcon className="fa-icon" icon={faPinterest} /> */}
+            <div className="cart-icon" onClick={() => navigate('/get-cart')}>
               <FontAwesomeIcon className="fa-icon" icon={faCart} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
             </div>
@@ -104,7 +105,7 @@ const Home = () => {
 
 
       <section id="paint-pic">
-        <img src={bghome} alt="" />
+        <img src={voth} alt="" />
       </section>
 
      
@@ -112,7 +113,7 @@ const Home = () => {
      
       <section id='home-div'>
     <div className='flex-row hr'>
-        <div className='flex-col hc'>
+        <div className='flex-col hc' onClick={() => {navigate("/products/1")}}>
             <img src={i1} className="body-img-top" alt="T-Shirt Green" />
             <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -123,9 +124,9 @@ const Home = () => {
             </div>
         </div>
 
-        <div className='flex-col hc'>
+        <div className='flex-col hc' onClick={() => {navigate("/products/3")}}>
             <img src={i3} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i44} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
                 <p className='gray-text'>OVERSIZED T-SHIRT</p>
                 <h5 className="body-title">T-Shirt Porsche</h5>
@@ -134,7 +135,7 @@ const Home = () => {
             </div>
         </div>
 
-        <div className='flex-col hc'>
+        <div className='flex-col hc' onClick={() => {navigate("/products/5")}}>
             <img src={i5} className="body-img-top" alt="T-Shirt Green" />
             <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -145,7 +146,7 @@ const Home = () => {
             </div>
         </div>
 
-        <div className='flex-col hc'>
+        <div className='flex-col hc' onClick={() => {navigate("/products/7")}}>
             <img src={i7} className="body-img-top" alt="T-Shirt Green" />
             <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -166,16 +167,22 @@ const Home = () => {
             editions and <br />
             more collection</h3>
 
-          <p>Available to purchase on our boutiques<br />
-            worldwide. Whether you choose to be a royal<br />
-            beauty in couture or to embrace your fairytale<br />
-            dream in a GALA creation, each dress is far<br />
-            beyond a product - it's a story.</p>
+          <p> Our dedication to excellence extends beyond<br/>
+          our product
+           selection. We believe
+           in delivering<br/>
+           exceptional customer
+           service to ensure your<br/> satisfaction. From the
+           moment you browse our website<br/>
+           to the time your order arrives at your doorstep,<br/>
+           we strive to make every step of your shopping<br/>
+           journey seamless and enjoyable.
+</p>
 
           <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
         </div>
         <div className='p3-part2'>
-          <img src={i4} alt='' />
+          <img src={i44} alt='' />
         </div>
       </section>
      
@@ -205,38 +212,35 @@ const Home = () => {
 
         <div className='navigate'>
           <h5>NAVIGATE</h5>
-          <a>Shop</a>
-          <a>About</a>
-          <a>Contact</a>
-          <a>Store locator</a>
+          <a href='/products'>Shop</a>
+          <a href='/community'>Contact</a>
+          {/* <a>Store locator</a> */}
         </div>
 
         <div className='get-help'>
           <h5>GET HELP</h5>
-          <a>FAQ</a>
-          <a>Delivery</a>
-          <a>Order Process</a>
-          <a>Returns</a>
+          <a href='/FAQ'>FAQ</a>
+          <a href='/FAQ'>Delivery</a>
+          <a href='/FAQ'>Order Process</a>
+          <a href='/returns'>Returns</a>
         </div>
 
         <div className='social'>
           <h5>SOCIAL</h5>
           <a>Instagram</a>
           <a>Facebook</a>
-          <a>Tiktok</a>
           <a>Pinterest</a>
         </div>
 
         <div className='customer-service'>
           <h5>CUSTOMER SERVICE</h5>
-          <a>Privacy Policy</a>
-          <a>Terms & Conditions</a>
-          <a>Payments</a>
-          <a>Let's Act</a>
+          <a href='/privacy-policy'>Privacy Policy</a>
+          <a href='/customer-care'>Terms & Conditions</a>
+          <a href='/FAQ'>Payments</a>
         </div>
 
         <div className='copy-right'>
-          <p>© Copyright 2023 Arjit Avadhanam</p>
+          <p>© Copyright 2024 True Hood</p>
         </div>
       </section>
     </>
