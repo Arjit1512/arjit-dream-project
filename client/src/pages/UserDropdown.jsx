@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import '../App.css'
+import '../App.css';
 
 const UserDropdown = ({ userName, handleLogout }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -20,7 +20,7 @@ const UserDropdown = ({ userName, handleLogout }) => {
           <Link to="/dashboard">My Orders</Link>
           <Link to="/customer-care">Customer Care</Link>
           {userName ? (
-            <button onClick={handleLogout}>Logout</button>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
           ) : (
             <Link to="/login">Login</Link>
           )}

@@ -140,6 +140,9 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Sale from './pages/Sale';
+import FAQ from './pages/FAQ';
+import PrivacyPolicy from './pages/PP';
+import Returns from './pages/Returns';
 import Community from './pages/Community';
 import DetailedPage from './pages/DetailedPage';
 import DetailedPage2 from './pages/DetailedPage2';
@@ -162,7 +165,10 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/about-us" element={<AboutUs />} />
       <Route path="/sale" element={<Sale />} />
+      <Route path="/FAQ" element={<FAQ />} />
+      <Route path="/returns" element={<Returns />} />
       <Route path="/community" element={<Community />} />
+      <Route path='/privacy-policy' element={<PrivacyPolicy/>} />
       <Route path="/detailedPage" element={<DetailedPage />} />
       <Route path="/detailedPage2" element={<DetailedPage2 />} />
       <Route path="/cart-page" element={<CartPage />} />

@@ -44,12 +44,49 @@
     position: absolute;
     background-color: transparent;
     top: 9%;
-    right: 25%;
+    right: 18%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 30%;
 }
+
+/*DROPDOWN STYLING*/
+.dropdown-content button{
+    color: white;
+    padding: 15px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    background-color: #000;
+    position: relative;
+    left:25%;
+  }
+  
+  .dropdown-content button:hover {
+    background-color: white;
+    color: white;
+  }
+  
+  /* .dropdown-content button {
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 4px;
+    padding: 8px 16px;
+    text-align: center;
+    margin-top: 5px;
+  }
+   */
+  .dropdown-content button:hover {
+    background-color: #ff1a1a;
+  }
+
+
+
+
 /*HOME-DIVVVVVVVVVVVVVVVVVVVVVVVVVV*/
 
 #home-div{
@@ -305,6 +342,10 @@
     margin-top: 2%;
     /* background-color: #000; */
 }
+#last a{
+    text-decoration: none;
+    color: #000;
+}
 
 .navigate,
 .get-help,
@@ -377,7 +418,14 @@ Link {
     justify-content: space-between;
     margin-bottom: -45px;
 }
+#start-div p{
+    font-family:  'Inconsolata', monospace;
+    font-size: 0.8rem;
 
+}
+.div02 button{
+    cursor: pointer;
+}
 .div01 {
     display: flex;
     flex-direction: column;
@@ -789,7 +837,7 @@ textarea {
 }
 
 .blink {
-    animation: blinkAnimation 3s infinite;
+    animation: blinkAnimation 9s infinite;
 }
 
 @keyframes blinkAnimation {
@@ -877,7 +925,7 @@ textarea {
     display: flex;
     position: relative;
     height: 700px;
-    background-color: ghostwhite;
+    background-color: whitesmoke;
 }
 
 #prodetails .single-pro-image {
@@ -885,6 +933,7 @@ textarea {
     position: relative;
     padding: 5% 3% 15% 10%;
     margin-right: 50px;
+    background-color: whitesmoke;
 }
 
 .small-img-group {
@@ -900,6 +949,7 @@ textarea {
 #prodetails .single-pro-details {
     width: 50%;
     padding-top: 5%;
+    background-color: whitesmoke;
 }
 
 .single-pro-details h1 {
@@ -1057,6 +1107,7 @@ button.normal {
 .cart-icon {
     position: relative;
     cursor: pointer;
+    margin: 0% 28%;
 }
 
 .cart-badge {
@@ -1122,16 +1173,16 @@ button.normal {
 }
 
 .s-box {
-    background-color: orangered;
+    background-color: rgb(220, 39, 39);
     color: rgb(0, 0, 0);
-    padding: 18px 15px;
+    padding: 16px 14px;
     position: relative;
     top: 4vh;
     text-decoration: none;
     border-radius: 5%;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 1.3rem;
-    font-family: 'Playfair Display', serif;
+    font-family:  'Rubik', sans-serif;
     border: 2px solid rgb(0, 0, 0);
     cursor: pointer;
 }
@@ -1165,9 +1216,8 @@ button.normal {
     flex-direction: row;
     position: relative;
     left: 15%;
-    top: 5vh;
+    /* top: 5vh; */
     padding-bottom: 2%;
-
 }
 
 .cart-class1 img {
@@ -1197,7 +1247,7 @@ button.normal {
     background-color: #000;
     position: relative;
     right: 40%;
-    top: 38vh;
+    top: 34vh;
 }
 
 .filter-gray{
@@ -1248,9 +1298,16 @@ button.normal {
     flex-direction: column;
     position: absolute;
     left: 72%;
-    top: 15vh;
+    top: 20vh;
     padding-bottom: 2%;
     border: 2px solid black;
+}
+.shopping-cart{
+    font-size: 1.2rem;
+    position: relative;
+    left: 5%;
+    width: fit-content;
+    font-family: 'Rubik', sans-serif;
 }
 
 .inside {
@@ -1297,8 +1354,7 @@ button.normal {
     top: 100%; /* Position dropdown below the icon */
   }
   
-  .dropdown-content a,
-  .dropdown-content button {
+  .dropdown-content a{
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -1308,8 +1364,7 @@ button.normal {
     transition: background-color 0.3s ease; /* Smooth background color transition */
   }
   
-  .dropdown-content a:hover,
-  .dropdown-content button:hover {
+  .dropdown-content a:hover {
     background-color: #393333;
     color: white;
   }
@@ -1318,3 +1373,30 @@ button.normal {
     display: block;
   }
   
+  .image-thumbnails {
+    display: flex;
+    justify-content: center;
+    /* margin-top: 10px; */
+    position: absolute;
+    top: 68%;
+    left: 9.6%;
+  }
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.thumbnail.active {
+    border: 2px solid black; /* Black border for the selected thumbnail */
+}
+.product-line{
+    height:1px;
+    width:130%;
+    background-color: black;
+    position: relative;
+    right:29%;
+  }

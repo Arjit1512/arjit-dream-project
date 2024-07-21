@@ -283,9 +283,9 @@ const Community = () => {
           <h1>Give us your valuable feedback.</h1>
           <div className='brown-border'></div>
           <p className='text-community'>
-            Before we kick off any project we like to consult with you to give you the most accurate quote possible.
+            Before we kick off any project we like to consult with you to give you the most accurate product possible.
             <br />
-            Use the form below to schedule a time and day for us to come out and check out your property.
+            Use the form below to send us your feedback to improve ourselves and come out with a better product.
           </p>
 
           <form onSubmit={handleSubmit}>
@@ -313,13 +313,7 @@ const Community = () => {
           </div>
           <div className='light-border lb2'></div>
           <div className='address'>
-            <p>Arjit Avadhanam<br />
-              IIIT Sricity<br />
-              near Tada<br />
-              Sricity, 517646<br />
-              <br />
-              avadhanamarjit15@gmail.com<br />
-              9618825172
+              <p>truehood.business@gmail.com<br />
             </p>
           </div>
         </div>

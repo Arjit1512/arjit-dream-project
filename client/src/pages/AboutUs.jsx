@@ -7,12 +7,11 @@ import background from "../sources/background.mp4";
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i11 from "../sources/i11.png";
-import i4 from "../sources/i3.webp";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import hyena from "../sources/hyena.webp";
-import hyena2 from "../sources/hyena2.avif";
+import i4 from "../sources/i4.jpg";
+import { BrowserRouter as Router, Route, Link, useNavigate } from 'react-router-dom';
 
 const AboutUs = () => {
+    const navigate=useNavigate();
     return (
         <>
             <section id='start-div'>
@@ -25,23 +24,24 @@ const AboutUs = () => {
                         consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature.</p>
                 </div>
                 <div className='div02'>
-                    <h6>SCHEDULE A CONSULTATION</h6>
-                    <p>In order to provide accurate pricing our<br />
-                        project manager will meet with you in<br />
-                        your home or business to discuss your<br />
-                        painting needs.</p>
-                    <button>START HERE</button>
+                    <h6>CUSTOMIZE YOUR T-SHIRTS</h6>
+                    <p>In order to provide accurate pricing, our<br />
+                        project manager will get in touch with you<br />
+                        to discuss your clothing needs.Also, we are<br />
+                        here to satisfy all your specifications<br/>
+                        no matter what.</p>
+                    <button onClick={()=>navigate("/community")}>START HERE</button>
                 </div>
             </section>
 
 
 
-            <section id="black-panther-1">
+            {/* <section id="black-panther-1">
                 <div className='bp1'>
                     <h6>FOUNDERS</h6>
                     <h2><i>Meet Arjit & Srawan</i></h2>
                 </div>
-            </section>
+            </section> */}
 
             {/* <section id='bp-sandwich'>
                 <div className='container-choose'>
@@ -52,15 +52,15 @@ const AboutUs = () => {
                 </div>
             </section> */}
 
-            <section id="black-panther-2">
-                {/* <div className='bp2'>
+            {/* <section id="black-panther-2">
+                <div className='bp2'>
                     <h4>Band is a multidisciplinary creative studio.</h4>
                     <p>We work together to design, create and produce work that we are proud of for<br />
                         folks that we believe in. We are available for hire in a wide range of creative<br />
                         discilpines for a variety of jobs, projects and gigs.</p>
-                </div> */}
+                </div>
 
-                {/* <div className='img-section'>
+                <div className='img-section'>
                     <img src={hyena} alt="" className='hyena-img' />
                     <div className='shit' >
                         <p>While functionality is important on a website, the design creates the first impression. So, don’t let these awesome<br />
@@ -77,17 +77,17 @@ const AboutUs = () => {
                             with smooth and lovely animations. Graceful page transitions also add charm to the website.
                         </p>
                     </div>
-                </div> */}
-                {/*<div className='img-section2'>
+                </div>
+                <div className='img-section2'>
                     <img src={i1} alt="" className='picture1' />
                     <img src={i2} alt="" className='picture2' />
                     <img src={i1} alt="" className='picture1' />
                     <img src={i2} alt="" className='picture2' />
-                </div> */}
-                {/* <div className='hyena'>
+                </div>
+                <div className='hyena'>
 
-                </div> */}
-            </section>
+                </div>
+            </section> */}
 
             
         </>

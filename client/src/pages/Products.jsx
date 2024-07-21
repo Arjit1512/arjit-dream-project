@@ -9,9 +9,10 @@ import 'rc-slider/assets/index.css';
 
 const Products = () => {
   const [sort, setSort] = useState('Recommended');
-  const [filter, setFilter] = useState({ price: false, category: false });
+  const [filter, setFilter] = useState({ price: false, category: false, collection: false });
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCollection, setSelectedCollection] = useState('All');
 
   const handleSortClick = (newSort) => {
     setSort(newSort);
@@ -29,10 +30,18 @@ const Products = () => {
     setSelectedCategory(event.target.value);
   };
 
+  const handleCollectionChange = (event) => {
+    setSelectedCollection(event.target.value);
+  };
+
   const filteredClothes = Clothes.filter((cloth) => {
     const priceCondition = cloth.price >= priceRange[0] && cloth.price <= priceRange[1];
     const categoryCondition = selectedCategory === 'All' || cloth.category === selectedCategory;
-    return priceCondition && categoryCondition;
+    const collectionCondition =
+      selectedCollection === 'All' ||
+      (selectedCollection === 'Vengeance' && cloth.name === 'Vengeance of the Hood') ||
+      (selectedCollection === 'Kendrick Lamar' && cloth.name === 'The Kendrick Lamar Tee');
+    return priceCondition && categoryCondition && collectionCondition;
   });
 
   const sortedClothes = [...filteredClothes].sort((a, b) => {
@@ -52,10 +61,12 @@ const Products = () => {
     };
 
     return (
-      <div className='flex-col slp'>
+      <div className='flex-col fc slp cloth-props'>
         <img src={props.img} alt="product.jpg" className='style-cloth' onClick={handleClick} />
-        <p>{props.name}</p>
-        <h6>{props.price}</h6>
+        <div className='small'>
+          <p>{props.name}</p>
+          <h6>₹{props.price}.00</h6>
+        </div>
       </div>
     );
   };
@@ -75,17 +86,14 @@ const Products = () => {
 
   return (
     <>
-       <section id='part-1'>
+      <section id='part-1'>
         <div className='black-box'>
-          <p>Free Shipping available worldwide!</p>
+          <p className='blink'>OUR SALE IS LIVE NOW!</p>
         </div>
         <div className='navbar'>
           <p>TRUE HOOD</p>
         </div>
       </section>
-
-
-
 
       <section id="sale-products">
         <div className='slp1'>
@@ -136,14 +144,27 @@ const Products = () => {
               </select>
             </div>
           )}
+          <div className='gray-line'></div>
+          <div className='far-away' onClick={() => handleFilterClick('collection')}>
+            <h3>Collections</h3>
+            <h3 style={{ cursor: "pointer" }}>{filter.collection ? '-' : '+'}</h3>
+          </div>
+          {filter.collection && (
+            <div className="filter-dropdown">
+              <select onChange={handleCollectionChange} value={selectedCollection}>
+                <option value="All">All</option>
+                <option value="Vengeance">Vengeance</option>
+                <option value="Kendrick Lamar">Kendrick Lamar</option>
+              </select>
+            </div>
+          )}
           <div className='gray-line filter-gray'></div>
         </div>
 
         <div className='slp2'>
           <h3>All Products</h3>
-          <p>This is your category description. It’s a great place to tell customers what this category is<br />
-            about, connect with your audience and draw attention to your products.</p>
-
+          <p>At True Hood, we are committed to providing you with the best possible shopping experience.<br />
+   We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
           <div className='space-btw'>
             <h5>{sortedClothes.length} products</h5>
             <select onChange={(e) => handleSortClick(e.target.value)} value={sort}>
@@ -163,13 +184,44 @@ const Products = () => {
         <img src={bg} alt="" />
       </section>
 
-      <div className='slp-last'>
-        <h4>ARJIT AVADHANAM</h4>
-        <br />
-        <p>info@mysite.com</p>
+      <section id="last">
 
-        <p>© Copyright 2023 Arjit Avadhanam</p>
-      </div>
+
+
+
+<div className='navigate'>
+  <h5>NAVIGATE</h5>
+  <a href='/products'>Shop</a>
+  <a href='/community'>Contact</a>
+  {/* <a>Store locator</a> */}
+</div>
+
+<div className='get-help'>
+  <h5>GET HELP</h5>
+  <a href='/FAQ'>FAQ</a>
+  <a href='/FAQ'>Delivery</a>
+  <a href='/FAQ'>Order Process</a>
+  <a href='/returns'>Returns</a>
+</div>
+
+<div className='social'>
+  <h5>SOCIAL</h5>
+  <a>Instagram</a>
+  <a>Facebook</a>
+  <a>Pinterest</a>
+</div>
+
+<div className='customer-service'>
+  <h5>CUSTOMER SERVICE</h5>
+  <a href='/privacy-policy'>Privacy Policy</a>
+  <a href='/customer-care'>Terms & Conditions</a>
+  <a href='/FAQ'>Payments</a>
+</div>
+
+<div className='copy-right'>
+<p>© Copyright 2024 True Hood</p>
+</div>
+</section>
     </>
   );
 }

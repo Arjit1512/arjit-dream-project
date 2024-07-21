@@ -8,7 +8,7 @@ import User from "./models/User.js";
 import Cart from "./models/Cart.js";
 import products from './products.js'; // Import the products
 import BlacklistToken from './models/BlackListToken.js';
-
+import { createOrder, verifyPayment } from './controllers/paymentController.js';
 dotenv.config();
 const app = express();
 const allowedOrigins = [
@@ -41,6 +41,12 @@ app.post("/auth/login", (req, res) => {
 app.post("/auth/register", (req, res) => {
     register(req, res);
 });
+
+// Add Razorpay payment routes
+
+app.post('/payment/create-order', auth, createOrder);
+app.post('/payment/verify-payment', auth, verifyPayment);
+
 
 app.post("/logout", auth, async (req, res) => {
     try {
@@ -233,6 +239,22 @@ app.post('/checkout', auth, async (req, res) => {
             return res.status(404).json({ message: 'Cart not found' });
         }
 
+        // Calculate total price with tax and delivery charges
+        const totalAmount = cart.totalPrice + 100;
+
+        // Create Razorpay order
+        const orderOptions = {
+            amount: totalAmount * 100, // amount in the smallest currency unit
+            currency: "INR",
+            receipt: `receipt_order_${userId}`,
+            notes: {
+                userId: userId.toString(),
+                userName: req.user.userName
+            }
+        };
+
+        const order = await razorpay.orders.create(orderOptions);
+
         // Save current cart items and total price to user's totalOrders
         const user = await User.findById(userId);
         if (!user) {
@@ -241,7 +263,7 @@ app.post('/checkout', auth, async (req, res) => {
 
         user.totalOrders.push({
             items: cart.items,
-            totalBill: cart.totalPrice + 100, // Adding 100 for tax and delivery charges
+            totalBill: totalAmount,
             orderDate: new Date(),
             userName: user.userName,
             userEmail: user.email
@@ -260,13 +282,15 @@ app.post('/checkout', auth, async (req, res) => {
                 userName: user.userName,
                 email: user.email,
                 totalOrders: user.totalOrders
-            }
+            },
+            order
         });
     } catch (error) {
         console.error('Error during checkout:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 app.get('/dashboard', auth, async (req, res) => {
     const userId = req.user._id;

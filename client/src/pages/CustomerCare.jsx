@@ -6,7 +6,7 @@ const CustomerCare = () => {
         <div className="customer-care-container">
             <h1>Customer Care</h1>
             <p>
-                Welcome to our Customer Care page! At Arjit Avadhanam, we are committed to providing you with the best possible shopping experience. Here's how we can assist you:
+                Welcome to our Customer Care page! At True Hood, we are committed to providing you with the best possible shopping experience. Here's how we can assist you:
             </p>
             <section className="customer-care-section">
                 <h2>Contact Us</h2>
@@ -14,9 +14,9 @@ const CustomerCare = () => {
                     If you have any questions, concerns, or feedback, our customer care team is here to help. You can reach us via:
                 </p>
                 <ul>
-                    <li>Phone: +91 9618825172</li>
-                    <li>Email: avadhanamarjit15@gmail.com</li>
-                    <li>Live Chat: https://www.instagram.com/hood.clothing.in</li>
+                    <li>WhatsApp: <i>+91 9618825172</i></li>                   
+                    <li>Email: <i>truehood.business@gmail.com</i></li>
+                    <li>Live Chat: <i>https://www.instagram.com/hood.clothing.in</i></li>
                 </ul>
             </section>
             <section className="customer-care-section">
@@ -27,7 +27,6 @@ const CustomerCare = () => {
                 <ul>
                     <li>How do I track my order?</li>
                     <li>What is your return policy?</li>
-                    <li>How do I update my account information?</li>
                 </ul>
                 <p>
                     Visit our <a href="/faq">FAQ page</a> for more information.

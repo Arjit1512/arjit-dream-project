@@ -1,217 +1,9 @@
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import "../App.css";
-
-// const CartDetail = () => {
-//   const [user, setUser] = useState(null);
-//   const [totalPrice, setTotalPrice] = useState(0);
-//   const { id } = useParams();
-
-//   useEffect(() => {
-//     const doCart = async () => {
-//       try {
-//         const response = await axios.get(`http://localhost:3001/get-cart/${id}`);
-//         const data = response.data;
-//         setUser(data.cart);
-//         setTotalPrice(data.totalPrice);
-//         console.log("Cart data fetched", data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     doCart();
-//   }, [id]);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && Array.isArray(user)) {
-//     return (
-//       <>
-//         <h1 className='heading-sale cart-head'>SHOPPING CART</h1>
-//         <div className='black-border'></div>
-
-//         {user.map((item) => (
-//           <div key={item._id} className='cart-class1'>
-//             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-//            <div className='flex-col calvin1'> 
-//             <h3>{item.name}</h3>
-//             <p className='quantity'>Quantity: {item.quantity}</p>
-//             {/* <p>Price per item: {item.price / item.quantity}</p> */}
-//             <h3 className='itemprice'>INR {item.price}</h3>
-            
-//             <div className='border-45'></div>
-//             </div>
-            
-//           </div>
-          
-//         ))}
-//         <div className='cart-class2'>
-//          <div className='inside'>
-//           <h2>ORDER SUMMARY</h2>
-//           <h4><span>SUB TOTAL:</span> INR {totalPrice}</h4>
-//           <h4><span>TAX AND DELIVERY CHARGES:</span> INR {100}</h4>
-//           <h4><span>TOTAL:</span> INR {totalPrice+100}</h4>
-//           <button className='last-button'>CHECKOUT</button>
-//         </div>
-//         </div>
-        
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-//     </>
-//   );
-// };
-
-// export default CartDetail;
-
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import "../App.css";
-
-// const CartDetail = () => {
-//   const [user, setUser] = useState(null);
-//   const [totalPrice, setTotalPrice] = useState(0);
-//   const { id } = useParams();
-
-//   // Define endpoint URLs
-//   const endpointUrls = {
-//     getCart: `http://localhost:3001/get-cart/${id}`,
-//     getAnotherData: `https://arjit-fashion.vercel.app/get-cart/${id}`,
-//   };
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(endpointUrls.getCart);
-//         const data = response.data;
-//         setUser(data.cart);
-//         setTotalPrice(data.totalPrice);
-//         console.log("Cart data fetched", data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     fetchData();
-//   }, [id, endpointUrls.getCart]);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && Array.isArray(user)) {
-//     return (
-//       <>
-//         <h1>INDIVIDUAL ITEMS</h1>
-//         {user.map((item) => (
-//           <div key={item._id}>
-//             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-//             <p>No of items: {item.quantity}</p>
-//             <p>Price per item: {item.price / item.quantity}</p>
-//             <h3>Total for this item: {item.price}</h3>
-//           </div>
-//         ))}
-//         <h2>Total Bill: {totalPrice}</h2>
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-//     </>
-//   );
-// };
-
-// export default CartDetail;
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import "../App.css";
-
-// const CartDetail = () => {
-//   const [user, setUser] = useState(null);
-//   const [totalPrice, setTotalPrice] = useState(0);
-//   const { id } = useParams();
-
-//   // Define endpoint URLs
-//   const endpointUrls = {
-//     getCart: `http://localhost:3001/get-cart/${id}`,
-//     getAnotherData: `https://arjit-fashion.vercel.app/get-cart/${id}`,
-//     // Add more endpoint URLs as needed
-//   };
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get(endpointUrls.getCart);
-//         const data = response.data;
-//         setUser(data.cart);
-//         setTotalPrice(data.totalPrice);
-//         console.log("Cart data fetched", data);
-//       } catch (error) {
-//         console.error('Failed to fetch cart data', error);
-//         if (error.response) {
-//           // Server responded with a status other than 2xx
-//           console.error('Error data:', error.response.data);
-//           console.error('Error status:', error.response.status);
-//           console.error('Error headers:', error.response.headers);
-//         } else if (error.request) {
-//           // Request was made but no response was received
-//           console.error('Error request:', error.request);
-//         } else {
-//           // Something happened in setting up the request
-//           console.error('Error message:', error.message);
-//         }
-//       }
-//     };
-
-//     fetchData();
-//   }, [id, endpointUrls.getCart]);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (user && Array.isArray(user)) {
-//     return (
-//       <>
-//         <h1>INDIVIDUAL ITEMS</h1>
-//         {user.map((item) => (
-//           <div key={item._id}>
-//             <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
-//             <p>No of items: {item.quantity}</p>
-//             <p>Price per item: {(item.price / item.quantity).toFixed(2)}</p>
-//             <h3>Total for this item: {item.price}</h3>
-//           </div>
-//         ))}
-//         <h2>Total Bill: {totalPrice}</h2>
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <h3 style={{ textAlign: "center" }}>Oops, you don't have anything in your cart! 😞</h3>
-//     </>
-//   );
-// };
-
-// export default CartDetail;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { useCart } from './CartContext';
+import imageMapping from './imageMapping';
+import './Dashboard.css';
 
 const CartDetail = () => {
   const [loading, setLoading] = useState(true);
@@ -243,7 +35,7 @@ const CartDetail = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching cart data:', error.message);
-        setError('Error fetching cart data');
+        setError(null);
         setLoading(false);
       }
     };
@@ -276,6 +68,20 @@ const CartDetail = () => {
     }
   };
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
   const handleCheckout = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -284,14 +90,61 @@ const CartDetail = () => {
         throw new Error('User not authenticated');
       }
 
-      await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, null, {
+      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/payment/create-order`, {
+        amount: (state.totalPrice + 100) * 100, // amount in paise
+        currency: 'INR',
+        receipt: 'order_rcptid_11'
+      }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      dispatch({ type: 'CLEAR_CART' });
-      navigate('/dashboard');
+      const { id: orderId, amount, currency } = orderResponse.data;
+
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        throw new Error('Razorpay SDK failed to load. Are you online?');
+      }
+
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
+        amount,
+        currency,
+        name: 'TRUE HOOD',
+        description: 'Transaction',
+        order_id: orderId,
+        handler: async function (response) {
+          try {
+            const paymentResponse = await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
+              razorpay_order_id: orderId,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            }, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+
+            dispatch({ type: 'CLEAR_CART' });
+            navigate('/dashboard');
+          } catch (error) {
+            console.error('Error verifying payment:', error.message);
+            setError('Payment verification failed');
+          }
+        },
+        prefill: {
+          name: 'Arjit Avadhanam',
+          email: 'avadhanamarjit15@gmail.com',
+          contact: '9618825172'
+        },
+        theme: {
+          color: '#3399cc'
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (error) {
       console.error('Error during checkout:', error.message);
       setError('Error during checkout: ' + error.message);
@@ -308,23 +161,39 @@ const CartDetail = () => {
 
   if (!state.cartItems || state.cartItems.length === 0) {
     return (
-      <h3 style={{ textAlign: 'center' }}>Oops, you don't have anything in your cart! 😞</h3>
+      <>
+      <h3 style={{ textAlign: 'center' }}></h3>
+    
+      <div className='no-orders'>
+            <p>Oops, you don't have anything in your cart! 😞</p>
+          </div>
+          </>
     );
   }
 
   return (
     <>
-      <h1 className="heading-sale cart-head">SHOPPING CART</h1>
-      <div className="black-border"></div>
+      <section id='part-1'>
+        <div className='black-box'>
+          <p>Free Shipping available worldwide!</p>
+        </div>
+        <div className='navbar barrr'>
+          <p>TRUE HOOD</p>
+        </div>    
+      </section>              
 
+      <div className="black-border"></div>
+      <div className='shopping-cart'>
+        <h3>SHOPPING CART</h3>
+      </div>
       {state.cartItems.map((item) => (
         <div key={item._id} className="cart-class1">
-          <img src={`/images/pro${item.productId}.webp`} alt={`Product ${item.productId}`} />
+          <img src={imageMapping[item.productId]} alt={`Product ${item.productId}`} />
           <div className="flex-col calvin1">
             <h3>{item.name}</h3>
             {item.size && <p>Size: {item.size}</p>}
             <p className="quantity calvin1">Quantity: {item.quantity}</p>
-            <h3 className="itemprice">INR {item.price * item.quantity}</h3> {/* Correctly calculate the total price for the item */}
+            <h3 className="itemprice">₹{item.price * item.quantity}.00</h3> {/* Correctly calculate the total price for the item */}
             <div className="quantity-buttons">
               <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
               <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>

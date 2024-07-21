@@ -1,398 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import Clothes from './Clothes.jsx';
-// import "../App.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faFacebook, faInstagram, faPinterest, faTwitter, faYoutube, faShopify, faShoppingCart } from "@fortawesome/free-brands-svg-icons";
-// import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
-// import { useNavigate, useLocation } from 'react-router-dom';
-// import i1 from "../sources/i1.jpg";
-// import i2 from "../sources/i2.jpg";
-// import i3 from "../sources/i3.jpg";
-// import { useCart } from './CartContext.js';
-// import axios from 'axios';
-
-// const ProductDetail = () => {
-//     const { id } = useParams();
-//     const { addToCart } = useCart();
-//     const [product, setProduct] = useState(null);
-//     const [showNotification, setShowNotification] = useState(false);
-//     const navigate = useNavigate();
-//     const userId = localStorage.getItem('userId');
-
-//     useEffect(() => {
-//         const fetchProductDetails = async () => {
-//             try {
-//                 const fetchedProduct = Clothes.find((p) => p.id === parseInt(id));
-//                 setProduct(fetchedProduct);
-//             } catch (error) {
-//                 console.error('Error fetching product details:', error);
-//             }
-//         };
-
-//         fetchProductDetails();
-//     }, [id]);
-
-//     const handleAddToCart = async () => {
-//         if (!product) {
-//             console.error('Product details not available');
-//             return;
-//         }
-    
-//         console.log('Product details:', product);
-    
-//         const selectedImage = `../sources/pro${product.id}.webp`;
-    
-//         addToCart(selectedImage);
-    
-//         try {
-//             const response = await axios.post(`http://localhost:3001/add-to-cart/${userId}`, {
-//                 productId: product.id,
-//                 quantity: 1,
-//                 price: product.price
-//             });
-    
-//             console.log('Add to cart response:', response.data);
-    
-//             setShowNotification(true);
-    
-//             setTimeout(() => {
-//                 setShowNotification(false);
-//             }, 2000);
-//         } catch (error) {
-//             console.error('Error updating cart:', error);
-//         }
-//     };
-    
-
-//     return (
-//         <>
-//             <section id='part-1'>
-//                 <div className='black-box'>
-//                     <p>Free Shipping available worldwide!</p>
-//                 </div>
-//                 <div className='navbar'>
-//                     <p>ARJIT AVADHANAM</p>
-
-//                     <div className='social-icons'>
-//                         <FontAwesomeIcon className="fa-icon" icon={faInstagram} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faFacebook} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faYoutube} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon
-//                             className="fa-icon"
-//                             onClick={() => navigate("/sale")}
-//                             style={{ cursor: "pointer" }}
-//                             icon={faShopify}
-//                         />
-//                         <div className="cart-icon" onClick={() => navigate(`/get-cart/${userId}`)}>
-//                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
-//                             {/* {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>} */}
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 <div className='light-border width'></div>
-//             </section>
-
-//             <section id="prodetails" className="section-p1">
-//                 {product && (
-//                     <div className="single-pro-image">
-//                         <img id="MainImg" src={product.imgURL} width="100%" alt="" />
-//                     </div>
-//                 )}
-//                 {product && (
-//                     <div className="single-pro-details">
-//                         <h1>{product.name}</h1>
-//                         <h4>Men's Fashion T Shirt</h4>
-//                         <h2>{product.price}</h2>
-//                         <select fdprocessedid="cwggv">
-//                             <option>Select Size</option>
-//                             <option>XL</option>
-//                             <option>XXL</option>
-//                             <option>Small</option>
-//                             <option>Large</option>
-//                         </select>
-//                         <input type="number" value="1" fdprocessedid="1mx0s" />
-//                         <button className="normal" onClick={handleAddToCart}>
-//                             Add to Cart
-//                         </button>
-
-//                         {showNotification && (
-//                             <div className="notification">
-//                                 <p>Item added to cart</p>
-//                             </div>
-//                         )}
-
-//                         <div className='positioning'>
-//                             <h4>Product Details</h4>
-//                             <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
-//                         </div>
-//                     </div>
-//                 )}
-//             </section>
-
-//             <section id='part-2'>
-//                 <div className='light-border width'></div>
-
-//                 <h3>TRY OTHER PRODUCTS</h3>
-
-//                 <div className="testimonial-section">
-//                     <div>
-//                         <div className='shop-images sale-page'>
-//                             <img src={i1} alt='' className='i1'></img>
-//                             <img src={i2} alt='' className='i2'></img>
-//                             <img src={i3} alt='' className='i2'></img>
-//                             <img src={i1} alt='' className='i3'></img>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </section>
-
-//             <div className='light-border width'></div>
-
-//             <section id="last">
-//                 <div className='navigate'>
-//                     <h5>NAVIGATE</h5>
-//                     <a>Shop</a>
-//                     <a>About</a>
-//                     <a>Contact</a>
-//                     <a>Store locator</a>
-//                 </div>
-
-//                 <div className='get-help'>
-//                     <h5>GET HELP</h5>
-//                     <a>FAQ</a>
-//                     <a>Delivery</a>
-//                     <a>Order Process</a>
-//                     <a>Returns</a>
-//                 </div>
-
-//                 <div className='social'>
-//                     <h5>SOCIAL</h5>
-//                     <a>Instagram</a>
-//                     <a>Facebook</a>
-//                     <a>Tiktok</a>
-//                     <a>Pinterest</a>
-//                 </div>
-
-//                 <div className='customer-service'>
-//                     <h5>CUSTOMER SERVICE</h5>
-//                     <a>Privacy Policy</a>
-//                     <a>Terms & Conditions</a>
-//                     <a>Payments</a>
-//                     <a>Let's Act</a>
-//                 </div>
-
-//                 <div className='copy-right'>
-//                     <p>© Copyright 2023 Arjit Avadhanam</p>
-//                 </div>
-//             </section>
-//         </>
-//     )
-// }
-// export default ProductDetail;
-// import React, { useState, useEffect } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import Clothes from './Clothes.jsx';
-// import "../App.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faFacebook, faInstagram, faPinterest, faTwitter, faYoutube, faShopify } from "@fortawesome/free-brands-svg-icons";
-// import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
-// import { useCart } from './CartContext.js';
-// import axios from 'axios';
-
-// import i1 from "../sources/i1.jpg";
-// import i2 from "../sources/i2.jpg";
-// import i3 from "../sources/i3.jpg";
-
-// const ProductDetail = () => {
-//     const { id } = useParams();
-//     const { addToCart } = useCart();
-//     const [product, setProduct] = useState(null);
-//     const [showNotification, setShowNotification] = useState(false);
-//     const navigate = useNavigate();
-//     const userId = localStorage.getItem('userId');
-
-//     const endpointUrls = {
-//         local: `http://localhost:3001/add-to-cart/${userId}`,
-//         remote: `https://arjit-fashion.vercel.app/add-to-cart/${userId}`
-//     };
-
-//     useEffect(() => {
-//         const fetchProductDetails = async () => {
-//             try {
-//                 const fetchedProduct = Clothes.find((p) => p.id === parseInt(id));
-//                 setProduct(fetchedProduct);
-//             } catch (error) {
-//                 console.error('Error fetching product details:', error);
-//             }
-//         };
-
-//         fetchProductDetails();
-//     }, [id]);
-
-//     const handleAddToCart = async () => {
-//         if (!product) {
-//             console.error('Product details not available');
-//             return;
-//         }
-
-//         console.log('Product details:', product);
-
-//         const selectedImage = `../sources/pro${product.id}.webp`;
-
-//         addToCart(selectedImage);
-
-//         try {
-//             const response = await axios.post(endpointUrls.local, {
-//                 productId: product.id,
-//                 quantity: 1,
-//                 price: product.price
-//             });
-
-//             console.log('Add to cart response:', response.data);
-
-//             setShowNotification(true);
-
-//             setTimeout(() => {
-//                 setShowNotification(false);
-//             }, 2000);
-//         } catch (error) {
-//             console.error('Error updating cart:', error);
-//         }
-//     };
-
-//     return (
-//         <>
-//             <section id='part-1'>
-//                 <div className='black-box'>
-//                     <p>Free Shipping available worldwide!</p>
-//                 </div>
-//                 <div className='navbar'>
-//                     <p>ARJIT AVADHANAM</p>
-
-//                     <div className='social-icons'>
-//                         <FontAwesomeIcon className="fa-icon" icon={faInstagram} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faFacebook} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faYoutube} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} style={{ visibility: "hidden" }} />
-//                         <FontAwesomeIcon
-//                             className="fa-icon"
-//                             onClick={() => navigate("/sale")}
-//                             style={{ cursor: "pointer" }}
-//                             icon={faShopify}
-//                         />
-//                         <div className="cart-icon" onClick={() => navigate(`/get-cart/${userId}`)}>
-//                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 <div className='light-border width'></div>
-//             </section>
-
-//             <section id="prodetails" className="section-p1">
-//                 {product && (
-//                     <>
-//                         <div className="single-pro-image">
-//                             <img id="MainImg" src={product.imgURL} width="100%" alt="" />
-//                         </div>
-//                         <div className="single-pro-details">
-//                             <h1>{product.name}</h1>
-//                             <h4>Men's Fashion T Shirt</h4>
-//                             <h2>{product.price}</h2>
-//                             <select fdprocessedid="cwggv">
-//                                 <option>Select Size</option>
-//                                 <option>XL</option>
-//                                 <option>XXL</option>
-//                                 <option>Small</option>
-//                                 <option>Large</option>
-//                             </select>
-//                             <input type="number" value="1" fdprocessedid="1mx0s" />
-//                             <button className="normal" onClick={handleAddToCart}>
-//                                 Add to Cart
-//                             </button>
-
-//                             {showNotification && (
-//                                 <div className="notification">
-//                                     <p>Item added to cart</p>
-//                                 </div>
-//                             )}
-
-//                             <div className='positioning'>
-//                                 <h4>Product Details</h4>
-//                                 <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
-//                             </div>
-//                         </div>
-//                     </>
-//                 )}
-//             </section>
-
-//             <section id='part-2'>
-//                 <div className='light-border width'></div>
-
-//                 <h3>TRY OTHER PRODUCTS</h3>
-
-//                 <div className="testimonial-section">
-//                     <div>
-//                         <div className='shop-images sale-page'>
-//                             <img src={i1} alt='' className='i1'></img>
-//                             <img src={i2} alt='' className='i2'></img>
-//                             <img src={i3} alt='' className='i2'></img>
-//                             <img src={i1} alt='' className='i3'></img>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </section>
-
-//             <div className='light-border width'></div>
-
-//             <section id="last">
-//                 <div className='navigate'>
-//                     <h5>NAVIGATE</h5>
-//                     <a>Shop</a>
-//                     <a>About</a>
-//                     <a>Contact</a>
-//                     <a>Store locator</a>
-//                 </div>
-
-//                 <div className='get-help'>
-//                     <h5>GET HELP</h5>
-//                     <a>FAQ</a>
-//                     <a>Delivery</a>
-//                     <a>Order Process</a>
-//                     <a>Returns</a>
-//                 </div>
-
-//                 <div className='social'>
-//                     <h5>SOCIAL</h5>
-//                     <a>Instagram</a>
-//                     <a>Facebook</a>
-//                     <a>Tiktok</a>
-//                     <a>Pinterest</a>
-//                 </div>
-
-//                 <div className='customer-service'>
-//                     <h5>CUSTOMER SERVICE</h5>
-//                     <a>Privacy Policy</a>
-//                     <a>Terms & Conditions</a>
-//                     <a>Payments</a>
-//                     <a>Let's Act</a>
-//                 </div>
-
-//                 <div className='copy-right'>
-//                     <p>© Copyright 2023 Arjit Avadhanam</p>
-//                 </div>
-//             </section>
-//         </>
-//     );
-// }
-
-// export default ProductDetail;
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Clothes from './Clothes.jsx';
@@ -405,25 +10,78 @@ import axios from 'axios';
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
+import i4 from "../sources/i4.jpg";
 import i5 from "../sources/i5.jpg";
 import i6 from "../sources/i6.jpg";
-import i44 from "../sources/i4.jpg";
+import i7 from "../sources/i7.png";
+import i8 from "../sources/i8.png";
+import i9 from "../sources/pro9.jpg";
+import i10 from "../sources/pro10.jpg";
+import i11 from "../sources/i11.png";
+import i12 from "../sources/i12.png";
+import i13 from "../sources/i13.png";
+import i14 from "../sources/i14.png";
+import i15 from "../sources/i15.png";
+import i16 from "../sources/i16.png";
+import i17 from "../sources/i17.png";
+import i18 from "../sources/i18.png";
 
 const ProductDetail = () => {
     const { id } = useParams();
     const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
     const [showNotification, setShowNotification] = useState(false);
-    const [loading, setLoading] = useState(true); // Loading state
-    const [error, setError] = useState(''); // Error state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
-    const [selectedSize, setSelectedSize] = useState(""); // State to hold selected size
+    const [selectedSize, setSelectedSize] = useState("");
+    const [mainImg, setMainImg] = useState('');
+    const [thumbnailImages, setThumbnailImages] = useState([]);
+    const [thumbnailStyle, setThumbnailStyle] = useState({});
+
+
+    const handleNavigation = (path) => {
+        navigate(path);
+        // window.location.reload();
+        window.scrollTo(0, 0);
+    };
+
+    const images = {
+        1: [i1, i2],
+        3: [i3, i4],
+        5: [i5, i6],
+        7: [i7, i8],
+        15: [i15, i16],
+        11: [i11, i12],
+        13: [i13, i14],
+        17: [i17, i18],
+        9: [i9],
+        10: [i10],
+    };
 
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
                 const fetchedProduct = Clothes.find((p) => p.id === parseInt(id));
                 setProduct(fetchedProduct);
+                setMainImg(fetchedProduct.imgURL);
+
+                if ([9, 10].includes(fetchedProduct.id)) {
+                    // For products 9 and 10, set only the main image
+                    setThumbnailImages([fetchedProduct.imgURL]); // Include the main image as the only thumbnail
+                } else {
+                    // For other products, set additional images as thumbnails
+                    const productImages = images[fetchedProduct.id] || [];
+                    setThumbnailImages([fetchedProduct.imgURL, ...productImages.slice(1)]); // Include the main image and additional thumbnails
+                }
+
+                // Set thumbnail style based on category
+                if (fetchedProduct.category === 'Accessories') {
+                    setThumbnailStyle({ top: '78%' });
+                } else {
+                    setThumbnailStyle({});
+                }
+
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching product details:', error);
@@ -444,43 +102,49 @@ const ProductDetail = () => {
             console.error('Product details not available');
             return;
         }
-    
+
+        if (product.category !== 'Accessories' && !selectedSize) {
+            alert("Please select a size");
+            return;
+        }
+
         const token = localStorage.getItem('token');
         if (!token) {
             navigate("/login");
             return;
         }
-    
-        console.log('Product details:', product);
-    
+
         addToCart({
             productId: product.id,
             quantity: 1,
             price: product.price,
-            size: product.category === 'Accessories' ? null : selectedSize // Include selected size or null for Accessories
+            size: product.category === 'Accessories' ? null : selectedSize
         });
-    
+
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/add-to-cart`, {
                 productId: product.id,
                 quantity: 1,
-                size: product.category === 'Accessories' ? null : selectedSize, // Include selected size or null for Accessories
+                size: product.category === 'Accessories' ? null : selectedSize,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-    
+
             console.log('Add to cart response:', response.data);
-    
+
             setShowNotification(true);
-    
             setTimeout(() => {
                 setShowNotification(false);
             }, 2000);
         } catch (error) {
             console.error('Error adding to cart:', error);
         }
+    };
+
+    const handleImageClick = (imgURL) => {
+        setMainImg(imgURL);
     };
 
     if (loading) {
@@ -506,15 +170,11 @@ const ProductDetail = () => {
                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} style={{ visibility: "hidden" }} />
                         <FontAwesomeIcon className="fa-icon" icon={faYoutube} style={{ visibility: "hidden" }} />
                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} style={{ visibility: "hidden" }} />
-                        <FontAwesomeIcon
-                            className="fa-icon"
-                            onClick={() => navigate("/sale")}
-                            style={{ cursor: "pointer" }}
-                            icon={faShopify}
-                        />
+                       
                         <div className="cart-icon" onClick={() => navigate("/get-cart")}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                         </div>
+                        
                     </div>
                 </div>
 
@@ -524,14 +184,14 @@ const ProductDetail = () => {
             <section id="prodetails" className="section-p1">
                 {product && (
                     <div className="single-pro-image">
-                        <img id="MainImg" src={product.imgURL} width="100%" alt="" />
+                        <img id="MainImg" src={mainImg} width="100%" alt="Main Product" />
                     </div>
                 )}
                 {product && (
                     <div className="single-pro-details">
                         <h1>{product.name}</h1>
-                        <h4>{product.category === 'Accessories' ? 'Fashion Accessories' : 'Men\'s Fashion T Shirt'}</h4>
-                        <h2>{product.price}</h2>
+                        <h4>{product.category === 'Accessories' ? 'Fashion Accessories' : 'Oversized T-Shirt'}</h4>
+                        <h2>₹{product.price}.00</h2>
                         {product.category !== 'Accessories' && (
                             <select onChange={handleSizeChange} value={selectedSize}>
                                 <option value="">Select Size</option>
@@ -554,106 +214,83 @@ const ProductDetail = () => {
                         <div className='positioning'>
                             <h4>Product Details</h4>
                             <span>
-                                The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton,
-                                this classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder,
-                                and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.
+                            Experience ultimate comfort and style with our premium True Hood T-shirt. Crafted from 100% soft, breathable cotton.
+                             Whether you're dressing up for a special occasion or keeping it casual, our True Hood T-shirt is the perfect choice for any wardrobe. Elevate your everyday look with the perfect blend of comfort and style.
+
                             </span>
                         </div>
                     </div>
                 )}
-            </section>
 
+                {thumbnailImages.length > 0 && (
+                    <div className="image-thumbnails" style={thumbnailStyle}>
+                        {thumbnailImages.map((thumbnail, index) => (
+                            <img
+                                key={index}
+                                src={thumbnail}
+                                alt={`Thumbnail ${index}`}
+                                className={`thumbnail ${mainImg === thumbnail ? 'active' : ''}`}
+                                onClick={() => handleImageClick(thumbnail)}
+                            />
+                        ))}
+                    </div>
+                )}
+            </section>
+           
+           
             <section id='home-div'>
 
-            <h1> YOU MAY ALSO LIKE</h1>
-    <div className='flex-row hr'>
-        <div className='flex-col hc'>
-            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                <div className='discount'>-25%</div>
+            <h1> OUR LATEST COLLECTIONS</h1>
+            <section id='home-div'>
+     <div className='flex-row hr'>
+            <div className='flex-col hc' onClick={() => handleNavigation("/products/1")}>
+                <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Red</h5>
+                    <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                    <div className='discount'>-25%</div>
+                </div>
             </div>
-        </div>
 
-        <div className='flex-col hc'>
-            <img src={i3} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i44} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Porsche</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
-                <div className='discount'>-36%</div>
+            <div className='flex-col hc' onClick={() => handleNavigation("/products/3")}>
+                <img src={i3} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Porsche</h5>
+                    <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
+                    <div className='discount'>-36%</div>
+                </div>
             </div>
-        </div>
 
-        <div className='flex-col hc'>
-            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Black</h5>
-                <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
-                <div className='discount'>-21%</div>
+            <div className='flex-col hc' onClick={() => handleNavigation("/products/5")}>
+                <img src={i5} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Black</h5>
+                    <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+                    <div className='discount'>-21%</div>
+                </div>
             </div>
-        </div>
 
-        <div className='flex-col hc'>
-            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                <div className='discount'>-25%</div>
+            <div className='flex-col hc' onClick={() => handleNavigation("/products/7")}>
+                <img src={i7} className="body-img-top" alt="T-Shirt Green" />
+                <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
+                <div className="body-body">
+                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                    <h5 className="body-title">T-Shirt Culture</h5>
+                    <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                    <div className='discount'>-25%</div>
+                </div>
             </div>
         </div>
-    </div>
 </section>
-
-            <div className='light-border width'></div>
-
-            <section id="last">
-                <div className='navigate'>
-                    <h5>NAVIGATE</h5>
-                    <a>Shop</a>
-                    <a>About</a>
-                    <a>Contact</a>
-                    <a>Store locator</a>
-                </div>
-
-                <div className='get-help'>
-                    <h5>GET HELP</h5>
-                    <a>FAQ</a>
-                    <a>Delivery</a>
-                    <a>Order Process</a>
-                    <a>Returns</a>
-                </div>
-
-                <div className='social'>
-                    <h5>SOCIAL</h5>
-                    <a>Instagram</a>
-                    <a>Facebook</a>
-                    <a>Tiktok</a>
-                    <a>Pinterest</a>
-                </div>
-
-                <div className='customer-service'>
-                    <h5>CUSTOMER SERVICE</h5>
-                    <a>Privacy Policy</a>
-                    <a>Terms & Conditions</a>
-                    <a>Payments</a>
-                    <a>Let's Act</a>
-                </div>
-
-                <div className='copy-right'>
-                    <p>© Copyright 2023 Arjit Avadhanam</p>
-                </div>
-            </section>
+</section>
         </>
     );
-}
+};
 
 export default ProductDetail;
