@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faPinterest, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faPinterest, faTwitter,faShopify } from "@fortawesome/free-brands-svg-icons";
 import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from 'react-router-dom';
 import bghome from '../sources/bghome.webp';
@@ -91,9 +91,16 @@ const Home = () => {
 
           <div className='social-icons'>
             <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
+            <FontAwesomeIcon className="fa-icon" icon={faShopify} onClick={()=>navigate("/products")} />
+
             {/* <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
             <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
             <FontAwesomeIcon className="fa-icon" icon={faPinterest} /> */}
+
+           
+
+
+
             <div className="cart-icon" onClick={() => navigate('/get-cart')}>
               <FontAwesomeIcon className="fa-icon" icon={faCart} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}

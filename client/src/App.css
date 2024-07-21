@@ -926,6 +926,7 @@ textarea {
     position: relative;
     height: 700px;
     background-color: whitesmoke;
+    padding-bottom: 4%;
 }
 
 #prodetails .single-pro-image {
@@ -993,7 +994,7 @@ textarea {
 #prodetails .single-pro-details span {
     line-height: 18px;
     position: relative;
-    bottom: 45px;
+    bottom: 56px;
     word-spacing: -2px;
     font-family: 'Inconsolata', monospace;
 }
@@ -1079,7 +1080,7 @@ button.normal {
 
 .positioning {
     position: relative;
-    top: 2%;
+    bottom: 4%;
 }
 
 .light-border.width {
@@ -1378,7 +1379,7 @@ button.normal {
     justify-content: center;
     /* margin-top: 10px; */
     position: absolute;
-    top: 68%;
+    top: 69%;
     left: 9.6%;
   }
 
@@ -1399,4 +1400,62 @@ button.normal {
     background-color: black;
     position: relative;
     right:29%;
+  }
+
+
+
+.exchange-info-container {
+    position: relative;
+    bottom: 13%;
+  }
+  
+  .exchange-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .exchange-info-header h4 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .exchange-info-header .fa-plus, .exchange-info-header .fa-minus {
+    color: #007BFF;
+  }
+  
+  .exchange-information {
+    position: relative;
+    bottom: 6vh;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .exchange-information ul {
+    list-style-type: disc;
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 10px;
+  }
+  
+  .exchange-information p {
+    margin-bottom:0;
+    font-size: 0.8rem;
+  }
+  
+  .chevron-icon{
+    position: relative;
+    left:5%;
+  }
+  
+  .exchange-information .link {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  .exchange-information .link:hover {
+    text-decoration: underline;
   }

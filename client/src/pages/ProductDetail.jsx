@@ -26,6 +26,7 @@ import i16 from "../sources/i16.png";
 import i17 from "../sources/i17.png";
 import i18 from "../sources/i18.png";
 
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 const ProductDetail = () => {
     const { id } = useParams();
     const { addToCart } = useCart();
@@ -38,7 +39,7 @@ const ProductDetail = () => {
     const [mainImg, setMainImg] = useState('');
     const [thumbnailImages, setThumbnailImages] = useState([]);
     const [thumbnailStyle, setThumbnailStyle] = useState({});
-
+    const [showExchangeInfo, setShowExchangeInfo] = useState(false);
 
     const handleNavigation = (path) => {
         navigate(path);
@@ -147,6 +148,10 @@ const ProductDetail = () => {
         setMainImg(imgURL);
     };
 
+    const toggleExchangeInfo = () => {
+        setShowExchangeInfo(!showExchangeInfo);
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -170,18 +175,18 @@ const ProductDetail = () => {
                         <FontAwesomeIcon className="fa-icon" icon={faTwitter} style={{ visibility: "hidden" }} />
                         <FontAwesomeIcon className="fa-icon" icon={faYoutube} style={{ visibility: "hidden" }} />
                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} style={{ visibility: "hidden" }} />
-                       
+
                         <div className="cart-icon" onClick={() => navigate("/get-cart")}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                         </div>
-                        
+
                     </div>
                 </div>
 
                 <div className='light-border width'></div>
             </section>
 
-            <section id="prodetails" className="section-p1">
+            <section id="prodetails" className="section-p1" style={{ paddingBottom: showExchangeInfo ? '4%' : '0%' }}>
                 {product && (
                     <div className="single-pro-image">
                         <img id="MainImg" src={mainImg} width="100%" alt="Main Product" />
@@ -214,11 +219,34 @@ const ProductDetail = () => {
                         <div className='positioning'>
                             <h4>Product Details</h4>
                             <span>
-                            Experience ultimate comfort and style with our premium True Hood T-shirt. Crafted from 100% soft, breathable cotton.
-                             Whether you're dressing up for a special occasion or keeping it casual, our True Hood T-shirt is the perfect choice for any wardrobe. Elevate your everyday look with the perfect blend of comfort and style.
+                                Experience ultimate comfort and style with our premium True Hood T-shirt. Crafted from 100% soft, breathable cotton.
+                                Whether you're dressing up for a special occasion or keeping it casual, our True Hood T-shirt is the perfect choice for any wardrobe. Elevate your everyday look with the perfect blend of comfort and style.
 
                             </span>
                         </div>
+
+                        <div className='exchange-info-container'>
+                            <div className='exchange-info-header' onClick={toggleExchangeInfo}>
+                                <h4>
+                                    Exchange & Return Information
+                                    <FontAwesomeIcon className='chevron-icon' icon={faChevronDown} />
+                                </h4>
+                            </div>
+
+                            {showExchangeInfo && (
+                                <div className='exchange-information'>
+                                    <ul>
+                                        <p>1. Cancellation or return requests are accepted only on the same day of the order is placed.</p>
+                                        <p>2. If exchanging, the product must be in its original condition and packaging, request should be done before 6 days.</p>
+                                        <p>3. Proof of purchase must be provided for processing exchanges.</p>
+                                    </ul>
+                                    <p>
+                                        For more details on our exchange and return policies, <a href="/returns" className="link">click here</a>.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 )}
 
@@ -236,59 +264,58 @@ const ProductDetail = () => {
                     </div>
                 )}
             </section>
-           
-           
+
+
             <section id='home-div'>
 
-            <h1> OUR LATEST COLLECTIONS</h1>
-            <section id='home-div'>
-     <div className='flex-row hr'>
-            <div className='flex-col hc' onClick={() => handleNavigation("/products/1")}>
-                <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-                <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
-                <div className="body-body">
-                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                    <h5 className="body-title">T-Shirt Red</h5>
-                    <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                    <div className='discount'>-25%</div>
-                </div>
-            </div>
+                <h1> OUR LATEST COLLECTIONS</h1>
 
-            <div className='flex-col hc' onClick={() => handleNavigation("/products/3")}>
-                <img src={i3} className="body-img-top" alt="T-Shirt Green" />
-                <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
-                <div className="body-body">
-                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                    <h5 className="body-title">T-Shirt Porsche</h5>
-                    <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
-                    <div className='discount'>-36%</div>
-                </div>
-            </div>
+                <div className='flex-row hr'>
+                    <div className='flex-col hc' onClick={() => handleNavigation("/products/1")}>
+                        <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+                        <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+                        <div className="body-body">
+                            <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                            <h5 className="body-title">T-Shirt Red</h5>
+                            <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                            <div className='discount'>-25%</div>
+                        </div>
+                    </div>
 
-            <div className='flex-col hc' onClick={() => handleNavigation("/products/5")}>
-                <img src={i5} className="body-img-top" alt="T-Shirt Green" />
-                <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
-                <div className="body-body">
-                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                    <h5 className="body-title">T-Shirt Black</h5>
-                    <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
-                    <div className='discount'>-21%</div>
-                </div>
-            </div>
+                    <div className='flex-col hc' onClick={() => handleNavigation("/products/3")}>
+                        <img src={i3} className="body-img-top" alt="T-Shirt Green" />
+                        <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
+                        <div className="body-body">
+                            <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                            <h5 className="body-title">T-Shirt Porsche</h5>
+                            <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
+                            <div className='discount'>-36%</div>
+                        </div>
+                    </div>
 
-            <div className='flex-col hc' onClick={() => handleNavigation("/products/7")}>
-                <img src={i7} className="body-img-top" alt="T-Shirt Green" />
-                <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
-                <div className="body-body">
-                    <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                    <h5 className="body-title">T-Shirt Culture</h5>
-                    <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                    <div className='discount'>-25%</div>
+                    <div className='flex-col hc' onClick={() => handleNavigation("/products/5")}>
+                        <img src={i5} className="body-img-top" alt="T-Shirt Green" />
+                        <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+                        <div className="body-body">
+                            <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                            <h5 className="body-title">T-Shirt Black</h5>
+                            <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+                            <div className='discount'>-21%</div>
+                        </div>
+                    </div>
+
+                    <div className='flex-col hc' onClick={() => handleNavigation("/products/7")}>
+                        <img src={i7} className="body-img-top" alt="T-Shirt Green" />
+                        <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
+                        <div className="body-body">
+                            <p className='gray-text'>OVERSIZED T-SHIRT</p>
+                            <h5 className="body-title">T-Shirt Culture</h5>
+                            <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                            <div className='discount'>-25%</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-</section>
-</section>
+            </section>
         </>
     );
 };

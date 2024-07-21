@@ -14,6 +14,13 @@ const Returns = () => {
       </section>
 
       <section className="policy-section">
+        <h2>Exchange Policy</h2>
+        <p>
+         If you want to exchange your product, the request should be sent via email(you get a reply within 2 days) or by whatsApp within the duration of 6 days after the order has been delivered. After 6 days, the request will not be considered.
+        </p>
+      </section>
+
+      <section className="policy-section">
         <h2>Refund Processing Time</h2>
         <p>
           All refunds will be processed within 5-7 business days after the cancellation request is approved. Confirmation emails will be sent once the refund is processed.
