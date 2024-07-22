@@ -1473,10 +1473,11 @@ button.normal {
         left: 10% !important;
     }
     .hc:hover {
-        transform: translateY(0px) !important;
+        transform: translateY(-3px) !important;
     }
      .hc{
         width: 50%;
+        margin: 4% 0% !important;
      }
 
      #part-3{
