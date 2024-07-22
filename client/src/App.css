@@ -1293,8 +1293,8 @@ button.normal {
 
 .itemprice {
     position: relative;
-    left: 250%;
-    bottom: 2%;
+    left: 200%;
+    bottom: 4%;
     width: fit-content;
 }
 
@@ -1515,9 +1515,7 @@ button.normal {
         right:84% !important;
         top:15% !important;   
      }    
-     html,body{
-        overflow-x: hidden !important;
-     }
+     
      .social-icons{
         gap: 0% !important;
         left: 70% !important;
@@ -1537,9 +1535,9 @@ button.normal {
         left:1%;
         height: fit-content;
      }
-     .calvin1{
-        /* height:20px !important; */
-     }
+     .cart-class1 img {
+        width: 66%;
+     }   
      .calvin1 p{
         margin: 0;
      }
@@ -1560,22 +1558,25 @@ button.normal {
         position: static;
         width: 90vw;
         height: fit-content;
+        margin-bottom: 3%;
+        margin-left: 2%;
      }
-     .race{
+     .itemprice {
         position: relative;
-        top:20%;
-        right: 185%;
-     }
+        left: 70%;
+        bottom: -20%;
+        width: fit-content;
+    }
      .inside{
         width: 95vw;
      }
-     .navbar p{
+     .jalsa{
         left: 13% !important;
         top: -10% !important;
      }
      .last-button {
         width: 75%;
-     }   
+     } 
 
   }
 
@@ -1613,5 +1614,58 @@ button.normal {
      }
      .copy-right{
         right:54% !important; 
+     }   
+     
+     /*Cart-detail*/
+     .cart-class1{
+        left: 15%;
+        height: fit-content;
+     }
+     .calvin1 p{
+        margin: 0;
+     }
+     .quantity.calvin1 {
+        top: 10%;
+     }
+     .border-45{
+        visibility: hidden;
+     }
+     .calvin1 h3{
+        margin: 0;
+        font-size: 1rem;
+     }
+     .quantity-buttons{
+        bottom: 0%;
+     }
+     .cart-class2{
+        position: static;
+        width: 90vw;
+        height: fit-content;
+        margin-bottom: 3%;
+        margin-left: 2%;
+     }
+     .itemprice {
+        position: relative;
+        left: 100%;
+        bottom: -20%;
+        width: fit-content;
+     }
+     .inside{
+        width: 95vw;
+     }
+     .navbar p{
+        left: 13% !important;
+        top: -10% !important;
+     }
+     .last-button {
+        width: 75%;
      }     
   }
+
+  html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden !important;
+ }

@@ -192,10 +192,8 @@ const CartDetail = () => {
           <div className="flex-col calvin1">
             <h3>{item.name}</h3>
             {item.size && <p className='p-size'>Size: {item.size}</p>}
-            <p className="quantity calvin1">Quantity: {item.quantity}</p>
-            <div className='race'>
+            <p className="quantity calvin1">Quantity: {item.quantity}</p>         
             <h3 className="itemprice">₹{item.price * item.quantity}.00</h3> {/* Correctly calculate the total price for the item */}
-            </div>
             <div className="quantity-buttons">
               <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
               <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
