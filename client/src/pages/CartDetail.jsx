@@ -207,7 +207,7 @@ const CartDetail = () => {
         <div className="inside">
           <h2>ORDER SUMMARY</h2>
           <h4><span>SUB TOTAL:</span> INR {state.totalPrice}</h4>
-          <h4><span>TAX AND DELIVERY CHARGES:</span> FREE</h4>
+          <h4><span>DELIVERY CHARGES:</span> FREE</h4>
           <h4><span>TOTAL:</span> INR {state.totalPrice}</h4>
           <button className="last-button" onClick={handleCheckout}>CHECKOUT</button>
         </div>

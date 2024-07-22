@@ -316,6 +316,20 @@ const Community = () => {
               <p>truehood.business@gmail.com<br />
             </p>
           </div>
+
+          <div className='contact-text'>
+            <h1>Address</h1>
+          </div>
+          <div className='light-border lb2'></div>
+          <div className='address'>
+              <p className='addr'>Lalitha Nagar,<br />
+              Ram Nagar,<br />
+              Hyderabad - 500029
+              
+            </p>
+          </div>
+
+
         </div>
       </section>
     </>

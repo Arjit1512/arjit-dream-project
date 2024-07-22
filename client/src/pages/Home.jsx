@@ -246,7 +246,7 @@ const Home = () => {
         <div className='customer-service'>
           <h5>CUSTOMER SERVICE</h5>
           <a href='/privacy-policy'>Privacy Policy</a>
-          <a href='/customer-care'>Terms & Conditions</a>
+          <a href='/terms'>Terms & Conditions</a>
           <a href='/FAQ'>Payments</a>
         </div>
 

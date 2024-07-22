@@ -786,7 +786,7 @@ textarea {
 }
 
 .cpage2 img {
-    width: 65%;
+    width: 80%;
     cursor: pointer;
     position: relative;
     top: 28%;
@@ -803,6 +803,16 @@ textarea {
     font-weight: 500;
 }
 
+.contact-text h2{
+    margin-top: 0;
+}
+.address p{
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+.addr{
+    padding-bottom: 15% !important;
+}
 .lb2 {
     position: relative;
     top: 30%;
