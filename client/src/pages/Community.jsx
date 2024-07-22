@@ -318,7 +318,7 @@ const Community = () => {
           </div>
 
           <div className='contact-text'>
-            <h1>Address</h1>
+            <h1>Operational Address</h1>
           </div>
           <div className='light-border lb2'></div>
           <div className='address'>
