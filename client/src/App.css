@@ -1485,12 +1485,8 @@ button.normal {
         top:190vh !important;
         width: fit-content;
      }
-     .p3-part2{
-        position: relative;
-        right: 5%;
-     }
      .p3-part2 img {
-        right: 36% !important;
+        right: 42% !important;
      }
      .p3-part1 p,
      .p3-part1 h3{

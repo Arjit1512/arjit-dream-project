@@ -114,9 +114,9 @@ const Home = () => {
       </section>
 
 
-      <section id="paint-pic">
+      {/* <section id="paint-pic">
         <img src={voth} alt="" />
-      </section>
+      </section> */}
 
      
      
