@@ -266,7 +266,7 @@ const ProductDetail = () => {
             </section>
 
 
-            <section id='home-div'>
+            <section id='home-div' className='home-div-p'>
 
                 <h1> OUR LATEST COLLECTIONS</h1>
 

@@ -231,8 +231,8 @@ const Home = () => {
         <div className='get-help'>
           <h5>GET HELP</h5>
           <a href='/FAQ'>FAQ</a>
-          <a href='/FAQ'>Delivery</a>
-          <a href='/FAQ'>Order Process</a>
+          <a href='/returns'>Delivery</a>
+          <a href='/returns'>Order Process</a>
           <a href='/returns'>Returns</a>
         </div>
 

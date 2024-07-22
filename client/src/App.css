@@ -1522,7 +1522,7 @@ button.normal {
         height:338px;
      }   
      .copy-right{
-        right:84% !important;
+        right:116% !important;
         top:15% !important;   
      }    
      
@@ -1538,6 +1538,7 @@ button.normal {
         left: 25% !important;
         top:72% !important;
      }
+
 
 
      /*Cart-detail*/
@@ -1588,7 +1589,136 @@ button.normal {
         width: 75%;
      } 
 
+     /*PRODUCTS PAGE*/
+     .slp2 p,
+     .slp2 h3{
+        visibility: hidden;
+     }
+     .space-btw{
+        position: relative;
+        bottom:5%;
+        z-index: 2;
+     }
+     .space-btw h5{
+        visibility: hidden;
+     }
+     .flex-row.flex-wrap{
+        position: relative;
+        left:15%;
+        bottom: 6%;
+     }
+     .visible{
+        visibility: visible !important;
+     }
+     .slp1{
+        width: 0% !important;
+        padding: 0 !important;
+        position: relative !important;
+        bottom: 6vh !important;
+     }
+     .las-vegas{
+        top: 0vh !important
+     }
+     .las-vegas .copy-right {
+        right: 116% !important;
+     }  
+     #sale-products{
+        margin-bottom: -220px;
+     } 
+
+
+     /*PRODUCT-DETAIL*/
+     #prodetails{
+        flex-direction: column;
+     }
+     #prodetails .single-pro-image {
+        width: 80% !important; 
+     }   
+     .image-thumbnails {
+        top: 42%;
+     }
+    .single-pro-details h1 {
+        width: 150%;
+        margin-left: 14%;
+    }  
+    #prodetails .single-pro-details h4 {
+        margin-left: 23%;
+        width: 100%;
+    }
+    #prodetails .single-pro-details h2 {
+        left: 10%;
+    }
+    #prodetails .single-pro-details select {
+        margin-left: 10%;
+        margin-top: 8%;
+    }
+    button.normal {
+        left: 10%;
+    }
+    #home-div.home-div-p {
+        margin-top: 118%;
+    }
+    #prodetails .single-pro-details {
+        width: 100%;
+    }    
+    .positioning {
+        width: 90%;
+        margin-left: 5%;
+    }
+    .positioning span{
+        font-size: 0.9rem !important;
+    }      
+    .exchange-info-header h4 {
+        margin-left: 12% !important;
+        margin-top: 12% !important;
+    } 
+    .exchange-information p {
+        line-height: 22px;
+    }
+    .flex-col {
+        width: 75%;
+    }
+
   }
+  /* Add this CSS to your products.css or App.css file */
+
+/* Dropdown button for mobile view */
+.mobile-dropdown-btn {
+    display: none;
+    background-color: #781919;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    height: 20%;
+    position: relative;
+    top:6vh !important;
+  }
+  
+  .slp1.hidden {
+    display: none;
+  }
+  
+  .slp1.visible {
+    display: block;
+  }
+  
+  /* Media query for mobile responsiveness */
+  @media (max-width: 768px) {
+    .mobile-dropdown-btn {
+      display: block;
+      margin: 0 auto 20px auto;
+      text-align: center;
+    }
+    
+    .slp1 {
+      display: none;
+      position: relative;
+      right: 20%;
+      top:5vh;
+    }
+  }
+  
 
   @media (min-width:700px) and (max-width:1385px){
      .social-icons{
@@ -1623,8 +1753,12 @@ button.normal {
         height:338px;
      }
      .copy-right{
-        right:54% !important; 
-     }   
+        right:74% !important; 
+     }  
+     #last p {
+        position: relative !important;
+        right: 45% !important;
+    } 
      
      /*Cart-detail*/
      .cart-class1{

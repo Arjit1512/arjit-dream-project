@@ -13,6 +13,7 @@ const Products = () => {
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedCollection, setSelectedCollection] = useState('All');
+  const [isSlp1Visible, setIsSlp1Visible] = useState(false);
 
   const handleSortClick = (newSort) => {
     setSort(newSort);
@@ -32,6 +33,10 @@ const Products = () => {
 
   const handleCollectionChange = (event) => {
     setSelectedCollection(event.target.value);
+  };
+
+  const toggleSlp1Visibility = () => {
+    setIsSlp1Visible(!isSlp1Visible);
   };
 
   const filteredClothes = Clothes.filter((cloth) => {
@@ -64,7 +69,7 @@ const Products = () => {
       <div className='flex-col fc slp cloth-props'>
         <img src={props.img} alt="product.jpg" className='style-cloth' onClick={handleClick} />
         <div className='small'>
-          <p>{props.name}</p>
+          <p className='visible'>{props.name}</p>
           <h6>₹{props.price}.00</h6>
         </div>
       </div>
@@ -96,7 +101,10 @@ const Products = () => {
       </section>
 
       <section id="sale-products">
-        <div className='slp1'>
+        <button onClick={toggleSlp1Visibility} className="mobile-dropdown-btn">
+          {isSlp1Visible ? 'Hide Filters' : 'Show Filters'}
+        </button>
+        <div className={`slp1 ${isSlp1Visible ? 'visible' : 'hidden'}`}>
           <br /><br /><br />
           <h2>Filter by</h2>
           <div className='gray-line'></div>
@@ -184,7 +192,7 @@ const Products = () => {
         <img src={bg} alt="" />
       </section>
 
-      <section id="last">
+      <section id="last" className='las-vegas'>
 
 
 
@@ -199,8 +207,8 @@ const Products = () => {
 <div className='get-help'>
   <h5>GET HELP</h5>
   <a href='/FAQ'>FAQ</a>
-  <a href='/FAQ'>Delivery</a>
-  <a href='/FAQ'>Order Process</a>
+  <a href='/returns'>Delivery</a>
+  <a href='/returns'>Order Process</a>
   <a href='/returns'>Returns</a>
 </div>
 
@@ -214,12 +222,12 @@ const Products = () => {
 <div className='customer-service'>
   <h5>CUSTOMER SERVICE</h5>
   <a href='/privacy-policy'>Privacy Policy</a>
-  <a href='/customer-care'>Terms & Conditions</a>
+  <a href='/terms'>Terms & Conditions</a>
   <a href='/FAQ'>Payments</a>
 </div>
 
 <div className='copy-right'>
-<p>© Copyright 2024 True Hood</p>
+  <p>© Copyright 2024 True Hood</p>
 </div>
 </section>
     </>
