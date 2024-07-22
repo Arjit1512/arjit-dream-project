@@ -178,7 +178,7 @@ const CartDetail = () => {
           <p>Free Shipping available worldwide!</p>
         </div>
         <div className='navbar barrr'>
-          <p>TRUE HOOD</p>
+          <p className='jalsa'>TRUE HOOD</p>
         </div>    
       </section>              
 
@@ -191,9 +191,11 @@ const CartDetail = () => {
           <img src={imageMapping[item.productId]} alt={`Product ${item.productId}`} />
           <div className="flex-col calvin1">
             <h3>{item.name}</h3>
-            {item.size && <p>Size: {item.size}</p>}
+            {item.size && <p className='p-size'>Size: {item.size}</p>}
             <p className="quantity calvin1">Quantity: {item.quantity}</p>
+            <div className='race'>
             <h3 className="itemprice">₹{item.price * item.quantity}.00</h3> {/* Correctly calculate the total price for the item */}
+            </div>
             <div className="quantity-buttons">
               <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'decrease', item.size)}>-</button>
               <button className="quantity-button" onClick={() => handleQuantityChange(item.productId, 'increase', item.size)}>+</button>
@@ -207,8 +209,8 @@ const CartDetail = () => {
         <div className="inside">
           <h2>ORDER SUMMARY</h2>
           <h4><span>SUB TOTAL:</span> INR {state.totalPrice}</h4>
-          <h4><span>TAX AND DELIVERY CHARGES:</span> INR {100}</h4>
-          <h4><span>TOTAL:</span> INR {state.totalPrice + 100}</h4>
+          <h4><span>TAX AND DELIVERY CHARGES:</span> FREE</h4>
+          <h4><span>TOTAL:</span> INR {state.totalPrice}</h4>
           <button className="last-button" onClick={handleCheckout}>CHECKOUT</button>
         </div>
       </div>

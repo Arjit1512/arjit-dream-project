@@ -240,7 +240,7 @@ app.post('/checkout', auth, async (req, res) => {
         }
 
         // Calculate total price with tax and delivery charges
-        const totalAmount = cart.totalPrice + 100;
+        const totalAmount = cart.totalPrice;
 
         // Create Razorpay order
         const orderOptions = {

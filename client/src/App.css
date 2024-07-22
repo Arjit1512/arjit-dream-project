@@ -1233,6 +1233,9 @@ button.normal {
     position: relative;
     left: 3%;
 }
+.calvin1 .p-size{
+    color: dimgray;
+}
 
 .quantity.calvin1 {
     top: 20%;
@@ -1462,7 +1465,6 @@ button.normal {
     text-decoration: underline;
   }
 
-
   /*RESPONSIVENESS*/
 
   @media (min-width:270px) and (max-width:700px){
@@ -1528,6 +1530,53 @@ button.normal {
         left: 25% !important;
         top:72% !important;
      }
+
+
+     /*Cart-detail*/
+     .cart-class1{
+        left:1%;
+        height: fit-content;
+     }
+     .calvin1{
+        /* height:20px !important; */
+     }
+     .calvin1 p{
+        margin: 0;
+     }
+     .quantity.calvin1 {
+        top: 10%;
+     }
+     .border-45{
+        visibility: hidden;
+     }
+     .calvin1 h3{
+        margin: 0;
+        font-size: 1rem;
+     }
+     .quantity-buttons{
+        bottom: 0%;
+     }
+     .cart-class2{
+        position: static;
+        width: 90vw;
+        height: fit-content;
+     }
+     .race{
+        position: relative;
+        top:20%;
+        right: 185%;
+     }
+     .inside{
+        width: 95vw;
+     }
+     .navbar p{
+        left: 13% !important;
+        top: -10% !important;
+     }
+     .last-button {
+        width: 75%;
+     }   
+
   }
 
   @media (min-width:700px) and (max-width:1385px){
