@@ -17,6 +17,8 @@ import i8 from "../sources/i8.png";
 import i4 from "../sources/i4.jpg";
 import i44 from "../sources/arjit.jpg";
 import voth from '../sources/voth.jpg';
+
+
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userName, setUserName] = useState("");
@@ -90,7 +92,8 @@ const Home = () => {
           <p onClick={gotoHome} style={{cursor:"pointer"}}>TRUE HOOD</p>
 
           <div className='social-icons'>
-            <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
+            {/* <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
+             */}
             <FontAwesomeIcon className="fa-icon" icon={faShopify} onClick={()=>navigate("/products")} />
 
             {/* <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
@@ -185,8 +188,9 @@ const Home = () => {
            we strive to make every step of your shopping<br/>
            journey seamless and enjoyable.
 </p>
-
+          <div className='move-a'>
           <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
+          </div>
         </div>
         <div className='p3-part2'>
           <img src={i44} alt='' />

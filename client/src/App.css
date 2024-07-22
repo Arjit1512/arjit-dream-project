@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter&family=Calligraffitti&family=Diphylleia&family=Inconsolata&family=Open+Sans&family=Playfair+Display&family=Poppins:wght@300&family=Quicksand&family=Roboto+Mono&family=Rubik&display=swap');
-
+html{
+    width: fit-content;
+}
 .black-box {
     height: 6%;
     width: 100%;
@@ -337,8 +339,8 @@
 #last {
     height: 50vh;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
+  justify-content: space-around;
     margin-top: 2%;
     /* background-color: #000; */
 }
@@ -1458,4 +1460,112 @@ button.normal {
   
   .exchange-information .link:hover {
     text-decoration: underline;
+  }
+
+
+  /*RESPONSIVENESS*/
+
+  @media (min-width:270px) and (max-width:700px){
+    .flex-row.hr{
+        display: flex;
+        flex-direction: column !important;
+        position: relative;
+        left: 10% !important;
+    }
+    .hc:hover {
+        transform: translateY(0px) !important;
+    }
+     .hc{
+        width: 50%;
+     }
+
+     #part-3{
+        position: relative;
+        top:190vh !important;
+        width: fit-content;
+     }
+     .p3-part2{
+        position: relative;
+        right: 5%;
+     }
+     .p3-part2 img {
+        right: 36% !important;
+     }
+     .p3-part1 p,
+     .p3-part1 h3{
+        z-index: -1;
+        visibility: hidden; 
+     }
+     .move-a{
+        position: relative;
+        bottom: 61.5%;
+        left:25%;
+     }   
+     #last{
+        position: relative;
+        top:190vh;
+        flex-direction: column;
+     }
+     #last a{
+        width: min-content !important;
+     }
+     .navigate, .get-help, .social, .customer-service {
+        height:338px;
+     }   
+     .copy-right{
+        right:84% !important;
+        top:15% !important;   
+     }    
+     html,body{
+        overflow-x: hidden !important;
+     }
+     .social-icons{
+        gap: 0% !important;
+        left: 70% !important;
+        top: 7% !important;
+        width: 100px;
+     }
+     .navbar p{
+        width: fit-content;
+        position: relative !important;
+        left: 25% !important;
+        top:72% !important;
+     }
+  }
+
+  @media (min-width:700px) and (max-width:1385px){
+     .social-icons{
+        top:8% !important;
+     }
+     #part-3{
+        position: relative;
+        width: 100%;
+     }
+     .p3-part2{
+        position: relative;
+        right: 5%;
+     }
+     .p3-part2 img {
+        right: 36% !important;
+     }
+     .p3-part1 p,
+     .p3-part1 h3{
+        z-index: -1;
+        visibility: hidden; 
+     }
+     .move-a{
+        position: relative;
+        bottom: 61.5%;
+        left:25%;
+     }   
+     #last{
+        position: relative;
+        flex-direction: column;
+     }
+     .navigate, .get-help, .social, .customer-service {
+        height:338px;
+     }
+     .copy-right{
+        right:54% !important; 
+     }     
   }
