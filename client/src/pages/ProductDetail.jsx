@@ -43,9 +43,12 @@ const ProductDetail = () => {
 
     const handleNavigation = (path) => {
         navigate(path);
-        // window.location.reload();
-        window.scrollTo(0, 0);
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
+
 
     const images = {
         1: [i1, i2],
@@ -176,7 +179,7 @@ const ProductDetail = () => {
                         <FontAwesomeIcon className="fa-icon" icon={faYoutube} style={{ visibility: "hidden" }} />
                         <FontAwesomeIcon className="fa-icon" icon={faPinterest} style={{ visibility: "hidden" }} />
 
-                        <div className="cart-icon" onClick={() => navigate("/get-cart")}>
+                        <div className="cart-icon ci" onClick={() => navigate("/get-cart")}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                         </div>
 

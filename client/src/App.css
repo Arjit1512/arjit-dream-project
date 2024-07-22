@@ -1485,10 +1485,11 @@ button.normal {
         left: 10% !important;
     }
     .hc:hover {
-        transform: translateY(-3px) !important;
+        transform: translateY(-5px) !important;
     }
      .hc{
         width: 50%;
+        height: 60%;
         margin: 4% 0% !important;
      }
 
@@ -1498,18 +1499,20 @@ button.normal {
         width: fit-content;
      }
      .p3-part2 img {
-        right: 42% !important;
-     }
+        right: 56% !important;
+        width: 90vw;
+    }
      .p3-part1 p,
      .p3-part1 h3{
         z-index: -1;
         visibility: hidden; 
      }
      .move-a{
-        position: relative;
-        bottom: 61.5%;
-        left:25%;
-     }   
+        text-decoration: none;
+        position: relative !important;
+        bottom: 75% !important;
+        z-index: 2;
+      }
      #last{
         position: relative;
         top:190vh;
@@ -1520,6 +1523,7 @@ button.normal {
      }
      .navigate, .get-help, .social, .customer-service {
         height:338px;
+        width: 19%;
      }   
      .copy-right{
         right:116% !important;
@@ -1528,7 +1532,7 @@ button.normal {
      
      .social-icons{
         gap: 0% !important;
-        left: 70% !important;
+        left: 64% !important;
         top: 7% !important;
         width: 100px;
      }
@@ -1677,6 +1681,9 @@ button.normal {
     }
     .flex-col {
         width: 75%;
+    }
+    .cart-icon.ci {
+        right: 105%;
     }
 
   }
