@@ -96,14 +96,14 @@ const Products = () => {
           <p className='blink'>OUR SALE IS LIVE NOW!</p>
         </div>
         <div className='navbar'>
-          <p>TRUE HOOD</p>
+          <p className='unga'>TRUE HOOD</p>
         </div>
       </section>
+      <div className='fbp'>
+          <p>Filter By Price</p>
+        </div>
 
       <section id="sale-products">
-        <button onClick={toggleSlp1Visibility} className="mobile-dropdown-btn">
-          {isSlp1Visible ? 'Hide Filters' : 'Show Filters'}
-        </button>
         <div className={`slp1 ${isSlp1Visible ? 'visible' : 'hidden'}`}>
           <br /><br /><br />
           <h2>Filter by</h2>
@@ -133,6 +133,7 @@ const Products = () => {
                   { borderColor: 'black', backgroundColor: 'black' }
                 ]}
               />
+              
               <div className="price-range">
                 <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
               </div>
@@ -172,7 +173,7 @@ const Products = () => {
         <div className='slp2'>
           <h3>All Products</h3>
           <p>At True Hood, we are committed to providing you with the best possible shopping experience.<br />
-   We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
+             We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
           <div className='space-btw'>
             <h5>{sortedClothes.length} products</h5>
             <select onChange={(e) => handleSortClick(e.target.value)} value={sort}>
@@ -186,13 +187,33 @@ const Products = () => {
             {sortedClothes.map(createCloth)}
           </div>
         </div>
+
+        <div className='price-slider-container'>
+          <Slider
+            range
+            min={0}
+            max={2000}
+            defaultValue={[0, 2000]}
+            value={priceRange}
+            onChange={handlePriceChange}
+            trackStyle={[{ backgroundColor: 'black', height: 5 }]}
+            handleStyle={[
+              { borderColor: 'black', backgroundColor: 'black' },
+              { borderColor: 'black', backgroundColor: 'black' }
+            ]}
+          />
+          <div className="price-range">
+            <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
+          </div>
+        </div>
       </section>
 
       <section id="paint-pic">
         <img src={bg} alt="" />
       </section>
 
-      <section id="last" className='las-vegas'>
+
+      <section id="last" className='hood-leave'>
 
 
 
@@ -232,6 +253,6 @@ const Products = () => {
 </section>
     </>
   );
-}
+};
 
 export default Products;
