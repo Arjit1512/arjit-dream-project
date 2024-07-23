@@ -149,3 +149,118 @@ ul{
   color: #672222;
   font-weight: 600;
 }
+
+
+/*ADDRESS POP-UP*/
+
+/* Add this CSS for the popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.popup-content h2 {
+  margin-top: 0;
+}
+
+.popup-content label {
+  display: block;
+  margin: 10px 0;
+}
+
+.popup-content input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.popup-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.popup-content button:hover {
+  background-color: #0056b3;
+}
+
+.popup .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+@media (min-width: 370px) and (max-width:700px){
+  .dash-order{
+    position: relative;
+    top: 17vh;
+    right:4%;
+  }
+  .t-h{
+    position: relative !important;
+    bottom: -2vh !important;
+  }
+  .dragon-img{
+    visibility: hidden;
+  }
+  .order-img{
+     width: 52%;
+  }
+  .inner-box{
+    height: 20%;
+  }
+  .love{
+    visibility: hidden;
+  }
+}
+
+
+@media (min-width: 700px) and (max-width:1300px){
+  .dash-order{
+    position: relative;
+    top: 17vh;
+    right:4%;
+  }
+  .t-h{
+    position: relative !important;
+    bottom: -5vh !important;
+  }
+  .dragon-img{
+    visibility: hidden;
+  }
+  .order-img{
+     width: 52%;
+  }
+  .inner-box{
+    height: 20%;
+  }
+  .love{
+    visibility: hidden;
+  }
+}

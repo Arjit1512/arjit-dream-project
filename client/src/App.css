@@ -1475,6 +1475,36 @@ button.normal {
     text-decoration: underline;
   }
 
+  /*PRODUCTS PAGE*/
+  /* Default styles for larger screens (e.g., laptops and desktops) */
+.slp1 {
+    display: block; /* Show filters on larger screens */
+  }
+  
+  /* Styles for mobile devices */
+  @media (max-width: 768px) { /* Adjust the breakpoint as needed */
+    .slp1 {
+      display: none; /* Hide the filters on mobile devices */
+    }
+  
+    .mobile-dropdown-btn {
+      display: block; /* Show the mobile dropdown button on mobile devices */
+    }
+  
+    .slp1.visible {
+      display: block; /* Show the filters when the dropdown is toggled */
+    }
+  
+    .slp1.hidden {
+       display: none; /*Hide the filters when the dropdown is not toggled */
+    }
+  }
+  
+  .mobile-dropdown-btn {
+    display: none; /* Hide the dropdown button by default on larger screens */
+  }
+  
+
   /*RESPONSIVENESS*/
 
   @media (min-width:270px) and (max-width:700px){
@@ -1500,7 +1530,7 @@ button.normal {
      }
      .p3-part2 img {
         right: 56% !important;
-        width: 90vw;
+        width: 100vw;
     }
      .p3-part1 p,
      .p3-part1 h3{
@@ -1700,10 +1730,6 @@ button.normal {
     height: 20%;
     position: relative;
     top:6vh !important;
-  }
-  
-  .slp1.hidden {
-    display: none;
   }
   
   .slp1.visible {

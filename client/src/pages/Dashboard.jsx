@@ -83,7 +83,9 @@ const Dashboard = () => {
           <p>Free Shipping available worldwide!</p>
         </div> */}
         <div className='navbar' style={{backgroundColor:"black"}}>
+          <div className='t-h'>
           <p className='title-hood'>TRUE HOOD</p>
+          </div>
         </div>
       </section>
   

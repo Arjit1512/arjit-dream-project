@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Clothes from './Clothes.jsx';
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faPinterest, faTwitter, faYoutube, faShopify } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faPinterest, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from './CartContext.js';
 import axios from 'axios';
@@ -27,6 +27,7 @@ import i17 from "../sources/i17.png";
 import i18 from "../sources/i18.png";
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
 const ProductDetail = () => {
     const { id } = useParams();
     const { addToCart } = useCart();
@@ -43,12 +44,12 @@ const ProductDetail = () => {
 
     const handleNavigation = (path) => {
         navigate(path);
+        window.scrollTo(0, 0); // Scroll to the top of the page
     };
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
-
 
     const images = {
         1: [i1, i2],
@@ -71,15 +72,12 @@ const ProductDetail = () => {
                 setMainImg(fetchedProduct.imgURL);
 
                 if ([9, 10].includes(fetchedProduct.id)) {
-                    // For products 9 and 10, set only the main image
-                    setThumbnailImages([fetchedProduct.imgURL]); // Include the main image as the only thumbnail
+                    setThumbnailImages([fetchedProduct.imgURL]);
                 } else {
-                    // For other products, set additional images as thumbnails
                     const productImages = images[fetchedProduct.id] || [];
-                    setThumbnailImages([fetchedProduct.imgURL, ...productImages.slice(1)]); // Include the main image and additional thumbnails
+                    setThumbnailImages([fetchedProduct.imgURL, ...productImages.slice(1)]);
                 }
 
-                // Set thumbnail style based on category
                 if (fetchedProduct.category === 'Accessories') {
                     setThumbnailStyle({ top: '78%' });
                 } else {

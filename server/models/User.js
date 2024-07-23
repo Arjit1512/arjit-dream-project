@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   userName: { type: String, required: true },
-  email: { type: String, required: true,unique:true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   feedback: [
     {
@@ -30,6 +30,15 @@ const userSchema = new mongoose.Schema({
       orderDate: { type: Date, default: Date.now },
     },
   ],
+  address: [
+    {
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      pincode: { type: String },
+      landmark: { type: String },
+    }
+  ]
 });
 
 const User = mongoose.model('dream-user', userSchema);
