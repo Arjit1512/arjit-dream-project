@@ -238,6 +238,12 @@ ul{
   .love{
     visibility: hidden;
   }
+  .black-div{
+    width: max-content;
+  }
+  .black-div h2{
+    width: 95%;
+  }
 }
 
 
@@ -262,5 +268,11 @@ ul{
   }
   .love{
     visibility: hidden;
+  }
+  .black-div{
+    width: 103vw;
+  }
+  .black-div h2{
+    width: 95%;
   }
 }
