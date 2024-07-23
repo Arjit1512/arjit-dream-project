@@ -2,7 +2,7 @@ const products = [
     {
         id: 1,
         imgURL: `../images/i1.jpg`,
-        price: 599.00,
+        price: 1.00,
         name: "Vengence of the Hood",
         description: "I'm a product",
         category: "T-Shirts"

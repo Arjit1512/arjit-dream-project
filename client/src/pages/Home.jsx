@@ -129,7 +129,7 @@ const Home = () => {
             <div className="body-body">
                 <p className='gray-text'>OVERSIZED T-SHIRT</p>
                 <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹1.00</p>
                 <div className='discount'>-25%</div>
             </div>
         </div>
