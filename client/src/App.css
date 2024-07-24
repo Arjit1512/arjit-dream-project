@@ -1868,6 +1868,9 @@ button.normal {
 .slp1.visible {
     display: block;
 }
+.fbp{
+    visibility: hidden;
+}
 
 /* Media query for mobile responsiveness */
 @media (max-width: 768px) {
