@@ -50,7 +50,7 @@ const products = [
     {
         id: 13,
         imgURL: `../images/i13.png`,
-        price: 599.00,
+        price: 1299.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"
@@ -63,22 +63,22 @@ const products = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    {
-        id: 9,
-        imgURL: `../images/pro9.webp`,
-        price: 299.00,
-        name: "Starboy Bracelet",
-        description: "Stylish leather bracelet",
-        category: "Accessories"
-    },
-    {
-        id: 10,
-        imgURL: `../images/pro10.webp`,
-        price: 199.00,
-        name: "XO Bracelet",
-        description: "Elegant beaded bracelet",
-        category: "Accessories"
-    },
+    // {
+    //     id: 9,
+    //     imgURL: `../images/pro9.webp`,
+    //     price: 299.00,
+    //     name: "Starboy Bracelet",
+    //     description: "Stylish leather bracelet",
+    //     category: "Accessories"
+    // },
+    // {
+    //     id: 10,
+    //     imgURL: `../images/pro10.webp`,
+    //     price: 199.00,
+    //     name: "XO Bracelet",
+    //     description: "Elegant beaded bracelet",
+    //     category: "Accessories"
+    // },
 ];
 
 export default products;

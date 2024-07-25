@@ -68,7 +68,7 @@ const Clothes = [
     {
         id: 13,
         imgURL: pro13,
-        price: 599.00,
+        price: 1299.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"
@@ -81,22 +81,22 @@ const Clothes = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    {
-        id: 9,
-        imgURL: pro9,
-        price: 299.00,
-        name: "Starboy Bracelet",
-        description: "Stylish leather bracelet",
-        category: "Accessories"
-    },
-    {
-        id: 10,
-        imgURL: pro10,
-        price: 199.00,
-        name: "XO Bracelet",
-        description: "Elegant beaded bracelet",
-        category: "Accessories"
-    },
+    // {
+    //     id: 9,
+    //     imgURL: pro9,
+    //     price: 299.00,
+    //     name: "Starboy Bracelet",
+    //     description: "Stylish leather bracelet",
+    //     category: "Accessories"
+    // },
+    // {
+    //     id: 10,
+    //     imgURL: pro10,
+    //     price: 199.00,
+    //     name: "XO Bracelet",
+    //     description: "Elegant beaded bracelet",
+    //     category: "Accessories"
+    // },
 ];
 
 export default Clothes;
