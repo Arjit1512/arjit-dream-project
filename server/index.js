@@ -291,7 +291,6 @@ app.post('/checkout', auth, async (req, res) => {
     }
 });
 
-
 app.get('/dashboard', auth, async (req, res) => {
     const userId = req.user._id;
     try {
