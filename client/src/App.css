@@ -8,8 +8,10 @@ html {
     height: 6%;
     width: 100%;
     background-color: black;
-    position: absolute;
+    position: relative;
     z-index: 1;
+    margin: 0;
+    padding: 1% 0%;
 }
 
 .black-box p {
@@ -27,7 +29,6 @@ html {
     font-size: 1.4rem;
     width: 100%;
     text-align: center;
-    padding-top: 0.6%;
     background-color: rgb(255, 255, 255);
 }
 
@@ -36,14 +37,13 @@ html {
 }
 
 #part-1 {
-    background-color: ghostwhite;
+    background-color: white;
 }
 
 .navbar {
     background-color: white;
     width: 100%;
     height: fit-content;
-    padding-top: 2%;
     word-spacing: 5%;
     text-align: center;
 }
@@ -421,11 +421,29 @@ html {
 .copy-right {
     position: relative;
     margin-top: 20%;
-    right: 40%;
+    width: 100%;
+    display: block;
     height: max-content;
     font-weight: 600;
+    align-items: center !important;
+    text-align: center;
     /* color: white; */
 }
+.copy-right p{
+    text-align: center;
+}
+.copy-right {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 15% !important; /* Ensure the div takes up the full height of its container */
+    text-align: center !important; /* Center text if the p element spans multiple lines */
+    padding: 10px 0 !important; /* Optional: Add padding for better spacing */
+  }
+  
+  .copy-right p {
+    margin: 0 !important; /* Remove default margins for precise centering */
+  }
 
 .hood-true {
     color: white;
@@ -1574,7 +1592,7 @@ button.normal {
 
     #part-3 {
         position: relative;
-        top: 190vh !important;
+        top: 160vh !important;
         width: fit-content;
     }
 
@@ -1598,7 +1616,7 @@ button.normal {
 
     #last {
         position: relative;
-        top: 190vh;
+        top: 160vh;
         flex-direction: column;
     }
 
@@ -1615,8 +1633,8 @@ button.normal {
     }
 
     .copy-right {
-        right: 116% !important;
-        top: 15% !important;
+        right: 131% !important;
+        top: 20% !important;
     }
 
     .social-icons {
@@ -1624,21 +1642,19 @@ button.normal {
         left: 64% !important;
         top: 7% !important;
         width: 100px;
-     }
-     .navbar{
+    }
+
+    .navbar {
         height: 30px !important;
-     }
-     .navbar p{
+    }
+
+    .navbar p {
         width: 100%;
         position: relative !important;
-        top:72% !important;
         text-align: center;
-     }
-    .unga{
-        margin-left: 6% !important;
     }
-    .hood-leave{
-        top:1vh !important;
+    .hood-leave {
+        top: 1vh !important;
     }
 
 
@@ -1692,11 +1708,6 @@ button.normal {
         width: 95vw;
     }
 
-    .jalsa {
-        left: 13% !important;
-        top: -10% !important;
-    }
-
     .last-button {
         width: 75%;
     }
@@ -1711,13 +1722,13 @@ button.normal {
         position: relative;
         bottom: 5%;
         left: 9%;
-    }   
+    }
 
     .space-btw h5 {
         visibility: hidden;
     }
 
-   
+
     .slp1,
     .mobile-dropdown-btn {
         display: none !important;
@@ -1732,13 +1743,15 @@ button.normal {
         width: 200% !important;
         height: 40px !important;
     }
-    .fbp{
+
+    .fbp {
         position: relative;
-        top:3vh;
-        width:25%;
-        left:5%;
+        top: 3vh;
+        width: 25%;
+        left: 5%;
     }
-    .fbp p{
+
+    .fbp p {
         margin: 0 !important;
     }
 
@@ -1754,8 +1767,9 @@ button.normal {
         left: 150%;
         bottom: 50%;
     }
-    .rc-slider{
-        width:142% !important;
+
+    .rc-slider {
+        width: 142% !important;
     }
 
     .visible {
@@ -1774,7 +1788,7 @@ button.normal {
     }
 
     .las-vegas .copy-right {
-        right: 116% !important;
+        /* right: 116% !important; */
     }
 
     #sale-products {
@@ -1819,7 +1833,7 @@ button.normal {
     }
 
     #home-div.home-div-p {
-        margin-top: 118%;
+        margin-top: 133%;
     }
 
     #prodetails .single-pro-details {
@@ -1872,7 +1886,8 @@ button.normal {
 .slp1.visible {
     display: block;
 }
-.fbp{
+
+.fbp {
     visibility: hidden;
 }
 
@@ -1937,12 +1952,12 @@ button.normal {
     }
 
     .copy-right {
-        right: 74% !important;
+        /* right: 74% !important; */
     }
 
     #last p {
         position: relative !important;
-        right: 45% !important;
+        right: 103% !important;
     }
 
     /*Cart-detail*/
@@ -2016,4 +2031,130 @@ body {
     .price-slider-container {
         display: none;
     }
+}
+
+/*HAMBURGER*/
+/* Section and Navbar styles */
+/* Default styles */
+/* Default styles */
+/* Default styles */
+/* Default styles */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 20px;
+    position: absolute;
+    top: 15%;
+    right: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hamburger-menu.active {
+    display: flex;
+    z-index: 1;
+    padding-bottom: 10px;
+}
+
+.hamburger-menu a,
+.hamburger-menu div {
+    margin: 9px 0;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    width: 125%;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    font-size: 11px !important;
+    font-weight: 500;
+    padding-top: 2%;
+}
+
+.profile-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.profile-toggle::after {
+    content: '▼';
+    margin-left: 5px;
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.profile-menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+    /* Indent nested options */
+    padding-left: 10px;
+    /* Additional padding for nesting effect */
+}
+
+.profile-menu.active {
+    display: flex;
+}
+
+.profile-menu.active~.profile-toggle::after {
+    transform: rotate(180deg);
+}
+
+#paint-pic {
+    display: none;
+}
+
+/* Media query for mobile view */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        background-color: #ffffff;
+        position: relative;
+        right: 18%;
+        bottom: 147%;
+        z-index: 10;
+        width: 50%;
+    }
+
+    .navbar p {
+        font-size: 20px;
+    }
+
+    .social-icons {
+        display: none !important;
+    }
+
+    .hamburger-menu a:hover{
+        margin: 10px 0;
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
+        width: 125%;
+        transition: background-color 0.3s;
+    }
+
+
+.hamburger-menu {
+    width: 20%;
+    right: 70%;
+    font-family: 'Inconsolata', monospace;
+}
+
+#paint-pic {
+    display: block !important;
+}
+#paint-pic.products-pic {
+    margin-top: 30%;
+}
+
+.hamburger-menu .profile-menu {
+    margin-top: -10px;
+    /* Adjust position if necessary */
+}
 }

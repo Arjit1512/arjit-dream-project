@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faPinterest, faTwitter,faShopify } from "@fortawesome/free-brands-svg-icons";
-import { faShoppingCart as faCart } from "@fortawesome/free-solid-svg-icons";
+import { faFacebook, faInstagram, faPinterest, faTwitter, faShopify } from "@fortawesome/free-brands-svg-icons";
+import { faShoppingCart as faCart, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";  // Importing faBars and faTimes
 import { Link, useNavigate } from 'react-router-dom';
 import bghome from '../sources/bghome.webp';
 import axios from 'axios';
@@ -19,10 +19,13 @@ import i44 from "../sources/arjit.jpg";
 import voth from '../sources/voth.jpg';
 
 
+
 const Home = () => {
   const [cartItems, setCartItems] = useState([]);
   const [userName, setUserName] = useState("");
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const Home = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         console.error('No token found. User is not authenticated.');
-        setLoading(false); // Set loading state accordingly
+        setLoading(false);
         return;
       }
 
@@ -51,7 +54,7 @@ const Home = () => {
         console.log('API URL:', process.env.REACT_APP_API_URL);
 
       } finally {
-        setLoading(false); // Always set loading state to false after attempting to fetch data
+        setLoading(false);
       }
     };
 
@@ -59,10 +62,9 @@ const Home = () => {
   }, []);
 
   const gotoHome = async () => {
-    window.location.reload(); // Refresh the page
-    navigate("/"); 
+    window.location.reload();
+    navigate("/");
   }
-  
 
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
@@ -78,10 +80,19 @@ const Home = () => {
     } finally {
       localStorage.removeItem('token');
       setUserName("");
-      window.location.href = "/"; // Navigate to the home page and refresh
+      window.location.href = "/";
     }
   };
-  
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    setProfileMenuOpen(false);
+  };
+
+  const toggleProfileMenu = () => {
+    setProfileMenuOpen(!profileMenuOpen);
+  };
+
   return (
     <>
       <section id='part-1'>
@@ -89,115 +100,122 @@ const Home = () => {
           <p>Welcome {userName ? userName : ""}!! Free Shipping available worldwide!</p>
         </div>
         <div className='navbar'>
-          <p onClick={gotoHome} style={{cursor:"pointer"}}>TRUE HOOD</p>
+          <p onClick={gotoHome} style={{ cursor: "pointer" }}>TRUE HOOD</p>
 
           <div className='social-icons'>
-            {/* <FontAwesomeIcon className="fa-icon" icon={faInstagram} />
-             */}
-            <FontAwesomeIcon className="fa-icon" icon={faShopify} onClick={()=>navigate("/products")} />
-
-            {/* <FontAwesomeIcon className="fa-icon" icon={faFacebook} />
-            <FontAwesomeIcon className="fa-icon" icon={faTwitter} />
-            <FontAwesomeIcon className="fa-icon" icon={faPinterest} /> */}
-
-           
-
-
-
+            <FontAwesomeIcon className="fa-icon" icon={faShopify} onClick={() => navigate("/products")} />
             <div className="cart-icon" onClick={() => navigate('/get-cart')}>
               <FontAwesomeIcon className="fa-icon" icon={faCart} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
             </div>
             <UserDropdown userName={userName} handleLogout={handleLogout} />
           </div>
+
+          <div className='hamburger' onClick={toggleMenu}>
+            <FontAwesomeIcon icon={faBars} />
+          </div>
+        </div>
+
+        <div className={`hamburger-menu ${menuOpen ? 'active' : ''}`}>
+          <Link to="/products">Sale</Link>
+          <Link to="/get-cart">Cart</Link>
+          <div className="profile-toggle" onClick={toggleProfileMenu} style={{ cursor: 'pointer' }}>
+            My Profile
+          </div>
+          <div className={`profile-menu ${profileMenuOpen ? 'active' : ''}`}>
+            <Link to="/dashboard">My Orders</Link>
+            <Link to="/customer-care">Customer Care</Link>
+            {userName ? (
+              <div onClick={handleLogout}>Logout</div>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section id="paint-pic">
+        <img src={voth} alt="" />
+      </section>
+
+
+      <section id='home-div'>
+        <div className='flex-row hr'>
+          <div className='flex-col hc' onClick={() => { navigate("/products/1") }}>
+            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+              <p className='gray-text'>OVERSIZED T-SHIRT</p>
+              <h5 className="body-title">T-Shirt Red</h5>
+              <p className="body-text"><span className='break'>₹899.00</span> ₹1.00</p>
+              <div className='discount'>-25%</div>
+            </div>
+          </div>
+
+          <div className='flex-col hc' onClick={() => { navigate("/products/3") }}>
+            <img src={i3} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+              <p className='gray-text'>OVERSIZED T-SHIRT</p>
+              <h5 className="body-title">T-Shirt Porsche</h5>
+              <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
+              <div className='discount'>-36%</div>
+            </div>
+          </div>
+
+          <div className='flex-col hc' onClick={() => { navigate("/products/5") }}>
+            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+              <p className='gray-text'>OVERSIZED T-SHIRT</p>
+              <h5 className="body-title">T-Shirt Black</h5>
+              <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+              <div className='discount'>-21%</div>
+            </div>
+          </div>
+
+          <div className='flex-col hc' onClick={() => { navigate("/products/7") }}>
+            <img src={i7} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className="body-body">
+              <p className='gray-text'>OVERSIZED T-SHIRT</p>
+              <h5 className="body-title">T-Shirt Culture</h5>
+              <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+              <div className='discount'>-25%</div>
+            </div>
+          </div>
         </div>
       </section>
 
 
-      {/* <section id="paint-pic">
-        <img src={voth} alt="" />
-      </section> */}
-
-     
-     
-     
-      <section id='home-div'>
-    <div className='flex-row hr'>
-        <div className='flex-col hc' onClick={() => {navigate("/products/1")}}>
-            <img src={i1} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹1.00</p>
-                <div className='discount'>-25%</div>
-            </div>
-        </div>
-
-        <div className='flex-col hc' onClick={() => {navigate("/products/3")}}>
-            <img src={i3} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Porsche</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
-                <div className='discount'>-36%</div>
-            </div>
-        </div>
-
-        <div className='flex-col hc' onClick={() => {navigate("/products/5")}}>
-            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Black</h5>
-                <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
-                <div className='discount'>-21%</div>
-            </div>
-        </div>
-
-        <div className='flex-col hc' onClick={() => {navigate("/products/7")}}>
-            <img src={i7} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
-            <div className="body-body">
-                <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">T-Shirt Culture</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-                <div className='discount'>-25%</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section id="part-3">
+      <section id="part-3">
         <div className='p3-part1'>
           <h3>Discover our<br />
             latest vintage<br />
             editions and <br />
             more collection</h3>
 
-          <p> Our dedication to excellence extends beyond<br/>
-          our product
-           selection. We believe
-           in delivering<br/>
-           exceptional customer
-           service to ensure your<br/> satisfaction. From the
-           moment you browse our website<br/>
-           to the time your order arrives at your doorstep,<br/>
-           we strive to make every step of your shopping<br/>
-           journey seamless and enjoyable.
-</p>
+          <p> Our dedication to excellence extends beyond<br />
+            our product
+            selection. We believe
+            in delivering<br />
+            exceptional customer
+            service to ensure your<br /> satisfaction. From the
+            moment you browse our website<br />
+            to the time your order arrives at your doorstep,<br />
+            we strive to make every step of your shopping<br />
+            journey seamless and enjoyable.
+          </p>
           <div className='move-a'>
-          <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
+            <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
           </div>
         </div>
         <div className='p3-part2'>
           <img src={i44} alt='' />
         </div>
       </section>
-     
-     
+
+
 
 
 

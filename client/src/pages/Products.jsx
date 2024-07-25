@@ -208,7 +208,7 @@ const Products = () => {
         </div>
       </section>
 
-      <section id="paint-pic">
+      <section id="paint-pic" className='products-pic'>
         <img src={bg} alt="" />
       </section>
 

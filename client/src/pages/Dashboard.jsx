@@ -93,9 +93,9 @@ const Dashboard = () => {
         {sortedOrders.length > 0 ? (
           <>
             <img className='dragon-img' src={`/images/snake.png`} alt="Dragon" />
+            <h3 className='grateful'>Thank you, {user.userName}, for being part of our hood.</h3>
             <ul>
-              <h3 className='grateful'>Thank you, {user.userName}, for being part of our hood.</h3>
-              <h2>Your Orders</h2>
+               <h2>Your Orders</h2>
               {sortedOrders.map(order => (
                 <li key={order._id}>
                   <h3 className='date'>Ordered by you on <span>{new Date(order.orderDate).toLocaleString()}</span></h3>
