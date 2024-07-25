@@ -13,6 +13,7 @@ const Products = () => {
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedCollection, setSelectedCollection] = useState('All');
+  const [isSlp1Visible, setIsSlp1Visible] = useState(false);
 
   const handleSortClick = (newSort) => {
     setSort(newSort);
@@ -32,6 +33,10 @@ const Products = () => {
 
   const handleCollectionChange = (event) => {
     setSelectedCollection(event.target.value);
+  };
+
+  const toggleSlp1Visibility = () => {
+    setIsSlp1Visible(!isSlp1Visible);
   };
 
   const filteredClothes = Clothes.filter((cloth) => {
@@ -64,7 +69,7 @@ const Products = () => {
       <div className='flex-col fc slp cloth-props'>
         <img src={props.img} alt="product.jpg" className='style-cloth' onClick={handleClick} />
         <div className='small'>
-          <p>{props.name}</p>
+          <p className='visible'>{props.name}</p>
           <h6>₹{props.price}.00</h6>
         </div>
       </div>
@@ -91,12 +96,15 @@ const Products = () => {
           <p className='blink'>OUR SALE IS LIVE NOW!</p>
         </div>
         <div className='navbar'>
-          <p>TRUE HOOD</p>
+          <p className='unga'>TRUE HOOD</p>
         </div>
       </section>
+      <div className='fbp'>
+          <p>Filter By Price</p>
+        </div>
 
       <section id="sale-products">
-        <div className='slp1'>
+        <div className={`slp1 ${isSlp1Visible ? 'visible' : 'hidden'}`}>
           <br /><br /><br />
           <h2>Filter by</h2>
           <div className='gray-line'></div>
@@ -125,6 +133,7 @@ const Products = () => {
                   { borderColor: 'black', backgroundColor: 'black' }
                 ]}
               />
+              
               <div className="price-range">
                 <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
               </div>
@@ -164,7 +173,7 @@ const Products = () => {
         <div className='slp2'>
           <h3>All Products</h3>
           <p>At True Hood, we are committed to providing you with the best possible shopping experience.<br />
-   We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
+             We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
           <div className='space-btw'>
             <h5>{sortedClothes.length} products</h5>
             <select onChange={(e) => handleSortClick(e.target.value)} value={sort}>
@@ -178,13 +187,33 @@ const Products = () => {
             {sortedClothes.map(createCloth)}
           </div>
         </div>
+
+        <div className='price-slider-container'>
+          <Slider
+            range
+            min={0}
+            max={2000}
+            defaultValue={[0, 2000]}
+            value={priceRange}
+            onChange={handlePriceChange}
+            trackStyle={[{ backgroundColor: 'black', height: 5 }]}
+            handleStyle={[
+              { borderColor: 'black', backgroundColor: 'black' },
+              { borderColor: 'black', backgroundColor: 'black' }
+            ]}
+          />
+          <div className="price-range">
+            <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
+          </div>
+        </div>
       </section>
 
       <section id="paint-pic">
         <img src={bg} alt="" />
       </section>
 
-      <section id="last">
+
+      <section id="last" className='hood-leave'>
 
 
 
@@ -199,8 +228,8 @@ const Products = () => {
 <div className='get-help'>
   <h5>GET HELP</h5>
   <a href='/FAQ'>FAQ</a>
-  <a href='/FAQ'>Delivery</a>
-  <a href='/FAQ'>Order Process</a>
+  <a href='/returns'>Delivery</a>
+  <a href='/returns'>Order Process</a>
   <a href='/returns'>Returns</a>
 </div>
 
@@ -214,16 +243,16 @@ const Products = () => {
 <div className='customer-service'>
   <h5>CUSTOMER SERVICE</h5>
   <a href='/privacy-policy'>Privacy Policy</a>
-  <a href='/customer-care'>Terms & Conditions</a>
+  <a href='/terms'>Terms & Conditions</a>
   <a href='/FAQ'>Payments</a>
 </div>
 
 <div className='copy-right'>
-<p>© Copyright 2024 True Hood</p>
+  <p>© Copyright 2024 True Hood</p>
 </div>
 </section>
     </>
   );
-}
+};
 
 export default Products;

@@ -14,10 +14,19 @@ const CustomerCare = () => {
                     If you have any questions, concerns, or feedback, our customer care team is here to help. You can reach us via:
                 </p>
                 <ul>
-                    <li>WhatsApp: <i>+91 9618825172</i></li>                   
+                    <li>WhatsApp: <i>+91 9618825172</i></li>
                     <li>Email: <i>truehood.business@gmail.com</i></li>
                     <li>Live Chat: <i>https://www.instagram.com/hood.clothing.in</i></li>
                 </ul>
+            </section>
+            <section className="customer-care-section">
+                <h2>Terms and Conditions</h2>
+                <p>
+                    Please review our Terms and Conditions to understand the guidelines and rules governing the use of our website and services.
+                </p>
+                <p>
+                    Read our <a href="/terms">Terms and Conditions</a> for more information.
+                </p>
             </section>
             <section className="customer-care-section">
                 <h2>FAQs</h2>

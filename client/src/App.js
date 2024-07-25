@@ -141,6 +141,7 @@ import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Sale from './pages/Sale';
 import FAQ from './pages/FAQ';
+import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PP';
 import Returns from './pages/Returns';
 import Community from './pages/Community';
@@ -169,6 +170,7 @@ const App = () => {
       <Route path="/returns" element={<Returns />} />
       <Route path="/community" element={<Community />} />
       <Route path='/privacy-policy' element={<PrivacyPolicy/>} />
+      <Route path='/terms' element={<Terms />} />
       <Route path="/detailedPage" element={<DetailedPage />} />
       <Route path="/detailedPage2" element={<DetailedPage2 />} />
       <Route path="/cart-page" element={<CartPage />} />

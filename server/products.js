@@ -2,8 +2,8 @@ const products = [
     {
         id: 1,
         imgURL: `../images/i1.jpg`,
-        price: 599.00,
-        name: "Vengence of the Hood",
+        price: 1.00,
+        name: "Vengeance of the Hood",
         description: "I'm a product",
         category: "T-Shirts"
     },
@@ -11,7 +11,7 @@ const products = [
         id: 3,
         imgURL: `../images/i3.jpg`,
         price: 899.00,
-        name: "The Porsche 911 Tee",
+        name: "True Hood Original",
         description: "I'm a product",
         category: "T-Shirts"
     },
@@ -19,7 +19,7 @@ const products = [
         id: 5,
         imgURL: `../images/i5.jpg`,
         price: 599.00,
-        name: "Vengence of the Hood",
+        name: "Vengeance of the Hood",
         description: "I'm a product",
         category: "T-Shirts"
     },
@@ -35,7 +35,7 @@ const products = [
         id: 15,
         imgURL: `../images/i15.png`,
         price: 599.00,
-        name: "To Pimp a Butterfly",
+        name: "True Hood Original",
         description: "I'm a product",
         category: "T-Shirts"
     },
@@ -59,7 +59,7 @@ const products = [
         id: 17,
         imgURL: `../images/i17.png`,
         price: 1299.00,
-        name: "The Kendrick Lamar Tee",
+        name: "True Hood Culture",
         description: "I'm a product",
         category: "T-Shirts"
     },

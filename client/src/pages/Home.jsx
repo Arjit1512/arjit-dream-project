@@ -129,7 +129,7 @@ const Home = () => {
             <div className="body-body">
                 <p className='gray-text'>OVERSIZED T-SHIRT</p>
                 <h5 className="body-title">T-Shirt Red</h5>
-                <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+                <p className="body-text"><span className='break'>₹899.00</span> ₹1.00</p>
                 <div className='discount'>-25%</div>
             </div>
         </div>
@@ -231,8 +231,8 @@ const Home = () => {
         <div className='get-help'>
           <h5>GET HELP</h5>
           <a href='/FAQ'>FAQ</a>
-          <a href='/FAQ'>Delivery</a>
-          <a href='/FAQ'>Order Process</a>
+          <a href='/returns'>Delivery</a>
+          <a href='/returns'>Order Process</a>
           <a href='/returns'>Returns</a>
         </div>
 
@@ -246,7 +246,7 @@ const Home = () => {
         <div className='customer-service'>
           <h5>CUSTOMER SERVICE</h5>
           <a href='/privacy-policy'>Privacy Policy</a>
-          <a href='/customer-care'>Terms & Conditions</a>
+          <a href='/terms'>Terms & Conditions</a>
           <a href='/FAQ'>Payments</a>
         </div>
 

@@ -240,7 +240,7 @@ app.post('/checkout', auth, async (req, res) => {
         }
 
         // Calculate total price with tax and delivery charges
-        const totalAmount = cart.totalPrice + 100;
+        const totalAmount = cart.totalPrice;
 
         // Create Razorpay order
         const orderOptions = {
@@ -307,6 +307,37 @@ app.get('/dashboard', auth, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+// Add this route in your server file
+app.post('/add-address', auth, async (req, res) => {
+  const userId = req.user._id;
+  const { street, city, state, pincode, landmark } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Add new address to the addresses array
+    user.address.push({
+      street,
+      city,
+      state,
+      pincode,
+      landmark
+    });
+
+    await user.save();
+
+    res.status(200).json({ message: 'Address added successfully', address: user.address });
+  } catch (error) {
+    console.error('Error adding address:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 const PORT = process.env.PORT || 5000;
 

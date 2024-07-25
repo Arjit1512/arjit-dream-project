@@ -14,6 +14,15 @@ const Returns = () => {
       </section>
 
       <section className="policy-section">
+        <h2>Shipping Policy</h2>
+        <p>
+        We do not guarantee that delivery will always be the fastest.<br />
+          Minimum Shipping Time - 2 days<br/>
+          Maximum Shipping Time - 21 days(approx. 3 weeks)
+        </p>
+      </section>
+
+      <section className="policy-section">
         <h2>Exchange Policy</h2>
         <p>
          If you want to exchange your product, the request should be sent via email(you get a reply within 2 days) or by whatsApp within the duration of 6 days after the order has been delivered. After 6 days, the request will not be considered.
@@ -30,7 +39,7 @@ const Returns = () => {
       <section className="policy-section">
         <h2>Shipping Time</h2>
         <p>
-          Our shipping times vary from 8 to 14 days, depending on your location and product availability. Tracking numbers will be provided once your order is shipped.
+          Our average shipping times vary from 8 to 14 days, depending on your location and product availability. Tracking numbers will be provided once your order is shipped.
         </p>
       </section>
     </div>
