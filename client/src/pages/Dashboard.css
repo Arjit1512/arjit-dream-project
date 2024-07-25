@@ -74,7 +74,7 @@
   border: 2px solid gray; 
   padding: 2%;
   margin: 0% 3%;
-  margin-top: -28vh;
+  margin-top: -22vh;
   z-index: 2; /* Ensure this is higher than .dragon-img */
   position: relative; /* Ensure .grateful is positioned */
 }
