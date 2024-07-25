@@ -45,6 +45,7 @@ html {
     height: fit-content;
     padding-top: 2%;
     word-spacing: 5%;
+    text-align: center;
 }
 
 .navbar .social-icons {
@@ -361,6 +362,7 @@ html {
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 2%;
+    min-width: 360px;
     /* background-color: #000; */
 }
 
@@ -1622,6 +1624,9 @@ button.normal {
         left: 64% !important;
         top: 7% !important;
         width: 100px;
+     }
+     .navbar{
+        height: 30px !important;
      }
      .navbar p{
         width: 100%;

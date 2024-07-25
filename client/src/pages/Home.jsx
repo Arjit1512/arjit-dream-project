@@ -81,7 +81,7 @@ const Home = () => {
       window.location.href = "/"; // Navigate to the home page and refresh
     }
   };
-
+  
   return (
     <>
       <section id='part-1'>
