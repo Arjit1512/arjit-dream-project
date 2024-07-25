@@ -246,6 +246,11 @@ function Register() {
         }
     }
 
+    const gotoHome = async () => {
+        window.location.reload(); // Refresh the page
+        navigate("/"); 
+    }
+
     return (
         <>
             <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
@@ -253,11 +258,15 @@ function Register() {
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous" />
             <link rel="stylesheet" href="styles.css" />
-
+            <section className='header-login'>
+                <div className='navbar'>
+                    <p onClick={gotoHome} style={{cursor:"pointer"}}>TRUE HOOD</p>
+                </div>
+            </section>
             <div className="wdiv">
                 <div className="wrapper">
                     <div className="form-box register">
-                        <h2>Register</h2>
+                        <h2>Welcome, to the hood</h2>
                         <form onSubmit={handleRegister}>
                             <div className="input-box">
                                 <input
@@ -292,7 +301,7 @@ function Register() {
                                 </button>
                             </div>
                             {registrationError && <p className="error-message">{registrationError}</p>}
-                            <p style={{ marginTop: '5%' }}>
+                            <p className='label-register' style={{ marginTop: '5%' }}>
                                 Already have an account?{' '}
                                 <Link to="/login">
                                     <span> Login</span>

@@ -234,18 +234,27 @@ function Login() {
         }
     }
 
+    const gotoHome = async () => {
+        window.location.reload(); // Refresh the page
+        navigate("/"); 
+    }
+
     return (
         <>
             <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
                 integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
                 crossOrigin="anonymous" />
-            <link rel="stylesheet" href="styles.css" />
-
+            <link rel="stylesheet" href="Login.css" />
+            <section className='header-login'>
+                <div className='navbar'>
+                    <p onClick={gotoHome} style={{cursor:"pointer"}}>TRUE HOOD</p>
+                </div>
+            </section>
             <div className="wdiv">
                 <div className="wrapper">
                     <div className="form-box login">
-                        <h2>Login</h2>
+                        <h2>This way, to the hood</h2>
                         <form onSubmit={submit}>
                             <div className="input-box">
                                 <input
@@ -271,7 +280,7 @@ function Login() {
                                 </button>
                             </div>
                             {loginError && <p className="error-message">{loginError}</p>}
-                            <p style={{ marginTop: '5%' }}>
+                            <p className='label-register' style={{ marginTop: '5%' }}>
                                 Don't have an account?{' '}
                                 <Link to="/register">
                                     <span>Register here</span>
