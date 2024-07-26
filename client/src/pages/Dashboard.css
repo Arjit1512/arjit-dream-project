@@ -174,31 +174,44 @@ ul{
 
 .popup-content {
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
+  width: 95%;
+  max-width: 550px;
+  min-width: 300px;
   position: relative;
+  font-size: 15px;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 .popup-content h2 {
   margin-top: 0;
 }
 
+.popup-content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .popup-content label {
   display: block;
-  margin: 10px 0;
+  margin: 7px 0;
+  font-size: 15px;
+  width: 90%;
 }
 
 .popup-content input {
-  width: 100%;
   padding: 8px;
-  margin-top: 5px;
+  margin-top: 3px;
+  border-radius: 3px;
+  border: 1px solid black;
 }
 
 .popup-content button {
   display: block;
-  width: 100%;
+  width: 30%;
   padding: 10px;
   background-color: #007bff;
   color: white;

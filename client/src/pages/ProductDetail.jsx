@@ -25,7 +25,7 @@ import i15 from "../sources/i15.png";
 import i16 from "../sources/i16.png";
 import i17 from "../sources/i17.png";
 import i18 from "../sources/i18.png";
-
+import { CiShoppingCart } from "react-icons/ci";
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const ProductDetail = () => {
@@ -171,12 +171,7 @@ const ProductDetail = () => {
                     <p>TRUE HOOD</p>
 
                     <div className='social-icons'>
-                        <FontAwesomeIcon className="fa-icon" icon={faInstagram} style={{ visibility: "hidden" }} />
-                        <FontAwesomeIcon className="fa-icon" icon={faFacebook} style={{ visibility: "hidden" }} />
-                        <FontAwesomeIcon className="fa-icon" icon={faTwitter} style={{ visibility: "hidden" }} />
-                        <FontAwesomeIcon className="fa-icon" icon={faYoutube} style={{ visibility: "hidden" }} />
-                        <FontAwesomeIcon className="fa-icon" icon={faPinterest} style={{ visibility: "hidden" }} />
-
+                        
                         <div className="cart-icon ci" onClick={() => navigate("/get-cart")}>
                             <FontAwesomeIcon className="fa-icon" icon={faCart} />
                         </div>

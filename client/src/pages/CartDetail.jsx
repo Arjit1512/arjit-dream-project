@@ -273,24 +273,24 @@ const CartDetail = () => {
             <h2>Enter Your Address</h2>
             <form onSubmit={(e) => { e.preventDefault(); handleAddressSubmit(); }}>
               <label>
-                Street:
+                Street:<br />
                 <input type="text" name="street" value={address.street} onChange={handleAddressChange} required />
               </label>
               <label>
-                City:
+                City:<br />
                 <input type="text" name="city" value={address.city} onChange={handleAddressChange} required />
               </label>
               <label>
-                State:
+                State:<br />
                 <input type="text" name="state" value={address.state} onChange={handleAddressChange} required />
-              </label>
-              <label>
-                Pincode:
-                <input type="text" name="pincode" value={address.pincode} onChange={handleAddressChange} required />
               </label>
               <label>
                 Landmark:
                 <input type="text" name="landmark" value={address.landmark} onChange={handleAddressChange} />
+              </label>
+              <label>
+                Pincode:<br />
+                <input type="text" name="pincode" value={address.pincode} onChange={handleAddressChange} required />
               </label>
               <button type="submit">Submit Address</button>
             </form>

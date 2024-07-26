@@ -43,19 +43,17 @@ html {
 .navbar {
     background-color: white;
     width: 100%;
-    height: fit-content;
+    height: auto;
     word-spacing: 5%;
     text-align: center;
 }
 
 .navbar .social-icons {
     position: absolute;
-    background-color: transparent;
-    top: 9%;
-    right: 18%;
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    top: 5rem;
+    justify-content: flex-end;
     gap: 30%;
 }
 
@@ -212,7 +210,7 @@ html {
 
 /*END OF HOME DIVVVVVVVVVVVVVVVVVVVVV*/
 .fa-icon {
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
 }
 
@@ -227,11 +225,11 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding-left: 20%;
+    padding-left: 0%;
 }
 
 .navbar-items a {
-    padding-left: 5%;
+    padding-left: 0%;
     cursor: pointer;
     font-family: 'Rubik', sans-serif;
 }
@@ -984,6 +982,7 @@ textarea {
 
 #prodetails {
     display: flex;
+    justify-content: space-between;
     position: relative;
     height: 700px;
     background-color: whitesmoke;
@@ -992,10 +991,19 @@ textarea {
 
 #prodetails .single-pro-image {
     width: 30%;
+    height: 45%;
     position: relative;
     padding: 5% 3% 15% 10%;
     margin-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: whitesmoke;
+}
+
+#MainImg {
+    width: 81%;
+    height: auto;
 }
 
 .small-img-group {
@@ -1022,6 +1030,7 @@ textarea {
 #prodetails .single-pro-details h4 {
     padding: 20px 0 20px 0;
     font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
 }
 
 #prodetails .single-pro-details h2 {
@@ -1169,7 +1178,9 @@ button.normal {
 .cart-icon {
     position: relative;
     cursor: pointer;
-    margin: 0% 28%;
+    margin: 10px 30px;
+    font-size: 25px;
+    z-index: 1000;
 }
 
 .cart-badge {
@@ -1448,7 +1459,7 @@ button.normal {
     justify-content: center;
     /* margin-top: 10px; */
     position: absolute;
-    top: 69%;
+    top: 63%;
     left: 9.6%;
 }
 
@@ -1499,7 +1510,7 @@ button.normal {
 
 .exchange-information {
     position: relative;
-    bottom: 6vh;
+    bottom: 7vh;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -1508,14 +1519,13 @@ button.normal {
 
 .exchange-information ul {
     list-style-type: disc;
-    font-size: 0.8rem;
     color: #666;
-    line-height: 10px;
 }
 
 .exchange-information p {
     margin-bottom: 0;
     font-size: 0.8rem;
+    line-height: 1rem;
 }
 
 .chevron-icon {
@@ -1640,7 +1650,7 @@ button.normal {
     .social-icons {
         gap: 0% !important;
         left: 64% !important;
-        top: 7% !important;
+        top: 4.5rem !important;
         width: 100px;
     }
 
@@ -1803,19 +1813,28 @@ button.normal {
 
     #prodetails .single-pro-image {
         width: 80% !important;
+        max-height: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #prodetails .single-pro-image img {
+        height: 100%;
+        width: auto;
     }
 
     .image-thumbnails {
-        top: 42%;
+        top: 45%;
     }
 
     .single-pro-details h1 {
-        width: 150%;
-        margin-left: 14%;
+        width: 100%;
+        text-align: center;
     }
 
     #prodetails .single-pro-details h4 {
-        margin-left: 23%;
+        text-align: center;
         width: 100%;
     }
 
@@ -1833,7 +1852,7 @@ button.normal {
     }
 
     #home-div.home-div-p {
-        margin-top: 133%;
+        margin-top: 120%;
     }
 
     #prodetails .single-pro-details {
@@ -1852,6 +1871,13 @@ button.normal {
     .exchange-info-header h4 {
         margin-left: 12% !important;
         margin-top: 12% !important;
+    }
+
+    .exchange-information {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
     }
 
     .exchange-information p {
@@ -1910,7 +1936,7 @@ button.normal {
 
 @media (min-width:700px) and (max-width:1385px) {
     .social-icons {
-        top: 8% !important;
+        top: 4.5rem !important;
     }
 
     #part-3 {
