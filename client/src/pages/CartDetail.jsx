@@ -26,6 +26,7 @@ const CartDetail = () => {
         if (!token) {
           setError('User not authenticated');
           setLoading(false);
+          navigate('/login');
           return;
         }
 

@@ -49,12 +49,13 @@ html {
 }
 
 .navbar .social-icons {
-    position: absolute;
-    width: 100%;
+    position: relative;
+    width: 97%;
     display: flex;
-    top: 5rem;
+    top: -3rem;
     justify-content: flex-end;
-    gap: 30%;
+    gap: 50px;
+    z-index: 1000;
 }
 
 /*DROPDOWN STYLING*/
@@ -210,7 +211,7 @@ html {
 
 /*END OF HOME DIVVVVVVVVVVVVVVVVVVVVV*/
 .fa-icon {
-    font-size: 22px;
+    font-size: 23px;
     cursor: pointer;
 }
 

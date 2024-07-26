@@ -14,10 +14,10 @@ const UserDropdown = ({ userName, handleLogout }) => {
 
   return (
     <div className="user-dropdown" onClick={toggleDropdown}>
-      <FontAwesomeIcon className="fa-icon" icon={faUser} />
+      <FontAwesomeIcon className="fa-icon user-icon" icon={faUser} />
       {showDropdown && (
         <div className="dropdown-content">
-          <Link to="/dashboard">My Orders</Link>
+          {userName && <Link to="/dashboard">My Orders</Link>}
           <Link to="/customer-care">Customer Care</Link>
           {userName ? (
             <button className="logout-button" onClick={handleLogout}>Logout</button>

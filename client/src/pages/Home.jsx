@@ -97,17 +97,17 @@ const Home = () => {
     <>
       <section id='part-1'>
         <div className='black-box'>
-          <p>Welcome {userName ? userName : ""}!! Free Shipping available worldwide!</p>
+          <p>Welcome {userName ? userName : ""}! Free shipping all over India !</p>
         </div>
         <div className='navbar'>
           <p onClick={gotoHome} style={{ cursor: "pointer" }}>TRUE HOOD</p>
 
           <div className='social-icons'>
             <FontAwesomeIcon className="fa-icon" icon={faShopify} onClick={() => navigate("/products")} />
-            <div className="cart-icon" onClick={() => navigate('/get-cart')}>
+            {userName && <div className="cart-icon" onClick={() => navigate('/get-cart')}>
               <FontAwesomeIcon className="fa-icon" icon={faCart} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
-            </div>
+            </div>}
             <UserDropdown userName={userName} handleLogout={handleLogout} />
           </div>
 
