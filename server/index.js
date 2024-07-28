@@ -9,6 +9,10 @@ import Cart from "./models/Cart.js";
 import products from './products.js'; // Import the products
 import BlacklistToken from './models/BlackListToken.js';
 import { createOrder, verifyPayment } from './controllers/paymentController.js';
+import nodemailer from 'nodemailer';
+import otpGenerator from 'otp-generator';
+import jwt from 'jsonwebtoken';
+
 dotenv.config();
 const app = express();
 const allowedOrigins = [
@@ -338,6 +342,61 @@ app.post('/add-address', auth, async (req, res) => {
 });
 
 
+// node mailer routes and functionalities
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
+
+const JWT_SECRET_OTP = process.env.JWT_SECRET_EMAIL_OTP;
+
+app.post('/send-otp', (req, res) => {
+    const { email } = req.body;
+    const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+
+    const otpToken = jwt.sign({ email, otp }, JWT_SECRET_OTP, { expiresIn: '10m' });
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: 'Your OTP for entering the Hood.',
+        text:   `
+                    Welcome to the Hood, Your OTP is ${otp}.
+                `
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending email:', error);
+            res.status(500).send('Error sending OTP');
+        } else {
+            console.log('Email sent:', info.response);
+            res.status(200).json({ otpToken });
+        }
+    });
+});
+
+app.post('/verify-otp', (req, res) => {
+    const { email, otp, otpToken } = req.body;
+    console.log(email, otp, otpToken);
+    try {
+        const decoded = jwt.verify(otpToken, JWT_SECRET_OTP);
+        console.log(decoded.email, decoded.otp)
+        if (decoded.email === email && decoded.otp === otp) {
+            res.status(200).send('OTP verified');
+        } else {
+            res.status(400).send('Invalid OTP');
+        }
+    } catch (error) {
+        res.status(400).send('Invalid or expired OTP');
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 
