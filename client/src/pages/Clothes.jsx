@@ -61,7 +61,7 @@ const Clothes = [
         id: 7,
         imgURL: pro7,
         price: 899.00,
-        name: "True Hood Culture",
+        name: "The Black Panther Tee",
         description: "I'm a product",
         category: "T-Shirts"
     },

@@ -419,7 +419,6 @@ html {
 
 .copy-right {
     position: relative;
-    margin-top: 20%;
     width: 100%;
     display: block;
     height: max-content;
@@ -1550,6 +1549,7 @@ button.normal {
     /* Show filters on larger screens */
 }
 
+
 /* Styles for mobile devices */
 @media (max-width: 768px) {
 
@@ -1646,6 +1646,7 @@ button.normal {
     .copy-right {
         right: 131% !important;
         top: 20% !important;
+        margin-top: 20% !important;
     }
 
     .social-icons {
@@ -1980,6 +1981,7 @@ button.normal {
 
     .copy-right {
         /* right: 74% !important; */
+        margin-top: 10% !important;
     }
 
     #last p {
