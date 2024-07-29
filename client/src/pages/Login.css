@@ -63,6 +63,25 @@
   outline: none;
 }
 
+.input-box.special {
+  display: flex;
+  border: none;
+  justify-content: space-between;
+}
+
+.input-box.special input {
+  width: 72.3%;
+  border-bottom: 1px solid #162938;
+}
+
+.input-box.special button {
+  width: 27.7%;
+  height: auto;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+
 .bt{
   background-color: #F5E8C7;
   padding: 0 15px;
@@ -132,6 +151,14 @@ form span {
     height: 50px;
     border-bottom: 1px solid #162938;
     margin: 35px 0;
+  }
+
+  .input-box.special input {
+    width: 70%;
+  }
+
+  .input-box.special button {
+    width: 28%;
   }
 
   .bt{

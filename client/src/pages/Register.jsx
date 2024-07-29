@@ -96,7 +96,7 @@ function Register() {
                                     onChange={(e) => setUserName(e.target.value)}
                                 />
                             </div>
-                            <div className="input-box">
+                            <div className="input-box special">
                                 <input
                                     placeholder="Email"
                                     type="email"
@@ -107,7 +107,7 @@ function Register() {
                                 <button type="button" onClick={handleSendOtp}>Send OTP</button>
                             </div>
                             {otpSent && (
-                                <div className="input-box">
+                                <div className="input-box special">
                                     <input
                                         placeholder="OTP"
                                         type="text"
@@ -115,7 +115,7 @@ function Register() {
                                         value={otp}
                                         onChange={(e) => setOtp(e.target.value)}
                                     />
-                                    <button type="button" onClick={handleVerifyOtp}>Verify OTP</button>
+                                    <button type="button" onClick={handleVerifyOtp}>Verify</button>
                                 </div>
                             )}
                             <div className="input-box">
