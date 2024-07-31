@@ -2140,7 +2140,9 @@ body {
 }
 
 #paint-pic {
-    display: none;
+    display: block;
+    margin-top: 0.6%;
+    cursor: pointer;
 }
 
 /* Media query for mobile view */

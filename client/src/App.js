@@ -150,6 +150,7 @@ import DetailedPage2 from './pages/DetailedPage2';
 import CartPage from './pages/CartPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Vengeance from './pages/Vengeance';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import CartDetail from './pages/CartDetail';
@@ -183,6 +184,7 @@ const App = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path='/checkout' element={<CartDetail />} />
       <Route path='/customer-care' element={<CustomerCare />} />
+      <Route path="/vengeance" element={<Vengeance />} />
       <Route path="/success" element={<Success />} />
     </Routes>
     </CartProvider>

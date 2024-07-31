@@ -5,6 +5,7 @@ import Clothes from './Clothes.jsx';
 import "../App.css";
 import { useNavigate } from 'react-router-dom';
 import Slider from 'rc-slider';
+import voth from '../sources/voth.jpg';
 import 'rc-slider/assets/index.css';
 
 const Products = () => {
@@ -14,7 +15,7 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedCollection, setSelectedCollection] = useState('All');
   const [isSlp1Visible, setIsSlp1Visible] = useState(false);
-
+  const navigate = useNavigate();
   const handleSortClick = (newSort) => {
     setSort(newSort);
   };
@@ -88,6 +89,9 @@ const Products = () => {
       />
     );
   };
+  const gotoVengeance = async()=>{
+    navigate("/vengeance");
+  }
 
   return (
     <>
@@ -208,8 +212,8 @@ const Products = () => {
         </div>
       </section>
 
-      <section id="paint-pic" className='products-pic'>
-        <img src={bg} alt="" />
+      <section id="paint-pic">
+        <img src={voth} alt="" onClick={gotoVengeance}/>
       </section>
 
 

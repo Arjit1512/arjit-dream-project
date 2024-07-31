@@ -66,6 +66,9 @@ const Home = () => {
     navigate("/");
   }
 
+  const gotoVengeance = async()=>{
+    navigate("/vengeance");
+  }
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
 
@@ -135,7 +138,7 @@ const Home = () => {
       </section>
 
       <section id="paint-pic">
-        <img src={voth} alt="" />
+        <img src={voth} alt="" onClick={gotoVengeance}/>
       </section>
 
 
