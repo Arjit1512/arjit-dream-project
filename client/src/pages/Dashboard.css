@@ -35,8 +35,8 @@
 }
 .inner-box p{
   position: relative;
-  top:15%;
-  margin: 5% 0%;
+  top: -5%;
+  margin: 3% 0%;
   font-family: 'Inconsolata', monospace;
   font-weight: 500;
 }
@@ -99,7 +99,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 3.5% 0; /* Adjust padding as needed */
+  padding-top: 3.5%;
 }
 
 .black-div h2 {
@@ -127,6 +127,7 @@ ul{
 .title-hood{
   color: brown !important;
   font-size: 1.7rem !important;
+  padding-top: 1.5vh;
   position: relative !important;
   bottom: 5vh !important;
   background-color: black !important;
@@ -232,7 +233,6 @@ ul{
   font-size: 20px;
   cursor: pointer;
 }
-
 @media (min-width: 370px) and (max-width:700px){
   .dash-order{
     position: relative;
@@ -246,7 +246,7 @@ ul{
     visibility: hidden;
   }
   .order-img{
-     width: 52%;
+     width: 55%;
   }
   .inner-box{
     height: 20%;

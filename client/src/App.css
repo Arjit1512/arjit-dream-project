@@ -1178,7 +1178,7 @@ button.normal {
 .cart-icon {
     position: relative;
     cursor: pointer;
-    margin: 10px 30px;
+    margin: -6px 10px;
     font-size: 25px;
     z-index: 1000;
 }
