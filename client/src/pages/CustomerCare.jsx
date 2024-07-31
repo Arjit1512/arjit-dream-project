@@ -44,7 +44,7 @@ const CustomerCare = () => {
             <section className="customer-care-section">
                 <h2>Return Policy</h2>
                 <p>
-                    We want you to be completely satisfied with your purchase. Our return policy allows you to return items within [insert number] days of purchase for a full refund or exchange.
+                    Currently we are not interested in taking any returns of our products, but we are available for an exchange. 
                 </p>
                 <p>
                     For more details, please review our <a href="/returns">Return Policy</a>.

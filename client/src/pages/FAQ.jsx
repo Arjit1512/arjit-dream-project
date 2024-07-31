@@ -15,15 +15,15 @@ const FAQ = () => {
     },
     {
       question: "How can I place an order?",
-      answer: "You can place an order by selecting the products you like, adding them to your cart, and proceeding to checkout. Follow these instructions to complete your purchase."
+      answer: "You can place an order by selecting the products you like, adding them to your cart, and proceeding to checkout. Follow these instructions to complete your purchase. Please understand that we are not accepting CODs for now."
     },
     {
       question: "What payment methods do you accept?",
-      answer: "We accept a variety of payment methods, including credit/debit cards, net banking, and UPI. All transactions are secure and encrypted via Razorpay."
+      answer: "We accept a variety of payment methods, including credit/debit cards, net banking, and UPI. All transactions are secure and encrypted via Razorpay. Unfortunately, for now, we are not accepting CASH ON DELIVERIES (COD)."
     },
     {
       question: "How can I track my order?",
-      answer: "Once your order is shipped, you will receive a tracking number via email. You can use this number to track your order."
+      answer: "Once your order is shipped, you will receive a tracking number via email by Shiprocket. You can check this email anytime to track your order."
     },
     {
       question: "What is your return policy?",

@@ -61,6 +61,12 @@ const Dashboard = () => {
     fetchUserData();
   }, []);
 
+  const toIST = (dateString) => {
+    const date = new Date(dateString);
+    const options = { timeZone: 'Asia/Kolkata', timeZoneName: 'short' };
+    return date.toLocaleString('en-IN', options);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -79,12 +85,9 @@ const Dashboard = () => {
   return (
     <>
       <section id='part-1'>
-        {/* <div className='black-box'>
-          <p>Free Shipping available worldwide!</p>
-        </div> */}
         <div className='navbar' style={{backgroundColor:"black"}}>
           <div className='t-h'>
-          <p className='title-hood'>TRUE HOOD</p>
+            <p className='title-hood'>TRUE HOOD</p>
           </div>
         </div>
       </section>
@@ -95,10 +98,10 @@ const Dashboard = () => {
             <img className='dragon-img' src={`/images/snake.png`} alt="Dragon" />
             <h3 className='grateful'>Thank you, {user.userName}, for being part of our hood.</h3>
             <ul>
-               <h2>Your Orders</h2>
+              <h2>Your Orders</h2>
               {sortedOrders.map(order => (
                 <li key={order._id}>
-                  <h3 className='date'>Ordered by you on <span>{new Date(order.orderDate).toLocaleString()}</span></h3>
+                  <h3 className='date'>Ordered by you on <span>{toIST(order.orderDate)}</span></h3>
                   {order.items.map(item => (
                     <div className='flex-row order-box' key={item._id}>
                       <img className='order-img' src={getImageSrc(item.productId)} alt={item.name} />
@@ -128,7 +131,6 @@ const Dashboard = () => {
       </div>
     </>
   );
-  
 };
 
 export default Dashboard;

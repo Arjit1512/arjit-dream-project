@@ -2,7 +2,7 @@ const products = [
     {
         id: 1,
         imgURL: `../images/i1.jpg`,
-        price: 1.00,
+        price: 2.00,
         name: "Vengeance of the Hood",
         description: "I'm a product",
         category: "T-Shirts"
@@ -10,7 +10,7 @@ const products = [
     {
         id: 3,
         imgURL: `../images/i3.jpg`,
-        price: 899.00,
+        price:2.00,
         name: "True Hood Original",
         description: "I'm a product",
         category: "T-Shirts"
@@ -18,7 +18,7 @@ const products = [
     {
         id: 5,
         imgURL: `../images/i5.jpg`,
-        price: 599.00,
+        price:2.00,
         name: "Vengeance of the Hood",
         description: "I'm a product",
         category: "T-Shirts"
@@ -26,7 +26,7 @@ const products = [
     {
         id: 7,
         imgURL: `../images/i7.png`,
-        price: 899.00,
+        price:2.00,
         name: "The Black Panther Tee",
         description: "I'm a product",
         category: "T-Shirts"
@@ -34,7 +34,7 @@ const products = [
     {
         id: 15,
         imgURL: `../images/i15.png`,
-        price: 599.00,
+        price:2.00,
         name: "True Hood Original",
         description: "I'm a product",
         category: "T-Shirts"
@@ -42,7 +42,7 @@ const products = [
     {
         id: 11,
         imgURL: `../images/i11.png`,
-        price: 899.00,
+        price:2.00,
         name: "The Kendrick Lamar Tee",
         description: "I'm a product",
         category: "T-Shirts"
@@ -50,7 +50,7 @@ const products = [
     {
         id: 13,
         imgURL: `../images/i13.png`,
-        price: 1299.00,
+        price: 2.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"
@@ -58,7 +58,7 @@ const products = [
     {
         id: 17,
         imgURL: `../images/i17.png`,
-        price: 1299.00,
+        price: 2.00,
         name: "True Hood Culture",
         description: "I'm a product",
         category: "T-Shirts"

@@ -134,8 +134,8 @@ ul{
   text-align: center !important;
 }
 .navbar{
-  height: 12px;
-  padding-bottom: 2vh !important;
+  height: 10px;
+  padding-bottom: 4vh !important;
 }
 
 .no-orders {
@@ -237,6 +237,9 @@ ul{
   .dash-order{
     position: relative;
     top: 17vh;
+  }
+  .navbar{
+    padding-bottom: 2vh !important;
   }
   .t-h{
     position: relative !important;

@@ -9,7 +9,8 @@ const Returns = () => {
       <section className="policy-section">
         <h2>Cancellation & Refund Request Time</h2>
         <p>
-          We accept cancellation and refund requests only on the same day the order is placed. Please contact customer support on the same day to process your request.
+          We accept cancellation and refund requests only on the same day the order is placed. Please contact customer support on the same day to process your request.<br/>
+          NOTE: <b>We are not accepting CODs for now.</b>
         </p>
       </section>
 
@@ -18,6 +19,7 @@ const Returns = () => {
         <p>
         We do not guarantee that delivery will always be the fastest.<br />
           Minimum Shipping Time - 2 days<br/>
+          Average Shipping Time - 8 days<br/>
           Maximum Shipping Time - 21 days(approx. 3 weeks)
         </p>
       </section>
@@ -25,7 +27,7 @@ const Returns = () => {
       <section className="policy-section">
         <h2>Exchange Policy</h2>
         <p>
-         If you want to exchange your product, the request should be sent via email(you get a reply within 2 days) or by whatsApp within the duration of 6 days after the order has been delivered. After 6 days, the request will not be considered.
+         If you want to exchange your product, the request should be sent via email(you get a reply within 2 days) or by whatsApp within the duration of 3 days after the order has been delivered. After 3 days, the request will not be considered.
         </p>
       </section>
 
