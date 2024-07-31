@@ -341,6 +341,62 @@ app.post('/add-address', auth, async (req, res) => {
   }
 });
 
+// Webhook endpoint to handle Razorpay payment events
+app.post('/razorpay-webhook', (req, res) => {
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    const receivedSignature = req.headers['x-razorpay-signature'];
+
+    const generatedSignature = crypto.createHmac('sha256', secret)
+                                      .update(JSON.stringify(req.body))
+                                      .digest('hex');
+
+    if (receivedSignature === generatedSignature) {
+        const { event, payload } = req.body;
+
+        if (event === 'payment.authorized' || event === 'payment.captured') {
+            const paymentDetails = payload.payment.entity;
+            
+            // Assuming you have a function to handle order creation
+            handleOrderCreation(paymentDetails)
+                .then(() => res.status(200).send('Order created and email sent'))
+                .catch((error) => {
+                    console.error('Error creating order:', error);
+                    res.status(500).send('Error creating order');
+                });
+        } else {
+            res.status(400).send('Unhandled event type');
+        }
+    } else {
+        res.status(403).send('Invalid signature');
+    }
+});
+
+async function handleOrderCreation(paymentDetails) {
+    const orderDetails = {
+        // Populate order details from paymentDetails and your database
+        // This includes customer details, shipping address, product details, etc.
+    };
+
+    // Create order in Shiprocket
+    const shiprocketResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', orderDetails, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.SHIPROCKET_API_TOKEN}`
+        }
+    });
+
+    if (shiprocketResponse.data.status_code !== 1) {
+        throw new Error('Failed to create order in Shiprocket');
+    }
+
+    // Shiprocket will handle sending the email to the customer
+}
+
+
+
+
+
+
 
 // node mailer routes and functionalities
 
