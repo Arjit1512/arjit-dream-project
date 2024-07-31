@@ -133,7 +133,7 @@ const handleAddressSubmit = async () => {
       });
 
       const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/payment/create-order`, {
-          amount: state.totalPrice * 100, // amount in paise
+          amount: state.totalPrice, // amount in paise
           currency: 'INR',
           receipt: 'order_rcptid_11'
       }, {

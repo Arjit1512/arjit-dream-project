@@ -1732,8 +1732,8 @@ button.normal {
 
     .space-btw {
         position: relative;
-        bottom: 5%;
-        left: 9%;
+        bottom: 6%;
+        right: 16%;
     }
 
     .space-btw h5 {
@@ -1892,6 +1892,11 @@ button.normal {
     .cart-icon.ci {
         right: 105%;
     }
+    /* .slp img {
+        width: 114% !important;
+        height:100% !important;
+        right: 13% !important;
+    } */
 
 }
 

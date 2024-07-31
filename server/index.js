@@ -12,6 +12,7 @@ import { createOrder, verifyPayment } from './controllers/paymentController.js';
 import nodemailer from 'nodemailer';
 import otpGenerator from 'otp-generator';
 import jwt from 'jsonwebtoken';
+import Razorpay from 'razorpay';
 
 dotenv.config();
 const app = express();
@@ -232,6 +233,11 @@ app.post("/community", auth, async (req, res) => {
     }
 });
 
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+});
+
 app.post('/checkout', auth, async (req, res) => {
     try {
         const userId = req.user._id;
@@ -240,6 +246,7 @@ app.post('/checkout', auth, async (req, res) => {
         const cart = await Cart.findOne({ userId });
 
         if (!cart) {
+            console.error('Cart not found');
             return res.status(404).json({ message: 'Cart not found' });
         }
 
@@ -248,7 +255,7 @@ app.post('/checkout', auth, async (req, res) => {
 
         // Create Razorpay order
         const orderOptions = {
-            amount: totalAmount * 100, // amount in the smallest currency unit
+            amount: totalAmount, // amount in the smallest currency unit
             currency: "INR",
             receipt: `receipt_order_${userId}`,
             notes: {
@@ -257,11 +264,18 @@ app.post('/checkout', auth, async (req, res) => {
             }
         };
 
-        const order = await razorpay.orders.create(orderOptions);
+        let order;
+        try {
+            order = await razorpay.orders.create(orderOptions);
+        } catch (error) {
+            console.error('Error creating Razorpay order:', error);
+            return res.status(500).json({ error: 'Error creating Razorpay order' });
+        }
 
         // Save current cart items and total price to user's totalOrders
         const user = await User.findById(userId);
         if (!user) {
+            console.error('User not found');
             return res.status(404).json({ message: 'User not found' });
         }
 
@@ -294,6 +308,7 @@ app.post('/checkout', auth, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 app.get('/dashboard', auth, async (req, res) => {
     const userId = req.user._id;

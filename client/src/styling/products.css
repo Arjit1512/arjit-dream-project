@@ -115,3 +115,11 @@
     position: relative;
     right:29%;
   }
+
+@media (min-width:270px) and (max-width:768px){
+   .slp img {
+        width: 114% ;
+        height:100% ;
+        right: 13% ;
+    } 
+}    
