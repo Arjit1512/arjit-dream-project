@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faPinterest, faTwitter, faShopify } from "@fortawesome/free-brands-svg-icons";
-import { faShoppingCart as faCart, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";  // Importing faBars and faTimes
+import { faFacebook, faInstagram, faPinterest, faTwitter, faShopify} from "@fortawesome/free-brands-svg-icons";
+import { faShoppingCart as faCart, faBars, faTimes, faStore} from "@fortawesome/free-solid-svg-icons";  // Importing faBars and faTimes
 import { Link, useNavigate } from 'react-router-dom';
 import bghome from '../sources/bghome.webp';
 import axios from 'axios';
@@ -95,6 +95,7 @@ const Home = () => {
   const toggleProfileMenu = () => {
     setProfileMenuOpen(!profileMenuOpen);
   };
+ 
 
   return (
     <>
@@ -106,7 +107,7 @@ const Home = () => {
           <p onClick={gotoHome} style={{ cursor: "pointer" }}>TRUE HOOD</p>
 
           <div className='social-icons'>
-            <FontAwesomeIcon className="fa-icon" icon={faShopify} onClick={() => navigate("/products")} />
+            <FontAwesomeIcon className="fa-icon" icon={faStore} onClick={() => navigate("/products")} />
             {userName && <div className="cart-icon" onClick={() => navigate('/get-cart')}>
               <FontAwesomeIcon className="fa-icon" icon={faCart} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
