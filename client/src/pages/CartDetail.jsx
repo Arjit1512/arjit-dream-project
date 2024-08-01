@@ -16,11 +16,12 @@ const CartDetail = () => {
     pincode: '',
     landmark: ''
   });
+  const [userDetails, setUserDetails] = useState({ userName: '', email: '' });
   const navigate = useNavigate();
   const { state, dispatch } = useCart();
 
   useEffect(() => {
-    const fetchCart = async () => {
+    const fetchCartAndUser = async () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -30,36 +31,45 @@ const CartDetail = () => {
           return;
         }
 
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-cart`, {
+        const cartResponse = await axios.get(`${process.env.REACT_APP_API_URL}/get-cart`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
 
-        const data = response.data.cart[0]; // Assuming only one cart per user
-        if (data && data.items.length > 0) {
-          dispatch({ type: 'SET_CART', payload: data.items });
-          dispatch({ type: 'SET_TOTAL_PRICE', payload: data.totalPrice });
+        const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const cartData = cartResponse.data.cart[0]; // Assuming only one cart per user
+        if (cartData && cartData.items.length > 0) {
+          dispatch({ type: 'SET_CART', payload: cartData.items });
+          dispatch({ type: 'SET_TOTAL_PRICE', payload: cartData.totalPrice });
         } else {
           dispatch({ type: 'SET_CART', payload: [] });
           dispatch({ type: 'SET_TOTAL_PRICE', payload: 0 });
         }
 
+        const userData = userResponse.data.user;
+        setUserDetails({ userName: userData.userName, email: userData.email });
+
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching cart data:', error.message);
+        console.error('Error fetching data:', error.message);
         if (error.response && error.response.status === 401) {
           setError('Unauthorized access - please log in again.');
           localStorage.removeItem('token');
           navigate('/login');
         } else {
-          setError('Error fetching cart data');
+          setError('Error fetching data');
         }
         setLoading(false);
       }
     };
 
-    fetchCart();
+    fetchCartAndUser();
   }, [dispatch, navigate]);
 
   const handleQuantityChange = async (productId, action, size) => {
@@ -111,101 +121,104 @@ const CartDetail = () => {
     setShowAddressPopup(true);
   };
 
-  
-const handleAddressSubmit = async () => {
-  if (!address.street || !address.city || !address.state || !address.pincode || !address.landmark) {
+  const handleAddressSubmit = async () => {
+    if (!address.street || !address.city || !address.state || !address.pincode || !address.landmark) {
       alert('Please enter all address details.');
       return;
-  }
-  
-  setShowAddressPopup(false);
+    }
 
-  try {
+    setShowAddressPopup(false);
+
+    try {
       const token = localStorage.getItem('token');
       if (!token) {
-          throw new Error('User not authenticated');
+        throw new Error('User not authenticated');
       }
 
       await axios.post(`${process.env.REACT_APP_API_URL}/add-address`, address, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/payment/create-order`, {
-          amount: state.totalPrice, // amount in paise
-          currency: 'INR',
-          receipt: 'order_rcptid_11'
+        amount: state.totalPrice * 100, // amount in paise
+        currency: 'INR',
+        receipt: 'order_rcptid_11'
       }, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       const { id: orderId, amount, currency } = orderResponse.data;
 
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
-          throw new Error('Razorpay SDK failed to load. Are you online?');
+        throw new Error('Razorpay SDK failed to load. Are you online?');
       }
 
       const options = {
-          key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-          amount,
-          currency,
-          name: 'TRUE HOOD',
-          description: 'Transaction',
-          order_id: orderId,
-          handler: async function (response) {
-              try {
-                  await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
-                      razorpay_order_id: orderId,
-                      razorpay_payment_id: response.razorpay_payment_id,
-                      razorpay_signature: response.razorpay_signature
-                  }, {
-                      headers: {
-                          Authorization: `Bearer ${token}`
-                      }
-                  });
-
-                  dispatch({ type: 'CLEAR_CART' });
-                  navigate('/dashboard');
-              } catch (error) {
-                  console.error('Error verifying payment:', error.message);
-                  setError('Payment verification failed');
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount,
+        currency,
+        name: 'TRUE HOOD',
+        description: 'Transaction',
+        order_id: orderId,
+        handler: async function (response) {
+          try {
+            await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
+              razorpay_order_id: orderId,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            }, {
+              headers: {
+                Authorization: `Bearer ${token}`
               }
-          },
-          prefill: {
-              name: 'Arjit Avadhanam',
-              email: 'avadhanamarjit15@gmail.com',
-              contact: '9618825172'
-          },
-          theme: {
-              color: '#3399cc'
+            });
+
+            dispatch({ type: 'CLEAR_CART' });
+            navigate('/dashboard');
+          } catch (error) {
+            console.error('Error verifying payment:', error.message);
+            setError('Payment verification failed');
           }
+        },
+        prefill: {
+          name: userDetails.userName,
+          email: userDetails.email,
+          contact: ''
+        },
+        theme: {
+          color: '#3399cc'
+        }
       };
 
       const rzp = new window.Razorpay(options);
       rzp.open();
-  } catch (error) {
+    } catch (error) {
       console.error('Error during checkout:', error.message);
       if (error.response && error.response.status === 401) {
-          setError('Unauthorized access - please log in again.');
-          localStorage.removeItem('token');
-          navigate('/login');
+        setError('Unauthorized access - please log in again.');
+        localStorage.removeItem('token');
+        navigate('/login');
       } else {
-          setError('Error during checkout: ' + error.message);
+        setError('Error during checkout: ' + error.message);
       }
-  }
-};
+    }
+  };
 
   const handleAddressChange = (e) => {
     setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="spinner-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
   if (error) {
     return <div>{error}</div>;
@@ -221,7 +234,7 @@ const handleAddressSubmit = async () => {
       </>
     );
   }
-  
+
 
   return (
     <>
@@ -271,10 +284,10 @@ const handleAddressSubmit = async () => {
         <div className="popup">
           <div className="popup-content">
             <span className="close" onClick={() => setShowAddressPopup(false)}>&times;</span>
-            <h2>Enter Your Address</h2>
+            <h2>Enter Your  Shipping Address</h2>
             <form onSubmit={(e) => { e.preventDefault(); handleAddressSubmit(); }}>
               <label>
-                Street:<br />
+                <nobr>Street:<i>(including landmark)</i></nobr><br />
                 <input type="text" name="street" value={address.street} onChange={handleAddressChange} required />
               </label>
               <label>
@@ -284,10 +297,6 @@ const handleAddressSubmit = async () => {
               <label>
                 State:<br />
                 <input type="text" name="state" value={address.state} onChange={handleAddressChange} required />
-              </label>
-              <label>
-                Landmark:
-                <input type="text" name="landmark" value={address.landmark} onChange={handleAddressChange} />
               </label>
               <label>
                 Pincode:<br />

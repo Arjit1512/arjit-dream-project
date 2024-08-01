@@ -27,6 +27,8 @@ import i17 from "../sources/i17.png";
 import i18 from "../sources/i18.png";
 import { CiShoppingCart } from "react-icons/ci";
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useLocation } from 'react-router-dom';
+
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -45,11 +47,17 @@ const ProductDetail = () => {
     const handleNavigation = (path) => {
         navigate(path);
         window.scrollTo(0, 0); // Scroll to the top of the page
+        window.location.reload(); // Refresh the page
     };
+    
+    
+    // Inside your component
+    const location = useLocation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [id]);
+    }, [location.pathname]);
+    
 
     const images = {
         1: [i1, i2],
@@ -154,8 +162,13 @@ const ProductDetail = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="spinner-container">
+                <div className="spinner"></div>
+            </div>
+        );
     }
+    
 
     if (error) {
         return <div>{error}</div>;

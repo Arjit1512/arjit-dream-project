@@ -732,6 +732,70 @@ Link {
     cursor: pointer;
 }
 
+/*ADDRESS POP-UP*/
+.popup-content {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+}
+
+.popup-content h2 {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.popup-content form {
+    display: grid;
+    gap: 8px;
+}
+
+.popup-content form label {
+    font-family: 'Inconsolata', monospace;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.popup-content form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.popup-content form input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.popup-content form button {
+    padding: 15px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    background-color: rgb(77, 42, 165);
+    border: 2px solid brown;
+    font-family: 'Inconsolata', monospace;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.popup-content form button:hover {
+    background-color: rgb(60, 30, 135);
+    transform: scale(1.05);
+}
+
+.popup-content form button:active {
+    background-color: rgb(50, 25, 110);
+}
+
 /*COMMUNITY PAGE*/
 
 #community-page {
@@ -1669,6 +1733,33 @@ button.normal {
         top: 1vh !important;
     }
 
+    /*community*/
+    #community-page {
+        flex-direction: column;
+    }  
+    .cpage1 {
+        width: 100%;
+    } 
+    .cpage1 form{
+        padding: 2% 5%; 
+    }
+    .text-community {
+        padding: 1% 3%;
+    }     
+    .cpage1 {
+        padding: 0%;
+    }
+    .cpage1 h1 {
+        text-align: center;
+    }
+    .cpage2 {
+        width: 100%;
+        position: relative;
+        top:12vh;
+        padding-bottom: 5%;
+    }   
+
+
 
     /*Cart-detail*/
     .cart-class1 {
@@ -1890,7 +1981,8 @@ button.normal {
     }
 
     .cart-icon.ci {
-        right: 105%;
+        right: 69%;
+        bottom: 13vh;
     }
     /* .slp img {
         width: 114% !important;
@@ -1944,6 +2036,9 @@ button.normal {
     .social-icons {
         top: 4.5rem !important;
     }
+    .contact-text h1{
+        font-size: 22px;
+    }    
 
     #part-3 {
         position: relative;
@@ -2144,6 +2239,36 @@ body {
     margin-top: 0.6%;
     cursor: pointer;
 }
+/*loading*/
+/* Add this to your CSS file */
+.spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: Add a semi-transparent background */
+    z-index: 9999;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1.5s linear infinite; /* Adjust the duration here to make it spin faster */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
 /* Media query for mobile view */
 @media (max-width: 768px) {
@@ -2152,7 +2277,7 @@ body {
         background-color: #ffffff;
         position: relative;
         right: 18%;
-        bottom: 147%;
+        bottom: 224%;
         z-index: 10;
         width: 50%;
     }
@@ -2161,9 +2286,9 @@ body {
         font-size: 20px;
     }
 
-    .social-icons {
+    /* .social-icons {
         display: none !important;
-    }
+    } */
 
     .hamburger-menu a:hover{
         margin: 10px 0;

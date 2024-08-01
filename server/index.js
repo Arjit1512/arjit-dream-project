@@ -255,7 +255,7 @@ app.post('/checkout', auth, async (req, res) => {
 
         // Create Razorpay order
         const orderOptions = {
-            amount: totalAmount, // amount in the smallest currency unit
+            amount: totalAmount*100, // amount in the smallest currency unit
             currency: "INR",
             receipt: `receipt_order_${userId}`,
             notes: {

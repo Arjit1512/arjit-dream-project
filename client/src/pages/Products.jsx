@@ -59,6 +59,10 @@ const Products = () => {
     return 0; // Default sorting
   });
 
+  const gotoHome = async () => {
+    navigate("/");
+  }
+
   const Cloth = (props) => {
     const navigate = useNavigate();
 
@@ -100,9 +104,10 @@ const Products = () => {
           <p className='blink'>OUR SALE IS LIVE NOW!</p>
         </div>
         <div className='navbar'>
-          <p className='unga'>TRUE HOOD</p>
+          <p className='unga' style={{cursor:"pointer"}} onClick={gotoHome}>TRUE HOOD</p>
         </div>
       </section>
+      
       <div className='fbp'>
           <p>Filter By Price</p>
         </div>

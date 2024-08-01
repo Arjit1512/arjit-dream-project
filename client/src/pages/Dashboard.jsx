@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
 import axios from 'axios';
 import i1 from "../sources/i1.jpg";
 import i3 from "../sources/i3.jpg";
@@ -14,7 +14,7 @@ import ending from '../sources/ending.jpg';
 import love from "../sources/love.jpg";
 import '../App.css';
 import './Dashboard.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const images = {
   1: i1,
@@ -37,7 +37,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
@@ -68,8 +68,13 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="spinner-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
+
 
   if (error) {
     return <div>{error}</div>;
