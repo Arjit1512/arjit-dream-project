@@ -141,17 +141,13 @@ const CartDetail = () => {
         }
       });
 
-      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/payment/create-order`, {
-        amount: state.totalPrice * 100, // amount in paise
-        currency: 'INR',
-        receipt: 'order_rcptid_11'
-      }, {
+      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      const { id: orderId, amount, currency } = orderResponse.data;
+      const { id: orderId, amount, currency } = orderResponse.data.order;
 
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -218,7 +214,7 @@ const CartDetail = () => {
             <div className="spinner"></div>
         </div>
     );
-}
+  }
 
   if (error) {
     return <div>{error}</div>;
@@ -234,7 +230,6 @@ const CartDetail = () => {
       </>
     );
   }
-
 
   return (
     <>
@@ -287,8 +282,12 @@ const CartDetail = () => {
             <h2>Enter Your  Shipping Address</h2>
             <form onSubmit={(e) => { e.preventDefault(); handleAddressSubmit(); }}>
               <label>
-                <nobr>Street:<i>(including landmark)</i></nobr><br />
+                Street:<br />
                 <input type="text" name="street" value={address.street} onChange={handleAddressChange} required />
+              </label>
+              <label>
+                Landmark:<br />
+                <input type="text" name="landmark" value={address.landmark} onChange={handleAddressChange} required />
               </label>
               <label>
                 City:<br />
