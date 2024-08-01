@@ -149,9 +149,9 @@ const Home = () => {
             <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
               <p className='gray-text'>OVERSIZED T-SHIRT</p>
-              <h5 className="body-title">T-Shirt Red</h5>
-              <p className="body-text"><span className='break'>₹899.00</span> ₹1.00</p>
-              <div className='discount'>-25%</div>
+              <h5 className="body-title">Vengeance of the Hood</h5>
+              <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
+              <div className='discount'>-21%</div>
             </div>
           </div>
 
@@ -160,9 +160,9 @@ const Home = () => {
             <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
               <p className='gray-text'>OVERSIZED T-SHIRT</p>
-              <h5 className="body-title">T-Shirt Porsche</h5>
+              <h5 className="body-title">True Hood Original</h5>
               <p className="body-text"><span className='break'>₹899.00</span> ₹599.00</p>
-              <div className='discount'>-36%</div>
+              <div className='discount'>-33%</div>
             </div>
           </div>
 
@@ -171,8 +171,8 @@ const Home = () => {
             <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
               <p className='gray-text'>OVERSIZED T-SHIRT</p>
-              <h5 className="body-title">T-Shirt Black</h5>
-              <p className="body-text"><span className='break'>₹799.00</span> ₹699.00</p>
+              <h5 className="body-title">Vengeance of the Hood</h5>
+              <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
               <div className='discount'>-21%</div>
             </div>
           </div>
@@ -182,9 +182,9 @@ const Home = () => {
             <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
               <p className='gray-text'>OVERSIZED T-SHIRT</p>
-              <h5 className="body-title">T-Shirt Culture</h5>
-              <p className="body-text"><span className='break'>₹899.00</span> ₹699.00</p>
-              <div className='discount'>-25%</div>
+              <h5 className="body-title">The Black Panther Tee</h5>
+              <p className="body-text"><span className='break'>₹899.00</span> ₹799.00</p>
+              <div className='discount'>-12%</div>
             </div>
           </div>
         </div>
