@@ -16,7 +16,7 @@ const CustomerCare = () => {
                 <ul>
                     <li>WhatsApp: <i>+91 9618825172</i></li>
                     <li>Email: <i>truehood.business@gmail.com</i></li>
-                    <li>Live Chat: <i>https://www.instagram.com/hood.clothing.in</i></li>
+                    <li>Live Chat: <a href='https://www.instagram.com/truehoodclothing/'>https://www.instagram.com/truehoodclothing/</a></li>
                 </ul>
             </section>
             <section className="customer-care-section">

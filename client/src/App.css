@@ -1860,9 +1860,9 @@ button.normal {
 
     .flex-row.flex-wrap {
         position: relative;
-        left: 32%;
+        left: 30%;
         bottom: 6%;
-        width: 168%;
+        width: 165%;
     }
 
     .price-range {

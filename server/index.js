@@ -13,6 +13,7 @@ import nodemailer from 'nodemailer';
 import otpGenerator from 'otp-generator';
 import jwt from 'jsonwebtoken';
 import Razorpay from 'razorpay';
+import crypto from 'crypto';
 
 dotenv.config();
 const app = express();
@@ -64,6 +65,7 @@ app.post("/logout", auth, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 /* CART ROUTES */
 app.get('/get-cart', auth, async (req, res) => {
@@ -238,70 +240,66 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
+
 app.post('/checkout', auth, async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user._id; // Extract user ID from authentication middleware
 
-        // Find the user's cart
-        const cart = await Cart.findOne({ userId });
-
-        if (!cart) {
-            console.error('Cart not found');
-            return res.status(404).json({ message: 'Cart not found' });
+        // Find user and populate cart
+        const user = await User.findById(userId).populate('cart');
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        // Calculate total price with tax and delivery charges
-        const totalAmount = cart.totalPrice;
+        const cart = await Cart.findOne({ userId });
+        if (!cart || cart.items.length === 0) {
+            return res.status(400).json({ error: 'Cart is empty' });
+        }
+
+        const amount = cart.totalPrice * 100; // Razorpay expects amount in paise
+        const receipt = `receipt_${Date.now()}`.slice(0, 40);  // Ensure the receipt length is within the limit
 
         // Create Razorpay order
-        const orderOptions = {
-            amount: totalAmount*100, // amount in the smallest currency unit
-            currency: "INR",
-            receipt: `receipt_order_${userId}`,
+        const order = await razorpay.orders.create({
+            amount,
+            currency: 'INR',
+            receipt,
             notes: {
-                userId: userId.toString(),
-                userName: req.user.userName
+                userId: userId.toString()
             }
-        };
-
-        let order;
-        try {
-            order = await razorpay.orders.create(orderOptions);
-        } catch (error) {
-            console.error('Error creating Razorpay order:', error);
-            return res.status(500).json({ error: 'Error creating Razorpay order' });
-        }
-
-        // Save current cart items and total price to user's totalOrders
-        const user = await User.findById(userId);
-        if (!user) {
-            console.error('User not found');
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        user.totalOrders.push({
-            items: cart.items,
-            totalBill: totalAmount,
-            orderDate: new Date(),
-            userName: user.userName,
-            userEmail: user.email
         });
+
+        // Map cart items to include totalBill
+        const totalOrders = [{
+            items: cart.items.map(item => ({
+                productId: item.productId,
+                quantity: item.quantity,
+                price: item.price,
+                name: item.name,
+                size: item.size,
+            })),
+            totalBill: cart.totalPrice,  // Total bill for the order
+            orderDate: new Date(),       // Current date
+        }];
+
+        // Add cart items to user's total orders
+        user.totalOrders.push(...totalOrders);
+        await user.save();
 
         // Clear the cart
         cart.items = [];
         cart.totalPrice = 0;
-
         await cart.save();
-        await user.save();
 
-        res.status(200).json({
-            message: 'Checkout successful',
-            user: {
-                userName: user.userName,
-                email: user.email,
-                totalOrders: user.totalOrders
-            },
-            order
+        res.status(201).json({
+            message: 'Order created successfully',
+            order: {
+                id: order.id,
+                currency: order.currency,
+                amount: order.amount,
+                receipt: order.receipt,
+                notes: order.notes
+            }
         });
     } catch (error) {
         console.error('Error during checkout:', error);
@@ -355,9 +353,8 @@ app.post('/add-address', auth, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 // Webhook endpoint to handle Razorpay payment events
-app.post('/razorpay-webhook', (req, res) => {
+app.post('/razorpay-webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
     const receivedSignature = req.headers['x-razorpay-signature'];
 
@@ -370,14 +367,46 @@ app.post('/razorpay-webhook', (req, res) => {
 
         if (event === 'payment.authorized' || event === 'payment.captured') {
             const paymentDetails = payload.payment.entity;
-            
-            // Assuming you have a function to handle order creation
-            handleOrderCreation(paymentDetails)
-                .then(() => res.status(200).send('Order created and email sent'))
-                .catch((error) => {
-                    console.error('Error creating order:', error);
-                    res.status(500).send('Error creating order');
+            const userId = paymentDetails.notes.userId;
+
+            try {
+                // Find the user's cart
+                const cart = await Cart.findOne({ userId });
+                if (!cart) {
+                    throw new Error('Cart not found');
+                }
+
+                // Save current cart items and total price to user's totalOrders
+                const user = await User.findById(userId);
+                if (!user) {
+                    throw new Error('User not found');
+                }
+
+                // Save cart items to totalOrders
+                user.totalOrders.push({
+                    items: cart.items,
+                    totalBill: cart.totalPrice,
+                    orderDate: new Date(),
+                    userName: user.userName,
+                    userEmail: user.email
                 });
+
+                // Clear the cart
+                cart.items = [];
+                cart.totalPrice = 0;
+
+                // Save updated cart and user
+                await cart.save();
+                await user.save();
+
+                // You can add additional order creation logic here if needed
+                // Example: Create an order in Shiprocket
+
+                res.status(200).send('Order created and cart cleared');
+            } catch (error) {
+                console.error('Error processing payment:', error);
+                res.status(500).send('Error processing payment');
+            }
         } else {
             res.status(400).send('Unhandled event type');
         }
