@@ -243,7 +243,7 @@ const razorpay = new Razorpay({
 
 app.post('/checkout', auth, async (req, res) => {
     try {
-        const userId = req.user._id; // Extract user ID from authentication middleware
+        const userId = req.user._id;
 
         // Find user and populate cart
         const user = await User.findById(userId).populate('cart');
@@ -269,28 +269,6 @@ app.post('/checkout', auth, async (req, res) => {
             }
         });
 
-        // Map cart items to include totalBill
-        const totalOrders = [{
-            items: cart.items.map(item => ({
-                productId: item.productId,
-                quantity: item.quantity,
-                price: item.price,
-                name: item.name,
-                size: item.size,
-            })),
-            totalBill: cart.totalPrice,  // Total bill for the order
-            orderDate: new Date(),       // Current date
-        }];
-
-        // Add cart items to user's total orders
-        user.totalOrders.push(...totalOrders);
-        await user.save();
-
-        // Clear the cart
-        cart.items = [];
-        cart.totalPrice = 0;
-        await cart.save();
-
         res.status(201).json({
             message: 'Order created successfully',
             order: {
@@ -306,6 +284,7 @@ app.post('/checkout', auth, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 
 app.get('/dashboard', auth, async (req, res) => {

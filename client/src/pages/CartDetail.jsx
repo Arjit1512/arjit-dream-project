@@ -119,90 +119,92 @@ const CartDetail = () => {
 
   const handleCheckout = () => {
     setShowAddressPopup(true);
-  };
+};
 
-  const handleAddressSubmit = async () => {
+const handleAddressSubmit = async () => {
     if (!address.street || !address.city || !address.state || !address.pincode || !address.landmark) {
-      alert('Please enter all address details.');
-      return;
+        alert('Please enter all address details.');
+        return;
     }
 
     setShowAddressPopup(false);
 
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('User not authenticated');
-      }
-
-      await axios.post(`${process.env.REACT_APP_API_URL}/add-address`, address, {
-        headers: {
-          Authorization: `Bearer ${token}`
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('User not authenticated');
         }
-      });
 
-      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      const { id: orderId, amount, currency } = orderResponse.data.order;
-
-      const scriptLoaded = await loadRazorpayScript();
-      if (!scriptLoaded) {
-        throw new Error('Razorpay SDK failed to load. Are you online?');
-      }
-
-      const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        amount,
-        currency,
-        name: 'TRUE HOOD',
-        description: 'Transaction',
-        order_id: orderId,
-        handler: async function (response) {
-          try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
-              razorpay_order_id: orderId,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature
-            }, {
-              headers: {
+        await axios.post(`${process.env.REACT_APP_API_URL}/add-address`, address, {
+            headers: {
                 Authorization: `Bearer ${token}`
-              }
-            });
+            }
+        });
 
-            dispatch({ type: 'CLEAR_CART' });
-            navigate('/dashboard');
-          } catch (error) {
-            console.error('Error verifying payment:', error.message);
-            setError('Payment verification failed');
-          }
-        },
-        prefill: {
-          name: userDetails.userName,
-          email: userDetails.email,
-          contact: ''
-        },
-        theme: {
-          color: '#3399cc'
+        const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const { id: orderId, amount, currency } = orderResponse.data.order;
+
+        const scriptLoaded = await loadRazorpayScript();
+        if (!scriptLoaded) {
+            throw new Error('Razorpay SDK failed to load. Are you online?');
         }
-      };
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+        const options = {
+            key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+            amount,
+            currency,
+            name: 'TRUE HOOD',
+            description: 'Transaction',
+            order_id: orderId,
+            handler: async function (response) {
+                try {
+                    await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify`, {
+                        razorpay_order_id: orderId,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    // Clear cart only after successful payment
+                    dispatch({ type: 'CLEAR_CART' });
+                    navigate('/dashboard');
+                } catch (error) {
+                    console.error('Error verifying payment:', error.message);
+                    setError('Payment verification failed');
+                }
+            },
+            prefill: {
+                name: userDetails.userName,
+                email: userDetails.email,
+                contact: ''
+            },
+            theme: {
+                color: '#3399cc'
+            }
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
     } catch (error) {
-      console.error('Error during checkout:', error.message);
-      if (error.response && error.response.status === 401) {
-        setError('Unauthorized access - please log in again.');
-        localStorage.removeItem('token');
-        navigate('/login');
-      } else {
-        setError('Error during checkout: ' + error.message);
-      }
+        console.error('Error during checkout:', error.message);
+        if (error.response && error.response.status === 401) {
+            setError('Unauthorized access - please log in again.');
+            localStorage.removeItem('token');
+            navigate('/login');
+        } else {
+            setError('Error during checkout: ' + error.message);
+        }
     }
-  };
+};
+
 
   const handleAddressChange = (e) => {
     setAddress({ ...address, [e.target.name]: e.target.value });
