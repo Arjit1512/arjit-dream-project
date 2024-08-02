@@ -57,13 +57,13 @@ const CartDetail = () => {
 
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error.message);
+        console.error('Error fetching data or You have not logged In:', error.message);
         if (error.response && error.response.status === 401) {
           setError('Unauthorized access - please log in again.');
           localStorage.removeItem('token');
           navigate('/login');
         } else {
-          setError('Error fetching data');
+          setError('Error fetching data or You have not logged In');
         }
         setLoading(false);
       }
