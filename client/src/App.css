@@ -316,6 +316,18 @@ html {
     top: 4%;
     height: 70vh;
 }
+.background-video {
+    position: relative;
+    top: 52%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    margin-right: 0;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* Ensure the video is behind other content */
+  }
+  
 
 #part-4 {
     width: 100%;
@@ -1664,6 +1676,26 @@ button.normal {
         position: relative;
         left: 10% !important;
     }
+    .background-video {
+        left:0%;
+        right:10%;
+        width: 260%;
+        height: 90%;
+    }
+    .p3-part1 i {
+        color: red;
+        font-family: 900;
+    }   
+    .p3-part1 {
+        width: 100% !important;
+        top: 5%;
+        left:22%;
+        align-items: center;
+    } 
+    .move-a {
+        text-align: center;
+        background-color: #000;
+    }
 
     .hc:hover {
         transform: translateY(-5px) !important;
@@ -1686,6 +1718,9 @@ button.normal {
         width: 100vw;
         height: 85%;
     }
+      
+   
+      
 
     .p3-part1 p,
     .p3-part1 h3 {

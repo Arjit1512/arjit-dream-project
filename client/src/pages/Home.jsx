@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram, faPinterest, faTwitter, faShopify} from "@fortawesome/free-brands-svg-icons";
-import { faShoppingCart as faCart, faBars, faTimes, faStore} from "@fortawesome/free-solid-svg-icons";  // Importing faBars and faTimes
+import { faFacebook, faInstagram, faPinterest, faTwitter, faShopify } from "@fortawesome/free-brands-svg-icons";
+import { faShoppingCart as faCart, faBars, faTimes, faStore } from "@fortawesome/free-solid-svg-icons";  // Importing faBars and faTimes
 import { Link, useNavigate } from 'react-router-dom';
 import bghome from '../sources/bghome.webp';
 import axios from 'axios';
@@ -17,7 +17,7 @@ import i8 from "../sources/i8.png";
 import i4 from "../sources/i4.jpg";
 import i44 from "../sources/h-star.png";
 import voth from '../sources/voth.jpg';
-
+import videoSource from '../sources/H-VIDEO.mp4';
 
 
 const Home = () => {
@@ -66,7 +66,7 @@ const Home = () => {
     navigate("/");
   }
 
-  const gotoVengeance = async()=>{
+  const gotoVengeance = async () => {
     navigate("/vengeance");
   }
   const handleLogout = async () => {
@@ -95,7 +95,7 @@ const Home = () => {
   const toggleProfileMenu = () => {
     setProfileMenuOpen(!profileMenuOpen);
   };
- 
+
 
   return (
     <>
@@ -139,7 +139,7 @@ const Home = () => {
       </section>
 
       <section id="paint-pic">
-        <img src={voth} alt="" onClick={gotoVengeance}/>
+        <img src={voth} alt="" onClick={gotoVengeance} />
       </section>
 
 
@@ -214,9 +214,15 @@ const Home = () => {
             <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
           </div>
         </div>
-        <div className='p3-part2'>
+        {/* <div className='p3-part2'>
           <img src={i44} alt='' />
-        </div>
+        </div> */}
+        <div className='p3-part2'>
+      <video autoPlay muted loop className='background-video'>
+        <source src={videoSource} type='video/mp4' />
+        </video>
+       </div>
+
       </section>
 
 
