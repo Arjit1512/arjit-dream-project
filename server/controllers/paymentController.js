@@ -37,8 +37,8 @@ export const verifyPayment = async (req, res) => {
         hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`);
         const generatedSignature = hmac.digest('hex');
 
-        console.log('Received signature:', razorpay_signature);
-        console.log('Generated signature:', generatedSignature);
+        // console.log('Received signature:', razorpay_signature);
+        // console.log('Generated signature:', generatedSignature);
 
         if (generatedSignature !== razorpay_signature) {
             return res.status(400).json({ error: "Invalid signature, verification failed" });

@@ -27,7 +27,8 @@ export const auth = async (req, res, next) => {
             return res.status(401).json({ error: 'Invalid token.' });
         }
 
-        console.log('Authenticated user:', decoded); // Debugging line
+        // console.log('Authenticated user:', decoded); // Debugging line
+        
         req.user = decoded;
         next();
     } catch (e) {
