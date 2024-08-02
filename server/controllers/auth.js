@@ -10,7 +10,7 @@ const secret = process.env.JWT_SECRET;
 
 export const auth = async (req, res, next) => {
     try {
-        const token = req.header("Authorization").replace("Bearer ", "");
+        const token = req.header("Authorization")?.replace("Bearer ", "");
         if (!token) {
             return res.status(401).json({ error: 'Authorization token missing' });
         }
@@ -27,13 +27,16 @@ export const auth = async (req, res, next) => {
             return res.status(401).json({ error: 'Invalid token.' });
         }
 
+        console.log('Authenticated user:', decoded); // Debugging line
         req.user = decoded;
         next();
     } catch (e) {
-        console.error(e);
-        res.status(401).json({ error: 'Please authenticate.' });
+        console.error('Authentication error:', e);
+        res.status(401).json({ error: 'Authentication error. Please log in again.' });
     }
 };
+
+
 export const register = async (req, res) => {
     const { userName, email, password } = req.body;
 

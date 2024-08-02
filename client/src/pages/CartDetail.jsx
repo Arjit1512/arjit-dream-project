@@ -165,7 +165,7 @@ const handleAddressSubmit = async () => {
           order_id: orderId,
           handler: async function (response) {
               try {
-                  await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify`, {
+                  await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
                       razorpay_order_id: orderId,
                       razorpay_payment_id: response.razorpay_payment_id,
                       razorpay_signature: response.razorpay_signature
