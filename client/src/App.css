@@ -1150,6 +1150,7 @@ textarea {
     align-items: center;
     text-align: center;
     width: 100%;
+    font-family: 'Rubik', sans-serif;
 }
 
 
@@ -1692,7 +1693,7 @@ button.normal {
         visibility: hidden;
     }
     .no-products {
-        bottom: 390% !important;
+        bottom: 410% !important;
         right: 16%;
     }
     .move-a {
