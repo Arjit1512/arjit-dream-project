@@ -1143,6 +1143,15 @@ textarea {
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
 }
+.no-products {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
 
 .space-btw select:focus,
 .space-btw select:active {
@@ -1674,6 +1683,7 @@ button.normal {
     .p3-part2 img {
         right: 56% !important;
         width: 100vw;
+        height: 85%;
     }
 
     .p3-part1 p,
@@ -1681,12 +1691,18 @@ button.normal {
         z-index: -1;
         visibility: hidden;
     }
-
+    .no-products {
+        bottom: 390% !important;
+        right: 16%;
+    }
     .move-a {
         text-decoration: none;
         position: relative !important;
         bottom: 75% !important;
         z-index: 2;
+    }
+    .invisible{
+        visibility: hidden;
     }
 
     #last {
@@ -1860,19 +1876,25 @@ button.normal {
 
     .flex-row.flex-wrap {
         position: relative;
-        left: 30%;
+        left: 22%;
         bottom: 6%;
-        width: 165%;
+        width: 160%;
     }
+    .space-btw select {
+        height: fit-content;
+        padding: 6px 15px;
+     }
 
     .price-range {
         position: relative;
         left: 150%;
-        bottom: 50%;
+        bottom: 77%;
     }
 
     .rc-slider {
         width: 142% !important;
+        position: relative !important;
+        bottom: 32% !important;
     }
 
     .visible {
@@ -2052,6 +2074,7 @@ button.normal {
 
     .p3-part2 img {
         right: 36% !important;
+        width:85% !important;
     }
 
     .p3-part1 p,

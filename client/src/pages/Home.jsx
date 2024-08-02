@@ -15,7 +15,7 @@ import i6 from "../sources/i6.jpg";
 import i7 from "../sources/i7.png";
 import i8 from "../sources/i8.png";
 import i4 from "../sources/i4.jpg";
-import i44 from "../sources/arjit.jpg";
+import i44 from "../sources/h-star.png";
 import voth from '../sources/voth.jpg';
 
 

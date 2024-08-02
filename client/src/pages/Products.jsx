@@ -16,6 +16,7 @@ const Products = () => {
   const [selectedCollection, setSelectedCollection] = useState('All');
   const [isSlp1Visible, setIsSlp1Visible] = useState(false);
   const navigate = useNavigate();
+
   const handleSortClick = (newSort) => {
     setSort(newSort);
   };
@@ -63,6 +64,9 @@ const Products = () => {
     navigate("/");
   }
 
+  const hasProducts = sortedClothes.length > 0;
+
+
   const Cloth = (props) => {
     const navigate = useNavigate();
 
@@ -93,9 +97,10 @@ const Products = () => {
       />
     );
   };
-  const gotoVengeance = async()=>{
+  const gotoVengeance = async () => {
     navigate("/vengeance");
   }
+
 
   return (
     <>
@@ -104,13 +109,13 @@ const Products = () => {
           <p className='blink'>OUR SALE IS LIVE NOW!</p>
         </div>
         <div className='navbar'>
-          <p className='unga' style={{cursor:"pointer"}} onClick={gotoHome}>TRUE HOOD</p>
+          <p className='unga' style={{ cursor: "pointer" }} onClick={gotoHome}>TRUE HOOD</p>
         </div>
       </section>
-      
+
       <div className='fbp'>
-          <p>Filter By Price</p>
-        </div>
+        <p>Filter By Price</p>
+      </div>
 
       <section id="sale-products">
         <div className={`slp1 ${isSlp1Visible ? 'visible' : 'hidden'}`}>
@@ -142,7 +147,7 @@ const Products = () => {
                   { borderColor: 'black', backgroundColor: 'black' }
                 ]}
               />
-              
+
               <div className="price-range">
                 <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
               </div>
@@ -182,8 +187,12 @@ const Products = () => {
         <div className='slp2'>
           <h3>All Products</h3>
           <p>At True Hood, we are committed to providing you with the best possible shopping experience.<br />
-             We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
-          <div className='space-btw'>
+            We take pride in offering a diverse range of high-quality products, meticulously made to meet your fashion needs. </p>
+
+
+
+
+          <div className={`space-btw ${hasProducts ? '' : 'invisible'}`}>
             <h5>{sortedClothes.length} products</h5>
             <select onChange={(e) => handleSortClick(e.target.value)} value={sort}>
               <option value="Recommended">Sort By: Recommended</option>
@@ -192,8 +201,18 @@ const Products = () => {
             </select>
           </div>
 
+
           <div className='flex-row flex-wrap'>
             {sortedClothes.map(createCloth)}
+
+
+            {
+              !hasProducts && (
+                <div className='no-products'>
+                  <h4>No products found.</h4>
+                </div>
+              )
+            }
           </div>
         </div>
 
@@ -218,7 +237,7 @@ const Products = () => {
       </section>
 
       <section id="paint-pic">
-        <img src={voth} alt="" onClick={gotoVengeance}/>
+        <img src={voth} alt="" onClick={gotoVengeance} />
       </section>
 
 
@@ -227,39 +246,39 @@ const Products = () => {
 
 
 
-<div className='navigate'>
-  <h5>NAVIGATE</h5>
-  <a href='/products'>Shop</a>
-  <a href='/community'>Contact</a>
-  {/* <a>Store locator</a> */}
-</div>
+        <div className='navigate'>
+          <h5>NAVIGATE</h5>
+          <a href='/products'>Shop</a>
+          <a href='/community'>Contact</a>
+          {/* <a>Store locator</a> */}
+        </div>
 
-<div className='get-help'>
-  <h5>GET HELP</h5>
-  <a href='/FAQ'>FAQ</a>
-  <a href='/returns'>Delivery</a>
-  <a href='/returns'>Order Process</a>
-  <a href='/returns'>Returns</a>
-</div>
+        <div className='get-help'>
+          <h5>GET HELP</h5>
+          <a href='/FAQ'>FAQ</a>
+          <a href='/returns'>Delivery</a>
+          <a href='/returns'>Order Process</a>
+          <a href='/returns'>Returns</a>
+        </div>
 
-<div className='social'>
-  <h5>SOCIAL</h5>
-  <a>Instagram</a>
-  <a>Facebook</a>
-  <a>Pinterest</a>
-</div>
+        <div className='social'>
+          <h5>SOCIAL</h5>
+          <a>Instagram</a>
+          <a>Facebook</a>
+          <a>Pinterest</a>
+        </div>
 
-<div className='customer-service'>
-  <h5>CUSTOMER SERVICE</h5>
-  <a href='/privacy-policy'>Privacy Policy</a>
-  <a href='/terms'>Terms & Conditions</a>
-  <a href='/FAQ'>Payments</a>
-</div>
+        <div className='customer-service'>
+          <h5>CUSTOMER SERVICE</h5>
+          <a href='/privacy-policy'>Privacy Policy</a>
+          <a href='/terms'>Terms & Conditions</a>
+          <a href='/FAQ'>Payments</a>
+        </div>
 
-<div className='copy-right'>
-  <p>© Copyright 2024 True Hood</p>
-</div>
-</section>
+        <div className='copy-right'>
+          <p>© Copyright 2024 True Hood</p>
+        </div>
+      </section>
     </>
   );
 };
