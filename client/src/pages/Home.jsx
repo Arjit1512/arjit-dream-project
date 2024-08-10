@@ -266,9 +266,8 @@ const Home = () => {
 
         <div className='social'>
           <h5>SOCIAL</h5>
-          <a>Instagram</a>
+          <a href='https://instagram.com/truehoodclothing'>Instagram</a>
           <a>Facebook</a>
-          <a>Pinterest</a>
         </div>
 
         <div className='customer-service'>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import i1 from "../sources/i1.jpg";
 import i3 from "../sources/i3.jpg";
@@ -14,7 +14,7 @@ import ending from '../sources/ending.jpg';
 import love from "../sources/love.jpg";
 import '../App.css';
 import './Dashboard.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const images = {
   1: i1,
@@ -30,36 +30,149 @@ const images = {
 };
 
 const getImageSrc = (productId) => {
-  return images[productId] || ending; // Default to 'ending' image if no match is found
+  return images[productId] || ending;
 };
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
-      console.log("Fetching user data with token:", token);
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        console.log("User data fetched:", response.data.user);
-        setUser(response.data.user);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setError('Error fetching user data');
-        setLoading(false);
-      }
-    };
+  const [lastProcessedOrderId, setLastProcessedOrderId] = useState(null);
+  const [processedOrders, setProcessedOrders] = useState(new Set());
+  const [creatingOrder, setCreatingOrder] = useState(false);
 
+  const fetchUserData = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUser(response.data.user);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setError('Error fetching user data');
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, []);
+
+  const generateShiprocketToken = async () => {
+    try {
+      const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: "hemanth.a21@iiits.in",
+          password: "Hemanth#2003"
+        })
+      });
+      const data = await response.json();
+      return data.token;
+    } catch (error) {
+      console.error('Error generating Shiprocket token:', error);
+      throw error;
+    }
+  };
+
+  const createShiprocketOrder = async (order) => {
+    try {
+      setCreatingOrder(true);
+      const shiprocketToken = await generateShiprocketToken();
+      const orderDetails = {
+        order_id: `order_${Date.now()}`,
+        order_date: new Date().toISOString(),
+        pickup_location: "Primary",
+        comment: "Customer Order",
+        billing_customer_name: user.userName || "Not Provided",
+        billing_address: user.address[user.address.length - 1]?.street || "Not Provided",
+        billing_city: user.address[user.address.length - 1]?.city || "Not Provided",
+        billing_pincode: Number(user.address[user.address.length - 1]?.pincode) || 517646,
+        billing_state: user.address[user.address.length - 1]?.state || "Not Provided",
+        billing_country: "India",
+        billing_last_name: "",
+        billing_email: user.email || "Not Provided@gmail.com",
+        billing_phone: user.phone || "9618825172",
+        shipping_is_billing: true,
+        shipping_customer_name: user.userName || "Not Provided",
+        shipping_address: user.address[user.address.length - 1]?.street || "Not Provided",
+        shipping_city: user.address[user.address.length - 1]?.city || "Not Provided",
+        shipping_pincode: Number(user.address[user.address.length - 1]?.pincode) || 517646,
+        shipping_country: "India",
+        shipping_state: user.address[user.address.length - 1]?.state || "Not Provided",
+        shipping_email: user.email || "Not Provided@gmail.com",
+        shipping_phone: user.phone || "9618825172",
+        order_items: order.items.map(item => ({
+          name: item.name || "Item Name not provided",
+          sku: "SKU" + item.productId.toString(),
+          units: item.quantity || 1,
+          selling_price: Number(item.price) || 0,
+          discount: item.discount || 0,
+          tax: item.tax || 0,
+          hsn: item.hsn || 123456
+        })),
+        payment_method: "UPI",
+        shipping_charges: 0,
+        giftwrap_charges: 0,
+        transaction_charges: 0,
+        total_discount: 0,
+        sub_total: Number(order.totalBill) || 0,
+        length: 10,
+        breadth: 15,
+        height: 20,
+        weight: 1.5
+      };
+
+      const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${shiprocketToken}`
+        },
+        body: JSON.stringify(orderDetails)
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`Shiprocket order creation failed: ${data.message || 'Unknown error'}`);
+      }
+      console.log('Shiprocket order created successfully:', data);
+      setProcessedOrders(prev => new Set(prev.add(order._id)));
+    } catch (error) {
+      console.error('Error creating Shiprocket order:', error);
+    } finally {
+      setCreatingOrder(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.totalOrders.length > 0 && !creatingOrder) {
+      const latestOrder = user.totalOrders[0];
+      if (!processedOrders.has(latestOrder._id)) {
+        console.log('New order detected, creating Shiprocket order');
+        createShiprocketOrder(latestOrder);
+      } else {
+        console.log('No new orders to process');
+      }
+    }
+  }, [user, processedOrders, creatingOrder]);
+
+
+
+  if (loading) {
+    return (
+      <div className="spinner-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   const toIST = (dateString) => {
     const date = new Date(dateString);
@@ -75,7 +188,6 @@ const Dashboard = () => {
     );
 }
 
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -84,7 +196,6 @@ const Dashboard = () => {
     return <div>No user data available</div>;
   }
 
-  // Sort orders by latest date
   const sortedOrders = user.totalOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
 
   return (
@@ -138,4 +249,6 @@ const Dashboard = () => {
   );
 };
 
+
 export default Dashboard;
+

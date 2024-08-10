@@ -14,6 +14,7 @@ import otpGenerator from 'otp-generator';
 import jwt from 'jsonwebtoken';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
+import axios from 'axios';
 
 dotenv.config();
 const app = express();
@@ -338,8 +339,8 @@ app.post('/razorpay-webhook', express.raw({ type: 'application/json' }), async (
     const receivedSignature = req.headers['x-razorpay-signature'];
 
     const generatedSignature = crypto.createHmac('sha256', secret)
-                                      .update(JSON.stringify(req.body))
-                                      .digest('hex');
+        .update(JSON.stringify(req.body))
+        .digest('hex');
 
     if (receivedSignature === generatedSignature) {
         const { event, payload } = req.body;
@@ -362,9 +363,10 @@ app.post('/razorpay-webhook', express.raw({ type: 'application/json' }), async (
                 }
 
                 // Save cart items to totalOrders
+                const totalBill = cart.totalPrice;
                 user.totalOrders.push({
                     items: cart.items,
-                    totalBill: cart.totalPrice,
+                    totalBill: totalBill,
                     orderDate: new Date(),
                     userName: user.userName,
                     userEmail: user.email
@@ -378,8 +380,8 @@ app.post('/razorpay-webhook', express.raw({ type: 'application/json' }), async (
                 await cart.save();
                 await user.save();
 
-                // You can add additional order creation logic here if needed
-                // Example: Create an order in Shiprocket
+                // Create order in Shiprocket
+                await handleOrderCreation(paymentDetails, totalBill, user);
 
                 res.status(200).send('Order created and cart cleared');
             } catch (error) {
@@ -394,32 +396,142 @@ app.post('/razorpay-webhook', express.raw({ type: 'application/json' }), async (
     }
 });
 
-async function handleOrderCreation(paymentDetails) {
-    const orderDetails = {
-        // Populate order details from paymentDetails and your database
-        // This includes customer details, shipping address, product details, etc.
-    };
+const shiprocketToken = process.env.SHIPROCKET_API_TOKEN;
 
-    // Create order in Shiprocket
-    const shiprocketResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', orderDetails, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.SHIPROCKET_API_TOKEN}`
+async function handleOrderCreation(paymentDetails, totalBill, user) {
+    try {
+        const orderDetails = {
+            order_id: `order_${Date.now()}`,
+            order_date: new Date().toISOString(),
+            pickup_location: "Primary",
+            channel_id: "",
+            comment: "Customer Order",
+            billing_customer_name: user.userName,
+            billing_last_name: "",
+            billing_address: user.address[0].street,
+            billing_address_2: "",
+            billing_city: user.address[0].city,
+            billing_pincode: user.address[0].pincode,
+            billing_state: user.address[0].state,
+            billing_country: "India",
+            billing_email: user.email,
+            billing_phone: user.phone,
+            shipping_is_billing: true,
+            shipping_customer_name: user.userName,
+            shipping_last_name: "",
+            shipping_address: user.address[0].street,
+            shipping_address_2: "",
+            shipping_city: user.address[0].city,
+            shipping_pincode: user.address[0].pincode,
+            shipping_country: "India",
+            shipping_state: user.address[0].state,
+            shipping_email: user.email,
+            shipping_phone: user.phone,
+            order_items: user.totalOrders[user.totalOrders.length - 1].items.map(item => ({
+                name: item.name,
+                sku: item.productId.toString(),
+                units: item.quantity,
+                selling_price: item.price,
+                discount: 0,
+                tax: 0,
+                hsn: 123456
+            })),
+            payment_method: "RAZORPAY",
+            shipping_charges: 0,
+            giftwrap_charges: 0,
+            transaction_charges: 0,
+            total_discount: 0,
+            sub_total: totalBill,
+            length: 10,
+            breadth: 15,
+            height: 20,
+            weight: 1.5
+        };
+
+        console.log('Order details:', orderDetails); // Log order details
+
+        // Step 1: Create order in Shiprocket
+        const shiprocketResponse = await axios.post(
+            'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
+            orderDetails,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${shiprocketToken}`
+                }
+            }
+        );
+
+        if (shiprocketResponse.data && shiprocketResponse.data.status_code === 1) {
+            console.log('Order successfully created in Shiprocket');
+        } else {
+            console.error('Error creating order in Shiprocket:', shiprocketResponse.data.message);
         }
-    });
 
-    if (shiprocketResponse.data.status_code !== 1) {
-        throw new Error('Failed to create order in Shiprocket');
+        // Step 2: Assign AWB using the obtained shipment_id
+        const { shipment_id } = shiprocketResponse.data;
+        const assignAWBResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/courier/assign/awb', {
+            shipment_id: shipment_id,
+            courier_id: 10 // Example courier_id, change as required
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${shiprocketToken}`
+            }
+        });
+
+        console.log('Assign AWB response:', assignAWBResponse.data); // Log Assign AWB response
+
+        return assignAWBResponse.data;
+
+    } catch (error) {
+        console.error('Error creating order in Shiprocket:', error);
+        throw error; // Ensure errors are propagated to the webhook handler
     }
-
-    // Shiprocket will handle sending the email to the customer
 }
 
+// async function trackShipment(shipment_id) {
+//     try {
+//         const trackResponse = await axios.get('https://apiv2.shiprocket.in/v1/external/courier/track/awb/', {
+//             params: {
+//                 shipment_id: shipment_id
+//             },
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${shiprocketToken}`
+//             }
+//         });
 
+//         console.log('Track response:', trackResponse.data); // Log Track response
 
+//         return trackResponse.data;
 
+//     } catch (error) {
+//         console.error('Error tracking shipment in Shiprocket:', error);
+//         throw error; // Ensure errors are propagated to the webhook handler
+//     }
+// }
+// app.get('/order-tracking/:orderId', async (req, res) => {
+//     try {
+//         const { orderId } = req.params;
+//         const response = await axios.get(`https://apiv2.shiprocket.in/v1/external/courier/track/awb/${orderId}`, {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${process.env.SHIPROCKET_API_KEY}`
+//             }
+//         });
 
+//         if (response.data.error) {
+//             // Handle the error returned by Shiprocket
+//             return res.status(404).json({ message: response.data.error });
+//         }
 
+//         res.json(response.data);
+//     } catch (error) {
+//         console.error('Error fetching tracking information:', error.message);
+//         res.status(500).send('Error fetching tracking information');
+//     }
+// });
 
 // node mailer routes and functionalities
 

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from './CartContext';
 import imageMapping from './imageMapping';
 import './Dashboard.css';
+import Dashboard from './Dashboard';  // Import Dashboard to access createShiprocketOrder
 
 const CartDetail = () => {
   const [loading, setLoading] = useState(true);
@@ -58,13 +59,13 @@ const CartDetail = () => {
 
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data or You have not logged In:', error.message);
+        console.error('Error fetching data or You have not logged In or Your cart might be empty', error.message);
         if (error.response && error.response.status === 401) {
           setError('Unauthorized access - please log in again.');
           localStorage.removeItem('token');
           navigate('/login');
         } else {
-          setError('Error fetching data or You have not logged In');
+          setError('Error fetching data or You have not logged In or Your cart might be empty');
         }
         setLoading(false);
       }
@@ -124,88 +125,101 @@ const CartDetail = () => {
 
 const handleAddressSubmit = async () => {
   if (!address.street || !address.city || !address.state || !address.pincode || !address.landmark) {
-      alert('Please enter all address details.');
-      return;
+    alert('Please enter all address details.');
+    return;
   }
 
   setShowAddressPopup(false);
-  setPaymentLoading(true); // Set loading state to true
+  setPaymentLoading(true);
 
   try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-          throw new Error('User not authenticated');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('User not authenticated');
+    }
+
+    await axios.post(`${process.env.REACT_APP_API_URL}/add-address`, address, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
+    });
 
-      await axios.post(`${process.env.REACT_APP_API_URL}/add-address`, address, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
-      });
-
-      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, {}, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
-      });
-
-      const { id: orderId, amount, currency } = orderResponse.data.order;
-
-      const scriptLoaded = await loadRazorpayScript();
-      if (!scriptLoaded) {
-          throw new Error('Razorpay SDK failed to load. Are you online?');
+    const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/checkout`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
+    });
 
-      const options = {
-          key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-          amount,
-          currency,
-          name: 'TRUE HOOD',
-          description: 'Transaction',
-          order_id: orderId,
-          handler: async function (response) {
-              try {
-                  await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
-                      razorpay_order_id: orderId,
-                      razorpay_payment_id: response.razorpay_payment_id,
-                      razorpay_signature: response.razorpay_signature
-                  }, {
-                      headers: {
-                          Authorization: `Bearer ${token}`
-                      }
-                  });
+    const { id: orderId, amount, currency } = orderResponse.data.order;
 
-                  // Clear cart only after successful payment
-                  dispatch({ type: 'CLEAR_CART' });
-                  navigate('/dashboard');
-              } catch (error) {
-                  console.error('Error verifying payment:', error.message);
-                  setError('Payment verification failed');
-              }
-          },
-          prefill: {
-              name: userDetails.userName,
-              email: userDetails.email,
-              contact: ''
-          },
-          theme: {
-              color: '#3399cc'
-          }
-      };
+    const scriptLoaded = await loadRazorpayScript();
+    if (!scriptLoaded) {
+      throw new Error('Razorpay SDK failed to load. Are you online?');
+    }
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+      amount,
+      currency,
+      name: 'TRUE HOOD',
+      description: 'Transaction',
+      order_id: orderId,
+      handler: async function (response) {
+        try {
+          await axios.post(`${process.env.REACT_APP_API_URL}/payment/verify-payment`, {
+            razorpay_order_id: orderId,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          // Clear cart only after successful payment
+          dispatch({ type: 'CLEAR_CART' });
+
+          // Fetch the updated user data
+          const updatedUserResponse = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+
+          // Optional: Update local state or context with new user data
+          const updatedUserData = updatedUserResponse.data.user;
+          setUserDetails({ userName: updatedUserData.userName, email: updatedUserData.email });
+
+          // Now navigate to the dashboard
+          navigate('/dashboard');
+        } catch (error) {
+          console.error('Error verifying payment:', error.message);
+          setError('Payment verification failed');
+        }
+      },
+      prefill: {
+        name: userDetails.userName,
+        email: userDetails.email,
+        contact: ''
+      },
+      theme: {
+        color: '#3399cc'
+      }
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
   } catch (error) {
-      console.error('Error during checkout:', error.message);
-      if (error.response && error.response.status === 401) {
-          setError('Unauthorized access - please log in again.');
-          localStorage.removeItem('token');
-          navigate('/login');
-      } else {
-          setError('Error during checkout: ' + error.message);
-      }
+    console.error('Error during checkout:', error.message);
+    if (error.response && error.response.status === 401) {
+      setError('Unauthorized access - please log in again.');
+      localStorage.removeItem('token');
+      navigate('/login');
+    } else {
+      setError('Error during checkout: ' + error.message);
+    }
   } finally {
-      setPaymentLoading(false); // Set loading state to false after completion
+    setPaymentLoading(false);
   }
 };
 

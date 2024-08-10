@@ -180,8 +180,6 @@ const Sale = () => {
                     <h5>SOCIAL</h5>
                     <a>Instagram</a>
                     <a>Facebook</a>
-                    <a>Tiktok</a>
-                    <a>Pinterest</a>
                 </div>
 
                 <div className='customer-service'>
