@@ -283,3 +283,158 @@ const Products = () => {
 };
 
 export default Products;
+
+
+//I CODED IT ON MY OWN
+
+
+// import React, { useState } from 'react'
+// import Cloth from './Cloth';
+// import Clothes from './Clothes';
+// import './styles.css'
+
+// const App = () => {
+
+//   const clothes = [];
+//   const [CategoriesOption, setCategoriesOption] = useState('All');
+//   const [CollectionsOption, setCollectionsOption] = useState('All');
+//   const [sortedOption, setSortedOption] = useState('Recommended');
+
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   Clothes.map((cloth) => {
+//     clothes.push(cloth);
+//   })
+
+
+
+//   console.log('Final array: ', clothes);
+//   console.log('Selected Categories option= ', CategoriesOption);
+//   console.log('Selected Collections option= ', CollectionsOption);
+//   console.log('Selected Sorted Option: ', sortedOption);
+  
+
+
+
+//   const sortByCategories = () => {
+//     var grouped = {};
+
+//     clothes.forEach((cloth) => {
+//       let hashKey = '';
+//       if (CategoriesOption === 'All') {
+//         hashKey = 'All';
+//       }
+//       else if (CategoriesOption === 'T-Shirts') {
+//         hashKey = cloth.category;
+//       }
+//       else if (CategoriesOption === 'Accessories') {
+//         hashKey = cloth.category;
+//       }
+
+//       if (CollectionsOption === 'All') {
+//         hashKey += 'All';
+//       }
+//       else if (CollectionsOption === 'Vengeance') {
+//         if (cloth.name.includes('Vengeance')) {
+//           hashKey += CollectionsOption;
+//         }
+//       }
+//       else if (CollectionsOption === 'Kendrick Lamar') {
+//         if (cloth.name.includes('Kendrick Lamar')) {
+//           hashKey += CollectionsOption;
+//         }
+//       }
+
+//       if (!grouped[hashKey]) grouped[hashKey] = [];
+
+//       grouped[hashKey].push(cloth);
+//     })
+
+//     return grouped;
+//   }
+
+
+//   const groupedClothes = sortByCategories();
+
+//   Object.keys(groupedClothes).forEach((hashKey) => {
+//      groupedClothes[hashKey].sort((a,b) => {
+//       if(sortedOption === 'price-HTOL'){
+//         return b.price - a.price;
+//       }
+//       else if(sortedOption === 'price-LTOH'){
+//         return a.price - b.price;
+//       }
+//       else
+//         return 0;
+//      })
+//   })
+
+
+//   console.log('Answer DATA---->', groupedClothes);
+
+
+
+//   return (
+//     <>
+//       <div className='info' style={{ padding: '5%' }}>
+//         <h5>All Products</h5>
+//         <p>At True Hood, we are committed to providing you with the best<br />
+//           possible shopping experience.
+//           We take pride in offering a diverse range of high-quality products, <br />
+//           meticulously made to meet your fashion needs.</p>
+//       </div>
+
+//       <button style={{ cursor: 'pointer' }} onClick={() => setIsOpen(!isOpen)}>Filter</button>
+
+
+
+//       <div style={{marginLeft:"85%", marginBottom:'2%'}}>
+//         <span>Sort By: </span>
+//         <select style={{ marginLeft: "5%" }} onChange={(e) => setSortedOption(e.target.value)}>
+//           <option value="Recommended">Recommended</option>
+//           <option value="price-HTOL">Price: High to Low</option>
+//           <option value="price-LTOH">Price: Low to High</option>
+//         </select>
+//       </div>
+
+//       {isOpen && (
+//         <div className='popup-menu' style={{ width: '210px' }}>
+//           <div className='menu-item'>
+//             <span>Categories: </span>
+//             <select onChange={(e) => setCategoriesOption(e.target.value)}>
+//               <option value="All">All</option>
+//               <option value="T-Shirts">T-Shirts</option>
+//               <option value="Accessories">Accessories</option>
+//             </select>
+//           </div>
+
+//           <div className='menu-item'>
+//             <span>Collections: </span>
+//             <select onChange={(e) => setCollectionsOption(e.target.value)}>
+//               <option value="All">All</option>
+//               <option value="Vengeance">Vengeance</option>
+//               <option value="Kendrick Lamar">Kendrick Lamar</option>
+//             </select>
+//           </div>
+
+//         </div>
+//       )}
+
+//       <div className='' style={{ display: "flex", flexDirection: "wrap",marginRight:"2%" }} >
+//         {groupedClothes[CategoriesOption + CollectionsOption]?.length > 0 ? (
+//           groupedClothes[CategoriesOption + CollectionsOption].map((cloth) => {
+//             return <Cloth key={cloth.id} imgURL={cloth.imgURL} name={cloth.name} price={cloth.price} />
+//           })
+//         ) : (
+//           <p>No products found</p>
+//         )}
+//       </div>
+
+
+
+
+//     </>
+//   )
+// }
+
+// export default App

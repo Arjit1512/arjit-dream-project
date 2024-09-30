@@ -307,31 +307,31 @@ app.get('/dashboard', auth, async (req, res) => {
 
 // Add this route in your server file
 app.post('/add-address', auth, async (req, res) => {
-  const userId = req.user._id;
-  const { street, city, state, pincode, landmark } = req.body;
+    const userId = req.user._id;
+    const { street, city, state, pincode, landmark } = req.body;
 
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Add new address to the addresses array
+        user.address.push({
+            street,
+            city,
+            state,
+            pincode,
+            landmark
+        });
+
+        await user.save();
+
+        res.status(200).json({ message: 'Address added successfully', address: user.address });
+    } catch (error) {
+        console.error('Error adding address:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
-
-    // Add new address to the addresses array
-    user.address.push({
-      street,
-      city,
-      state,
-      pincode,
-      landmark
-    });
-
-    await user.save();
-
-    res.status(200).json({ message: 'Address added successfully', address: user.address });
-  } catch (error) {
-    console.error('Error adding address:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
 });
 // Webhook endpoint to handle Razorpay payment events
 app.post('/razorpay-webhook', express.raw({ type: 'application/json' }), async (req, res) => {
@@ -535,6 +535,7 @@ async function handleOrderCreation(paymentDetails, totalBill, user) {
 
 // node mailer routes and functionalities
 
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
@@ -557,7 +558,7 @@ app.post('/send-otp', (req, res) => {
         from: process.env.EMAIL,
         to: email,
         subject: 'Your OTP for entering the Hood.',
-        text:   `
+        text: `
                     Welcome to the Hood, Your OTP is ${otp}.
                 `
     };
