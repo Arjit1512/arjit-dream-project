@@ -85,7 +85,7 @@ const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    const token = localStorage.getItem('token'); 
     if (token) {
       fetchUser(token);
     }

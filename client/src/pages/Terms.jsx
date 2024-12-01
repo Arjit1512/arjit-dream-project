@@ -1,5 +1,5 @@
 import React from 'react';
-import './Terms.css'; // Import CSS file for styling
+import './Terms.css';
 
 const Terms = () => {
     return (

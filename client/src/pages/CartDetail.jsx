@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from './CartContext';
 import imageMapping from './imageMapping';
 import './Dashboard.css';
-import Dashboard from './Dashboard';  // Import Dashboard to access createShiprocketOrder
+import Dashboard from './Dashboard';  
 
 const CartDetail = () => {
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ const CartDetail = () => {
           }
         });
 
-        const cartData = cartResponse.data.cart[0]; // Assuming only one cart per user
+        const cartData = cartResponse.data.cart[0]; 
         if (cartData && cartData.items.length > 0) {
           dispatch({ type: 'SET_CART', payload: cartData.items });
           dispatch({ type: 'SET_TOTAL_PRICE', payload: cartData.totalPrice });

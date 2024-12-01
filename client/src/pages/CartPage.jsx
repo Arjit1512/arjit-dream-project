@@ -213,7 +213,7 @@ const CartPage = () => {
     console.log('Clicked index:', index);
 
     try {
-      const token = localStorage.getItem('token'); // Retrieve token from local storage
+      const token = localStorage.getItem('token'); 
 
       if (!token) {
         console.error('No token found. User is not authenticated.');
@@ -242,7 +242,7 @@ const CartPage = () => {
 
   const fetchUserCart = async () => {
     try {
-      const token = localStorage.getItem('token'); // Retrieve token from local storage
+      const token = localStorage.getItem('token'); 
 
       if (!token) {
         console.error('No token found. User is not authenticated.');
