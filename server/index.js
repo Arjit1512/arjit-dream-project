@@ -241,7 +241,6 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
-
 app.post('/checkout', auth, async (req, res) => {
     try {
         const userId = req.user._id;

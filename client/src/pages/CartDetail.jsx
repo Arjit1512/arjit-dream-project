@@ -284,6 +284,7 @@ const handleAddressSubmit = async () => {
         </div>
       ))}
 
+
       <div className="cart-class2">
         <div className="inside">
           <h2>ORDER SUMMARY</h2>
